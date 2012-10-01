@@ -19,8 +19,10 @@
     
     <string-array name="main_items">
         <item name="specialties">@string/specialties</item>
+        <item name="locations">Near Me</item>
         <item name="organizations">@string/organizations</item>
         <item name="people">@string/people</item>
+        <item name="sponsors">Sponsors</item>
     </string-array>
 
 </resources>
