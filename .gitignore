@@ -27,3 +27,6 @@ Thumbs.db
 # File locks
 .~*
 ~*
+
+# Private stuff
+.private

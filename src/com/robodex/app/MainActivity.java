@@ -9,7 +9,7 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.robodex.R;
 
-public class MainActivity extends SherlockFragmentActivity implements MainListFragment.Callbacks {
+public class MainActivity extends BaseActivity implements MainListFragment.Callbacks {
 	
 	private boolean mTwoPane;
 
@@ -18,31 +18,12 @@ public class MainActivity extends SherlockFragmentActivity implements MainListFr
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         
-        if (findViewById(R.id.detail_container) != null) {
+        if (findViewById(R.id.fragment_container) != null) {
             mTwoPane = true; 
             ((MainListFragment) getSupportFragmentManager()
                     .findFragmentById(R.id.list))
                     .setActivateOnItemClick(true);
         }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-    	super.onCreateOptionsMenu(menu);
-        getSupportMenuInflater().inflate(R.menu.main, menu);
-        (menu.findItem(R.id.menu_search))
-        .setActionView(R.layout.collapsible_edittext)
-        .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS | MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
-        return true;
-    }
-    
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {    	
-    	if (Robodex.DEBUG) {     		
-        	Toast.makeText(this,"option: " + item.getTitle(), Toast.LENGTH_SHORT).show();        	
-        }
-
-    	return super.onOptionsItemSelected(item);
     }
 
 	@Override

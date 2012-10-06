@@ -14,7 +14,7 @@
     <string name="specialties">Specialties</string>
     <string name="organization">Organization</string>
     <string name="organizations">Organizations</string>    
-    <string name="Person">Person</string>
+    <string name="person">Person</string>
     <string name="people">People</string>
     
     <string-array name="main_items">
@@ -22,7 +22,7 @@
         <item name="locations">Near Me</item>
         <item name="organizations">@string/organizations</item>
         <item name="people">@string/people</item>
-        <item name="sponsors">Sponsors</item>
+        <item name="links">Links</item>
     </string-array>
 
 </resources>
