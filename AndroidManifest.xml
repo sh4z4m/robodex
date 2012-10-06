@@ -22,11 +22,18 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".app.DetailActivity"
-            android:label="@string/title_activity_detail" 
+            android:name=".app.CategoryListActivity"
+            android:label="@string/title_activity_category" 
             android:parentActivityName=".app.MainActivity" >
             <meta-data 
                 android:name="android.support.PARENT_ACTIVITY" android:value=".app.MainActivity" />
+        </activity>
+        <activity
+            android:name=".app.DetailActivity"
+            android:label="@string/title_activity_detail" 
+            android:parentActivityName=".app.CategoryListActivity" >
+            <meta-data 
+                android:name="android.support.PARENT_ACTIVITY" android:value=".app.CategoryListActivity" />
         </activity>
     </application>
 

@@ -13,12 +13,12 @@ public class MainListFragment extends SherlockListFragment {
 	private static final String STATE_ACTIVATED_POSITION = "activated_position";
 
 	public interface Callbacks {
-        public void onItemSelected(int position);
+        public void onMainItemSelected(int position);
 	}
 
 	private static Callbacks sDummyCallbacks = new Callbacks() {
 		@Override
-        public void onItemSelected(int position) {
+        public void onMainItemSelected(int position) {
         }
 	};
 	
@@ -61,7 +61,7 @@ public class MainListFragment extends SherlockListFragment {
     @Override
     public void onListItemClick(ListView listView, View view, int position, long id) {
         super.onListItemClick(listView, view, position, id);
-        mCallbacks.onItemSelected(position);
+        mCallbacks.onMainItemSelected(position);
     }
 
     @Override

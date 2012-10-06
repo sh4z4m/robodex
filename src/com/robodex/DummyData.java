@@ -1,6 +1,7 @@
 package com.robodex;
 
 public final class DummyData {
+	
 	public static final String[] SPECIALTIES = {
 		"Specialty0","Specialty1","Specialty2","Specialty3","Specialty4","Specialty5","Specialty6","Specialty7","Specialty8","Specialty9",
 		"Specialty10","Specialty11","Specialty12","Specialty13","Specialty14","Specialty15","Specialty16","Specialty17","Specialty18","Specialty19",
@@ -63,13 +64,14 @@ public final class DummyData {
 		new DummyLocation("380 Richland Avenue", 		"Athens", 		"OH", "45701", 39.3149540, -82.1043140)
 	};
 	
-	public static final Link[] LINKS = {
-		new Link("http://businesshours.net/oatia/",		"Dev Team Site"),
-		new Link("http://google.com?q=user",			"User link"),
-		new Link("http://google.com?q=trusted_user",	"Trusted User link"),
-		new Link("http://google.com?q=moderator",		"Moderator link"),
-		new Link("http://google.com?q=admin",			"Admin link"),
-		new Link("http://google.com?q=head_admin",		"Head Admin link")
+	// Top level links
+	public static final DummyLink[] LINKS = {
+		new DummyLink("http://businesshours.net/oatia/",		"Dev Team Site"),
+		new DummyLink("http://google.com?q=user",			"User link"),
+		new DummyLink("http://google.com?q=trusted_user",	"Trusted User link"),
+		new DummyLink("http://google.com?q=moderator",		"Moderator link"),
+		new DummyLink("http://google.com?q=admin",			"Admin link"),
+		new DummyLink("http://google.com?q=head_admin",		"Head Admin link")
 	};
 	
 	public static final class DummyLocation {
@@ -88,15 +90,25 @@ public final class DummyData {
 			LATITUDE = latitude;
 			LONGITUDE = longitude;
 		}
+		
+		@Override
+		public String toString() {
+			return ADDRESS +" "+ CITY +", "+ STATE +" "+ ZIP +" ("+ LATITUDE +", "+ LONGITUDE + ")";
+		}
 	}
 	
-	public static final class Link {
+	public static final class DummyLink {
 		public final String URI;
 		public final String LABEL;
 		
-		public Link(String uri, String label) {
+		public DummyLink(String uri, String label) {
 			URI = uri;
 			LABEL = label;
+		}
+		
+		@Override
+		public String toString() {
+			return LABEL +" ("+ URI +")";
 		}
 	}
 }
