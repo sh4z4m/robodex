@@ -37,7 +37,10 @@ public class MainActivity extends BaseActivity implements MainListFragment.Callb
     	
     	mMainItem = String.valueOf(position);
 		
-		if (mTwoPane) {
+    	if (position == 1) {
+    		startActivity(new Intent(this, MyMapActivity.class));
+    	}
+    	else if (mTwoPane) {
 			Bundle arguments = new Bundle();
             arguments.putString(CategoryListFragment.ARG_MAIN_ITEM_ID, mMainItem);
             CategoryListFragment fragment = new CategoryListFragment();
@@ -45,7 +48,7 @@ public class MainActivity extends BaseActivity implements MainListFragment.Callb
 	            getSupportFragmentManager().beginTransaction()
 	                    .replace(R.id.fragment_container, fragment)
 	                    .commit();
-		}
+		}		
 		else {
 			Intent category = new Intent(this, CategoryListActivity.class);
 			category.putExtra(CategoryListFragment.ARG_MAIN_ITEM_ID, mMainItem);

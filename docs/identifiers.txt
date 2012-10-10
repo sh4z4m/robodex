@@ -1,4 +1,5 @@
 admob publisher id (will need to be changed after oatia creates admob account) = a1506e906138301
-google maps api key (this is an my old one, app should have its own) = 0iINBr1ZSri9x_vs_3IYtXE8X2dO0plUIlYTa3g
+google maps api key (for apps signed with the robodex.keystore) = 0iINBr1ZSri9wPdlv9Uipi1VZZTCoM-9sciWDOQ
+google maps api key (for apps signed with the debug.keystore) = 0iINBr1ZSri8YhfokYyzPKJblKZyFUxZQXl1u7w
 my galaxy nexus adview test device id = 4AB4327DD66436AAF2B917739E24B866
 nexus 7 adview test device id = 1C61D0699B76FB79113B685B19440E25

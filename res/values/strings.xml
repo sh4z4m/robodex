@@ -5,6 +5,7 @@
     <string name="title_activity_main">@string/app_name</string>
     <string name="title_activity_category">Categories</string>
     <string name="title_activity_detail">Details</string>
+    <string name="title_activity_map">Map</string>
     
     <string name="menu_search">Search</string>
     <string name="menu_settings">Settings</string>
