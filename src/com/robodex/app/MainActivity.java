@@ -6,9 +6,10 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.robodex.R;
+import com.robodex.Robodex;
 
 public class MainActivity extends BaseActivity implements MainListFragment.Callbacks,
-		CategoryListFragment.Callbacks {
+		ItemListFragment.Callbacks {
 	private static final String LOG_TAG = MainActivity.class.getSimpleName();
 	
 	private boolean mTwoPane;
@@ -42,16 +43,16 @@ public class MainActivity extends BaseActivity implements MainListFragment.Callb
     	}
     	else if (mTwoPane) {
 			Bundle arguments = new Bundle();
-            arguments.putString(CategoryListFragment.ARG_MAIN_ITEM_ID, mMainItem);
-            CategoryListFragment fragment = new CategoryListFragment();
+            arguments.putString(ItemListFragment.ARG_MAIN_ITEM_ID, mMainItem);
+            ItemListFragment fragment = new ItemListFragment();
 	            fragment.setArguments(arguments);
 	            getSupportFragmentManager().beginTransaction()
 	                    .replace(R.id.fragment_container, fragment)
 	                    .commit();
 		}		
 		else {
-			Intent category = new Intent(this, CategoryListActivity.class);
-			category.putExtra(CategoryListFragment.ARG_MAIN_ITEM_ID, mMainItem);
+			Intent category = new Intent(this, ItemListActivity.class);
+			category.putExtra(ItemListFragment.ARG_MAIN_ITEM_ID, mMainItem);
 			startActivity(category);		
 		}	
     }

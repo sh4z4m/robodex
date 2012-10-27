@@ -9,8 +9,9 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.robodex.R;
+import com.robodex.Robodex;
 
-public class CategoryListActivity extends BaseActivity implements CategoryListFragment.Callbacks {
+public class ItemListActivity extends BaseActivity implements ItemListFragment.Callbacks {
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,9 +21,9 @@ public class CategoryListActivity extends BaseActivity implements CategoryListFr
 
         if (savedInstanceState == null) {
             Bundle arguments = new Bundle();
-            arguments.putString(CategoryListFragment.ARG_MAIN_ITEM_ID,
-                    getIntent().getStringExtra(CategoryListFragment.ARG_MAIN_ITEM_ID));
-            CategoryListFragment fragment = new CategoryListFragment();
+            arguments.putString(ItemListFragment.ARG_MAIN_ITEM_ID,
+                    getIntent().getStringExtra(ItemListFragment.ARG_MAIN_ITEM_ID));
+            ItemListFragment fragment = new ItemListFragment();
             fragment.setArguments(arguments);
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.category_container, fragment)
@@ -55,7 +56,7 @@ public class CategoryListActivity extends BaseActivity implements CategoryListFr
         }
 		
 		Intent details = new Intent(this, DetailActivity.class);
-		details.putExtra(DetailFragment.ARG_MAIN_ITEM_ID, getIntent().getStringExtra(CategoryListFragment.ARG_MAIN_ITEM_ID));
+		details.putExtra(DetailFragment.ARG_MAIN_ITEM_ID, getIntent().getStringExtra(ItemListFragment.ARG_MAIN_ITEM_ID));
 		details.putExtra(DetailFragment.ARG_CATEGORY_ITEM_ID, position + "");
 		startActivity(details);				
 	}

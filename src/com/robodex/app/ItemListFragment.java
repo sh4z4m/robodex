@@ -4,20 +4,18 @@ import java.util.ArrayList;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockListFragment;
-import com.robodex.DummyData;
-import com.robodex.DummyData.DummyLink;
-import com.robodex.DummyData.DummyLocation;
 import com.robodex.R;
+import com.robodex.data.DummyData;
+import com.robodex.data.DummyData.DummyLink;
+import com.robodex.data.DummyData.DummyLocation;
+import com.robodex.request.ListSpecialties;
 
-public class CategoryListFragment extends SherlockListFragment {
+public class ItemListFragment extends SherlockListFragment {
 	private static final String STATE_ACTIVATED_POSITION = "activated_position";
 	public static final String ARG_MAIN_ITEM_ID = "main_item_id";
 	public static final String ARG_CATEGORY_ITEM_ID = "category_item_id";
@@ -54,6 +52,9 @@ public class CategoryListFragment extends SherlockListFragment {
         
         if (mainItems[pos].equals(getResources().getString(R.string.specialties))) {
         	items = DummyData.SPECIALTIES;
+        	
+        	ListSpecialties specialties = new ListSpecialties();
+        	specialties.execute();
         }
         else if (mainItems[pos].equals(getResources().getString(R.string.organizations))) {
         	items = DummyData.AGENCIES;

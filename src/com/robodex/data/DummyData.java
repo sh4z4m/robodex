@@ -1,4 +1,4 @@
-package com.robodex;
+package com.robodex.data;
 
 public final class DummyData {
 	

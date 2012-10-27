@@ -8,6 +8,7 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.robodex.R;
+import com.robodex.Robodex;
 
 public class DetailActivity extends BaseActivity {
 	@Override
@@ -20,9 +21,9 @@ public class DetailActivity extends BaseActivity {
         if (savedInstanceState == null) {
             Bundle arguments = new Bundle();
             arguments.putString(DetailFragment.ARG_MAIN_ITEM_ID,
-                    getIntent().getStringExtra(CategoryListFragment.ARG_MAIN_ITEM_ID));
+                    getIntent().getStringExtra(ItemListFragment.ARG_MAIN_ITEM_ID));
             arguments.putString(DetailFragment.ARG_CATEGORY_ITEM_ID,
-                    getIntent().getStringExtra(CategoryListFragment.ARG_CATEGORY_ITEM_ID));
+                    getIntent().getStringExtra(ItemListFragment.ARG_CATEGORY_ITEM_ID));
             DetailFragment fragment = new DetailFragment();
             fragment.setArguments(arguments);
             getSupportFragmentManager().beginTransaction()
@@ -40,9 +41,9 @@ public class DetailActivity extends BaseActivity {
     	
     	switch (item.getItemId()) {
     	case android.R.id.home:
-    		Intent parentActivityIntent = new Intent(this, CategoryListActivity.class);
-    		parentActivityIntent.putExtra(CategoryListFragment.ARG_MAIN_ITEM_ID, getIntent().getStringExtra(CategoryListFragment.ARG_MAIN_ITEM_ID));
-    		parentActivityIntent.putExtra(CategoryListFragment.ARG_CATEGORY_ITEM_ID, getIntent().getStringExtra(CategoryListFragment.ARG_CATEGORY_ITEM_ID));
+    		Intent parentActivityIntent = new Intent(this, ItemListActivity.class);
+    		parentActivityIntent.putExtra(ItemListFragment.ARG_MAIN_ITEM_ID, getIntent().getStringExtra(ItemListFragment.ARG_MAIN_ITEM_ID));
+    		parentActivityIntent.putExtra(ItemListFragment.ARG_CATEGORY_ITEM_ID, getIntent().getStringExtra(ItemListFragment.ARG_CATEGORY_ITEM_ID));
     		parentActivityIntent.addFlags(
                     Intent.FLAG_ACTIVITY_CLEAR_TOP /* |
                     Intent.FLAG_ACTIVITY_NEW_TASK  */ );

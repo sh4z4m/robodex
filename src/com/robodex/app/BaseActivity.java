@@ -8,6 +8,7 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.robodex.R;
+import com.robodex.Robodex;
 
 public class BaseActivity extends SherlockFragmentActivity {
 	
