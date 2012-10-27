@@ -34,7 +34,7 @@ public abstract class BaseRequest {
 		private static final String KEY_SESSION_ID	 		= "session_id";
 		
 		// Some requests share these
-		static final String 		KEY_START 				= "start_position";
+		static final String 		KEY_START_POSITION 				= "start_position";
 		
 		
 		// Valid request types
@@ -94,12 +94,6 @@ public abstract class BaseRequest {
 		static String getSessionId() {
 			
 			return "";
-		}
-		
-		// TODO figure out storage
-		static String getStartPosition() {
-			
-			return "1";
 		}
 	}
 	
