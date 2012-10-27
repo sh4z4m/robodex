@@ -8,4 +8,10 @@ public class Login extends BaseRequest {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	protected void processInBackground(JSONObject response) {
+		// TODO Auto-generated method stub
+		
+	}
 }

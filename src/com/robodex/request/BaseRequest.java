@@ -1,6 +1,7 @@
 package com.robodex.request;
 
 import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +14,7 @@ import org.json.JSONObject;
 import android.util.Log;
 
 import com.robodex.HttpHelper;
+import com.robodex.Robodex;
 import com.robodex.HttpHelper.HttpPostTask;
 import com.robodex.HttpHelper.HttpPostTask.Callback;
 import com.robodex.Private;
@@ -20,19 +22,19 @@ import com.robodex.Private;
 public abstract class BaseRequest {
 	private static final String LOG_TAG = BaseRequest.class.getSimpleName();
 	
-	protected static class Request {
-		static final String URL 			 				= "http://businesshours.net/oatia/json/test.php";
+	protected static final class Request {
+		private static final String URL 			 		= "http://businesshours.net/oatia/json/test.php";
 		
 		// HTTP Post variable names
-		private static final String POST_REQUEST	 				= "request";
-		private static final String POST_HASH 						= "hash";		
+		private static final String POST_REQUEST	 		= "request";
+		private static final String POST_HASH 				= "hash";		
 		
 		// All requests share these
 		private static final String KEY_REQUEST_TYPE 		= "request_type";
 		private static final String KEY_SESSION_ID	 		= "session_id";
 		
 		// Some requests share these
-		static final		 String KEY_START 				= "start_position";
+		static final String 		KEY_START 				= "start_position";
 		
 		
 		// Valid request types
@@ -78,14 +80,12 @@ public abstract class BaseRequest {
 		static final String TYPE_EDIT_ROLE 					= "edit_role";
 		
 		
-		// Shared response variable names
-		static final String RESPONSE_ERROR_CODE		= "error_code";
-		static final String RESPONSE_ERROR_MESSAGE	= "error_message";
+		
 		
 		// TODO complete this as each class is made
 		static String getType(Class<? extends BaseRequest> cls) {
 			if (cls == Login.class) return TYPE_LOGIN;
-			if (cls == ListSpecialties.class) return TYPE_LIST_SPECIALTIES;
+			if (cls == SpecialtyList.class) return TYPE_LIST_SPECIALTIES;
 			
 			return null;
 		}
@@ -103,9 +103,84 @@ public abstract class BaseRequest {
 		}
 	}
 	
-	protected abstract JSONObject getRequest();
+	protected static final class Response {
+		// Shared response variable names
+		private static final String KEY_ERROR_CODE		= "error_code";
+		private static final String KEY_ERROR_MESSAGE	= "error_message";
+	}
+
 	
-	public void execute() {
+	
+	
+	private final Callback mCallback;
+	
+	protected BaseRequest() {
+		mCallback = new Callback() {
+			@Override
+			public void onExtraBackgroundProcessing(HttpPostTask task) {				
+				String 		response 	= null;				
+				String	 	hash 		= null;
+				JSONObject 	json 		= null;
+								
+				int 		size 		= task.getResponseLines().size();
+				
+				if (size >= 2) {
+					response 	= task.getResponseLines().get(0);					
+					hash 		= task.getResponseLines().get(1);	
+				}
+				else {
+					Throwable t = task.getConnectionError();
+					if (t == null) t = task.getParseError();
+					Log.e(LOG_TAG, "Response and hash are not defined.", t);
+					return;
+				}
+				
+				
+				if (!hash.equals(Private.calculateHash(response))) {
+					Log.e(LOG_TAG, "Failed hash check.");
+					if (Robodex.ENFORCE_HASH_CHECK) return;
+				}
+				
+				
+				try { 
+					response = URLDecoder.decode(response, "UTF-8");
+					json 	 = new JSONObject(response); 
+				}			
+				catch (UnsupportedEncodingException e) {
+					Log.e(LOG_TAG, "Failed URL-decoding response.", e);
+				}
+				catch (JSONException e) { 
+					Log.e(LOG_TAG, "Failed converting response to JSONObject.", e);
+				}
+				
+				if (json != null) {
+					int 	code = 0;
+					String  msg  = null;					
+					
+					try {
+						code = json.getInt(	  Response.KEY_ERROR_CODE);
+						msg  = json.getString(Response.KEY_ERROR_MESSAGE);
+					} 
+					catch (JSONException e) {
+						Log.e(LOG_TAG, "Failed parsing response error code or message.", e);
+					}
+					
+					if (code != 0) {
+						Log.e(LOG_TAG, "Error " + code + ": " + msg);
+					}
+					
+					processInBackground(json);
+				}
+			}
+			
+			@Override
+			public void onCompleted(HttpPostTask task) {
+				// blank
+			}
+		};
+	}
+	
+	public final void execute() {
 		JSONObject json = getRequest();
 		if (json == null) json = new JSONObject();
 		
@@ -126,17 +201,19 @@ public abstract class BaseRequest {
 		try { post = HttpHelper.getPost(Request.URL, postArgs); } 
 		catch (UnsupportedEncodingException ignored) {}
 		
-		new HttpPostTask(post, new Callback() {	
-			@Override
-			public void onCompleted(HttpPostTask task) {
-				handleResponse(task);
-			}
-		}).execute();
+		new HttpPostTask(post, mCallback).execute();
 	}	
 	
-	private void handleResponse(HttpPostTask task) {
-		Log.d(LOG_TAG, "Response: " + task.getResponseLines().get(0));
-		Log.d(LOG_TAG, "Response Hash: " + task.getResponseLines().get(1));
-		Log.d(LOG_TAG, "Calculated Hash: " + Private.calculateHash(task.getResponseLines().get(0)));
-	}
+	/** Fields to send to server */
+	protected abstract JSONObject 	getRequest();
+	/** 
+	 * Do background processing (save response). 
+	 * Should be <b><u>synchronized</u></b> in implementing classes.<br />
+	 * <p>For example:</p>
+	 * {@code @Override}<br /> 
+	 * <b>synchronized</b> protected void processInBackground(JSONObject response) {<br />
+	 *     // code<br />
+	 * }<hr />
+	 */
+	protected abstract void 		processInBackground(JSONObject response);
 }

@@ -13,7 +13,7 @@ import com.robodex.R;
 import com.robodex.data.DummyData;
 import com.robodex.data.DummyData.DummyLink;
 import com.robodex.data.DummyData.DummyLocation;
-import com.robodex.request.ListSpecialties;
+import com.robodex.request.SpecialtyList;
 
 public class ItemListFragment extends SherlockListFragment {
 	private static final String STATE_ACTIVATED_POSITION = "activated_position";
@@ -53,7 +53,7 @@ public class ItemListFragment extends SherlockListFragment {
         if (mainItems[pos].equals(getResources().getString(R.string.specialties))) {
         	items = DummyData.SPECIALTIES;
         	
-        	ListSpecialties specialties = new ListSpecialties();
+        	SpecialtyList specialties = new SpecialtyList();
         	specialties.execute();
         }
         else if (mainItems[pos].equals(getResources().getString(R.string.organizations))) {

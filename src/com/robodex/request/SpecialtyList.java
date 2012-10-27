@@ -3,7 +3,7 @@ package com.robodex.request;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class ListSpecialties extends BaseRequest {
+public class SpecialtyList extends BaseRequest {
 	@Override
 	protected JSONObject getRequest() {
 		JSONObject request = new JSONObject();
@@ -14,5 +14,11 @@ public class ListSpecialties extends BaseRequest {
 			e.printStackTrace();
 		}
 		return request;
+	}
+
+	@Override
+	protected void processInBackground(JSONObject response) {
+		// TODO Auto-generated method stub
+		
 	}
 }

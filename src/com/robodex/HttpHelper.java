@@ -79,6 +79,9 @@ public class HttpHelper {
         
     public static class HttpPostTask extends AsyncTask<Void, Void, Void> {
     	public static interface Callback { 
+    		/** Called on background thread */
+    		void onExtraBackgroundProcessing(HttpPostTask task);
+    		/** Called on UI thread */
     		void onCompleted(HttpPostTask task); 
 		}
     	
@@ -123,6 +126,8 @@ public class HttpHelper {
             catch (Exception e) { 				mConnectionError = e; }
 			
 			parseResponseLines();
+			
+			if (mCallback != null) mCallback.onExtraBackgroundProcessing(this);
 
 			return null;
 		}
@@ -133,19 +138,19 @@ public class HttpHelper {
 			HttpEntity entity = mResponse.getEntity();
 		    if (entity == null) return;
            
-            InputStream is = null;
+            InputStream stream = null;
             BufferedReader reader = null;
             String line = null;
 			
             // Not a repeatable entity, only one call to getContent() allowed
             try { 
-            	is = entity.getContent(); 
-            	reader = new BufferedReader(new InputStreamReader(is,"iso-8859-1"), 8);
+            	stream = entity.getContent(); 
+            	reader = new BufferedReader(new InputStreamReader(stream,"iso-8859-1"), 8);
             	while ((line = reader.readLine()) != null) {
 					mResponseLines.add(line);
 				}
             	reader.close();
-				is.close();
+				stream.close();
         	} 
 			catch (IllegalStateException e) { 	mParseError = e; } 
 			catch (IOException e) { 			mParseError = e; }

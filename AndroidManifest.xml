@@ -59,7 +59,12 @@
             <meta-data 
                 android:name="android.support.PARENT_ACTIVITY" android:value=".app.MainActivity" />
         </activity>
-            
+        
+        <provider
+            android:name=".data.DatabaseContentProvider" 
+            android:authorities="com.robodex"
+            android:exported="false"
+            android:multiprocess="true" />
     </application>
 
 </manifest>
