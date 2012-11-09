@@ -50,7 +50,7 @@ public class ItemListActivity extends BaseActivity implements ItemListFragment.C
 
 
     @Override
-    public void onCategoryItemSelected(int position) {
+    public void onItemSelected(int position) {
         if (Robodex.DEBUG) {
             Toast.makeText(this,"category item selected, position: " + position, Toast.LENGTH_SHORT).show();
         }

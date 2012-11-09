@@ -1,6 +1,9 @@
 package com.robodex.request;
 
-
+/**
+ * Contains the fields used for communication between the
+ * app and the server.
+ */
 final class Fields {
     // HTTP Post variable names
     static final String REQUEST 						= "request";

@@ -59,7 +59,7 @@ ItemListFragment.Callbacks {
 
 
     @Override
-    public void onCategoryItemSelected(int position) {
+    public void onItemSelected(int position) {
         if (Robodex.DEBUG) {
             Toast.makeText(this,"category item selected, position: " + position, Toast.LENGTH_SHORT).show();
         }
@@ -78,7 +78,7 @@ ItemListFragment.Callbacks {
         }
         else {
             // This should never happen
-            Log.e(LOG_TAG, "Going from main activity to detail activity");
+            Log.wtf(LOG_TAG, "Going from main activity to detail activity");
 
             Intent details = new Intent(this, DetailActivity.class);
             details.putExtra(DetailFragment.ARG_MAIN_ITEM_ID, mMainItem);

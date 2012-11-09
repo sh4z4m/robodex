@@ -839,7 +839,6 @@ public final class DatabaseContract {
     }
 
 
-    // TODO give the data, not just IDs
     public static final class SearchAll {
         private SearchAll() { /* Not instantiable */ }
 
@@ -853,156 +852,342 @@ public final class DatabaseContract {
         public static final String 	COL_SEARCH			= "search";
 
         public static final String 	COL_ORGANIZATION_ID	= "organization_id";
+        public static final String 	COL_ORGANIZATION	= "organization";
         public static final String 	COL_LOCATION_ID		= "location_id";
-        public static final String 	COL_LINK_ID			= "link_id";
+        public static final String 	COL_LOCATION		= "location";
         public static final String 	COL_MEMBER_ID		= "member_id";
         public static final String 	COL_PERSON_ID		= "person_id";
+
+        public static final String 	COL_FIRST_NAME		= "first_name";
+        public static final String 	COL_LAST_NAME		= "last_name";
+        public static final String 	COL_ADDRESS			= "address";
+        public static final String 	COL_CITY			= "city";
+        public static final String 	COL_STATE			= "state";
+
         public static final String 	COL_SPECIALTY_ID	= "specialty_id";
-        public static final String 	COL_FLAG_ID			= "flag_id";
+        public static final String 	COL_SPECIALTY	= "specialty";
+        public static final String 	COL_LINK_ID			= "link_id";
+        public static final String 	COL_LINK			= "link";
+        public static final String 	COL_LINK_TITLE		= "link_title";
+
+        // Not searching flags from general search
+
 
         static final String	CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " ("
                 + COL_ID 					+ " integer PRIMARY KEY AUTOINCREMENT, "
                 + COL_SEARCH				+ " text NOT NULL, "
                 + COL_ORGANIZATION_ID		+ " integer, "
+                + COL_ORGANIZATION			+ " text, "
                 + COL_LOCATION_ID 			+ " integer, "
-                + COL_LINK_ID				+ " integer, "
+                + COL_LOCATION 				+ " text, "
                 + COL_MEMBER_ID 			+ " integer, "
                 + COL_PERSON_ID 			+ " integer, "
+
+                + COL_FIRST_NAME 			+ " text, "
+                + COL_LAST_NAME 			+ " text, "
+
+                + COL_ADDRESS 				+ " text, "
+                + COL_CITY 					+ " text, "
+                + COL_STATE 				+ " text, "
+
                 + COL_SPECIALTY_ID 			+ " integer, "
-                + COL_FLAG_ID 				+ " integer"
+                + COL_SPECIALTY 			+ " text, "
+                + COL_LINK_ID				+ " integer, "
+                + COL_LINK 					+ " text, "
+                + COL_LINK_TITLE 			+ " text"
                 + ");";
     }
 
 
-//    public static final class SearchSpecialties {
-//        private SearchSpecialties() { /* Not instantiable */ }
-//
-//        public static final String 	TABLE_NAME 			= "search_specialties";
-//        public static final Uri 	CONTENT_URI 		= Uri.parse("content://" + AUTHORITY + "/" + TABLE_NAME);
-//
-//        public static final String 	CONTENT_TYPE 		= ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + TABLE_NAME;
-//        public static final String 	CONTENT_ITEM_TYPE	= ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + TABLE_NAME;
-//
-//        public static final String 	COL_ID 				= BaseColumns._ID;
-//        public static final String 	COL_SEARCH			= "search";
-//        public static final String 	COL_SPECIALTY_ID	= "specialty_id";
-//        public static final String 	COL_SPECIALTY		= "specialty";
-//
-//        static final String	CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " ("
-//                + COL_ID 					+ " integer PRIMARY KEY AUTOINCREMENT, "
-//                + COL_SEARCH				+ " text NOT NULL, "
-//                + COL_SPECIALTY_ID 			+ " integer, "
-//                + COL_SPECIALTY 			+ " text"
-//                + ");";
-//    }
-//
-//    public static final class SearchOrganizations {
-//        private SearchOrganizations() { /* Not instantiable */ }
-//
-//        public static final String 	TABLE_NAME 			= "search_organizations";
-//        public static final Uri 	CONTENT_URI 		= Uri.parse("content://" + AUTHORITY + "/" + TABLE_NAME);
-//
-//        public static final String 	CONTENT_TYPE 		= ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + TABLE_NAME;
-//        public static final String 	CONTENT_ITEM_TYPE	= ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + TABLE_NAME;
-//
-//        public static final String 	COL_ID 				= BaseColumns._ID;
-//        public static final String 	COL_SEARCH			= "search";
-//        public static final String 	COL_ORGANIZATION_ID	= "organization_id";
-//        public static final String 	COL_ORGANIZATION	= "organization";
-//
-//        static final String	CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " ("
-//                + COL_ID 					+ " integer PRIMARY KEY AUTOINCREMENT, "
-//                + COL_SEARCH				+ " text NOT NULL, "
-//                + COL_ORGANIZATION_ID 		+ " integer, "
-//                + COL_ORGANIZATION 			+ " text"
-//                + ");";
-//    }
-//
-//    public static final class SearchLinks {
-//        private SearchLinks() { /* Not instantiable */ }
-//
-//        public static final String 	TABLE_NAME 			= "search_links";
-//        public static final Uri 	CONTENT_URI 		= Uri.parse("content://" + AUTHORITY + "/" + TABLE_NAME);
-//
-//        public static final String 	CONTENT_TYPE 		= ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + TABLE_NAME;
-//        public static final String 	CONTENT_ITEM_TYPE	= ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + TABLE_NAME;
-//
-//        public static final String 	COL_ID 				= BaseColumns._ID;
-//        public static final String 	COL_SEARCH			= "search";
-//        public static final String 	COL_LINK_ID			= "link_id";
-//        public static final String 	COL_LINK			= "link";
-//        public static final String 	COL_TITLE			= "title";
-//
-//        static final String	CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " ("
-//                + COL_ID 					+ " integer PRIMARY KEY AUTOINCREMENT, "
-//                + COL_SEARCH				+ " text NOT NULL, "
-//                + COL_LINK_ID 				+ " integer, "
-//                + COL_LINK 					+ " text, "
-//                + COL_TITLE					+ " text"
-//                + ");";
-//    }
-//
-//
-//    public static final class SearchPeopleBySpecialty {
-//        private SearchPeopleBySpecialty() { /* Not instantiable */ }
-//
-//        public static final String 	TABLE_NAME 			= "search_people_by_specialty";
-//        public static final Uri 	CONTENT_URI 		= Uri.parse("content://" + AUTHORITY + "/" + TABLE_NAME);
-//
-//        public static final String 	CONTENT_TYPE 		= ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + TABLE_NAME;
-//        public static final String 	CONTENT_ITEM_TYPE	= ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + TABLE_NAME;
-//
-//        public static final String 	COL_ID 				= BaseColumns._ID;
-//        public static final String 	COL_SEARCH			= "search";
-//
-//        public static final String 	COL_PERSON_ID		= "person_id";
-//        public static final String 	COL_FIRST_NAME		= "first_name";
-//        public static final String 	COL_LAST_NAME		= "last_name";
-//        public static final String 	COL_CITY			= "city";
-//        public static final String 	COL_STATE			= "state";
-//
-//
-//        static final String	CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " ("
-//                + COL_ID 					+ " integer PRIMARY KEY AUTOINCREMENT, "
-//                + COL_SEARCH 				+ " text NOT NULL, "
-//
-//                + COL_PERSON_ID 			+ " integer, "
-//                + COL_FIRST_NAME 			+ " text, "
-//                + COL_LAST_NAME 			+ " text, "
-//                + COL_CITY 					+ " text, "
-//                + COL_STATE 				+ " text"
-//                + ");";
-//    }
-//
-//
-//    public static final class SearchLocationByOrganization {
-//        private SearchLocationByOrganization() { /* Not instantiable */ }
-//
-//        public static final String 	TABLE_NAME 			= "search_location_by_organization";
-//        public static final Uri 	CONTENT_URI 		= Uri.parse("content://" + AUTHORITY + "/" + TABLE_NAME);
-//
-//        public static final String 	CONTENT_TYPE 		= ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + TABLE_NAME;
-//        public static final String 	CONTENT_ITEM_TYPE	= ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + TABLE_NAME;
-//
-//        public static final String 	COL_ID 				= BaseColumns._ID;
-//        public static final String 	COL_SEARCH			= "search";
-//        public static final String 	COL_LOCATION_ID		= "location_id";
-//        public static final String 	COL_ADDRESS			= "address";
-//        public static final String 	COL_CITY			= "city";
-//        public static final String 	COL_STATE			= "state";
-//        public static final String 	COL_ZIP				= "zip";
-//
-//
-//        static final String	CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " ("
-//                + COL_ID 					+ " integer PRIMARY KEY AUTOINCREMENT, "
-//                + COL_SEARCH 				+ " text NOT NULL, "
-//                + COL_LOCATION_ID 			+ " integer, "
-//                + COL_ADDRESS 				+ " text, "
-//                + COL_CITY 					+ " text, "
-//                + COL_STATE 				+ " text, "
-//                + COL_ZIP 					+ " text"
-//                + ");";
-//    }
+    public static final class SearchSpecialties {
+        private SearchSpecialties() { /* Not instantiable */ }
+
+        public static final String 	TABLE_NAME 			= "search_specialties";
+        public static final Uri 	CONTENT_URI 		= Uri.parse("content://" + AUTHORITY + "/" + TABLE_NAME);
+
+        public static final String 	CONTENT_TYPE 		= ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + TABLE_NAME;
+        public static final String 	CONTENT_ITEM_TYPE	= ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + TABLE_NAME;
+
+        public static final String 	COL_ID 				= BaseColumns._ID;
+        public static final String 	COL_SEARCH			= "search";
+        public static final String 	COL_SPECIALTY_ID	= "specialty_id";
+        public static final String 	COL_SPECIALTY		= "specialty";
+
+        static final String	CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " ("
+                + COL_ID 					+ " integer PRIMARY KEY AUTOINCREMENT, "
+                + COL_SEARCH				+ " text NOT NULL, "
+                + COL_SPECIALTY_ID 			+ " integer, "
+                + COL_SPECIALTY 			+ " text"
+                + ");";
+    }
+
+    public static final class SearchOrganizations {
+        private SearchOrganizations() { /* Not instantiable */ }
+
+        public static final String 	TABLE_NAME 			= "search_organizations";
+        public static final Uri 	CONTENT_URI 		= Uri.parse("content://" + AUTHORITY + "/" + TABLE_NAME);
+
+        public static final String 	CONTENT_TYPE 		= ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + TABLE_NAME;
+        public static final String 	CONTENT_ITEM_TYPE	= ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + TABLE_NAME;
+
+        public static final String 	COL_ID 				= BaseColumns._ID;
+        public static final String 	COL_SEARCH			= "search";
+        public static final String 	COL_ORGANIZATION_ID	= "organization_id";
+        public static final String 	COL_ORGANIZATION	= "organization";
+
+        static final String	CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " ("
+                + COL_ID 					+ " integer PRIMARY KEY AUTOINCREMENT, "
+                + COL_SEARCH				+ " text NOT NULL, "
+                + COL_ORGANIZATION_ID 		+ " integer, "
+                + COL_ORGANIZATION 			+ " text"
+                + ");";
+    }
+
+    public static final class SearchLinks {
+        private SearchLinks() { /* Not instantiable */ }
+
+        public static final String 	TABLE_NAME 			= "search_links";
+        public static final Uri 	CONTENT_URI 		= Uri.parse("content://" + AUTHORITY + "/" + TABLE_NAME);
+
+        public static final String 	CONTENT_TYPE 		= ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + TABLE_NAME;
+        public static final String 	CONTENT_ITEM_TYPE	= ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + TABLE_NAME;
+
+        public static final String 	COL_ID 				= BaseColumns._ID;
+        public static final String 	COL_SEARCH			= "search";
+        public static final String 	COL_LINK_ID			= "link_id";
+        public static final String 	COL_LINK			= "link";
+        public static final String 	COL_TITLE			= "title";
+
+        static final String	CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " ("
+                + COL_ID 					+ " integer PRIMARY KEY AUTOINCREMENT, "
+                + COL_SEARCH				+ " text NOT NULL, "
+                + COL_LINK_ID 				+ " integer, "
+                + COL_LINK 					+ " text, "
+                + COL_TITLE					+ " text"
+                + ");";
+    }
+
+
+    public static final class SearchPeopleBySpecialty {
+        private SearchPeopleBySpecialty() { /* Not instantiable */ }
+
+        public static final String 	TABLE_NAME 			= "search_people_by_specialty";
+        public static final Uri 	CONTENT_URI 		= Uri.parse("content://" + AUTHORITY + "/" + TABLE_NAME);
+
+        public static final String 	CONTENT_TYPE 		= ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + TABLE_NAME;
+        public static final String 	CONTENT_ITEM_TYPE	= ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + TABLE_NAME;
+
+        public static final String 	COL_ID 				= BaseColumns._ID;
+        public static final String 	COL_SEARCH			= "search";
+
+        public static final String 	COL_PERSON_ID		= "person_id";
+        public static final String 	COL_FIRST_NAME		= "first_name";
+        public static final String 	COL_LAST_NAME		= "last_name";
+        public static final String 	COL_CITY			= "city";
+        public static final String 	COL_STATE			= "state";
+
+
+        static final String	CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " ("
+                + COL_ID 					+ " integer PRIMARY KEY AUTOINCREMENT, "
+                + COL_SEARCH 				+ " text NOT NULL, "
+
+                + COL_PERSON_ID 			+ " integer, "
+                + COL_FIRST_NAME 			+ " text, "
+                + COL_LAST_NAME 			+ " text, "
+                + COL_CITY 					+ " text, "
+                + COL_STATE 				+ " text"
+                + ");";
+    }
+
+
+    public static final class SearchLocationByOrganization {
+        private SearchLocationByOrganization() { /* Not instantiable */ }
+
+        public static final String 	TABLE_NAME 			= "search_location_by_organization";
+        public static final Uri 	CONTENT_URI 		= Uri.parse("content://" + AUTHORITY + "/" + TABLE_NAME);
+
+        public static final String 	CONTENT_TYPE 		= ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + TABLE_NAME;
+        public static final String 	CONTENT_ITEM_TYPE	= ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + TABLE_NAME;
+
+        public static final String 	COL_ID 				= BaseColumns._ID;
+        public static final String 	COL_SEARCH			= "search";
+        public static final String 	COL_LOCATION_ID		= "location_id";
+        public static final String 	COL_ADDRESS			= "address";
+        public static final String 	COL_CITY			= "city";
+        public static final String 	COL_STATE			= "state";
+        public static final String 	COL_ZIP				= "zip";
+
+
+        static final String	CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " ("
+                + COL_ID 					+ " integer PRIMARY KEY AUTOINCREMENT, "
+                + COL_SEARCH 				+ " text NOT NULL, "
+                + COL_LOCATION_ID 			+ " integer, "
+                + COL_ADDRESS 				+ " text, "
+                + COL_CITY 					+ " text, "
+                + COL_STATE 				+ " text, "
+                + COL_ZIP 					+ " text"
+                + ");";
+    }
+
+
+    public static final class SearchPendingFlags {
+        private SearchPendingFlags() { /* Not instantiable */ }
+
+        public static final String 	TABLE_NAME 			= "search_pending_flags";
+        public static final Uri 	CONTENT_URI 		= Uri.parse("content://" + AUTHORITY + "/" + TABLE_NAME);
+
+        public static final String 	CONTENT_TYPE 		= ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + TABLE_NAME;
+        public static final String 	CONTENT_ITEM_TYPE	= ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + TABLE_NAME;
+
+        public static final String 	COL_ID 				= BaseColumns._ID;
+        public static final String 	COL_SEARCH			= "search";
+        public static final String 	COL_FLAG_ID			= "flag_id";
+        public static final String 	COL_FLAG_BY			= "flag_by";
+        public static final String 	COL_FLAG_TIME		= "flag_time";
+        public static final String 	COL_FLAG_COMMENT	= "flag_comment";
+        public static final String 	COL_ORGANIZATION_ID	= "organization_id";
+        public static final String 	COL_LOCATION_ID		= "location_id";
+        public static final String 	COL_LINK_ID			= "link_id";
+        public static final String 	COL_MEMBER_ID		= "member_id";
+        public static final String 	COL_PERSON_ID		= "person_id";
+        public static final String 	COL_SPECIALTY_ID	= "specialty_id";
+
+        static final String	CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " ("
+                + COL_ID 					+ " integer PRIMARY KEY AUTOINCREMENT, "
+                + COL_SEARCH 				+ " text NOT NULL, "
+                + COL_FLAG_ID 				+ " integer, "
+                + COL_FLAG_BY 				+ " integer, "
+                + COL_FLAG_TIME 			+ " text, "
+                + COL_FLAG_COMMENT 			+ " text, "
+                + COL_ORGANIZATION_ID		+ " integer, "
+                + COL_LOCATION_ID 			+ " integer, "
+                + COL_LINK_ID				+ " integer, "
+                + COL_MEMBER_ID 			+ " integer, "
+                + COL_PERSON_ID 			+ " integer, "
+                + COL_SPECIALTY_ID 			+ " integer"
+                + ");";
+    }
+
+    public static final class SearchApprovedFlags {
+        private SearchApprovedFlags() { /* Not instantiable */ }
+
+        public static final String 	TABLE_NAME 			= "search_approved_flags";
+        public static final Uri 	CONTENT_URI 		= Uri.parse("content://" + AUTHORITY + "/" + TABLE_NAME);
+
+        public static final String 	CONTENT_TYPE 		= ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + TABLE_NAME;
+        public static final String 	CONTENT_ITEM_TYPE	= ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + TABLE_NAME;
+
+        public static final String 	COL_ID 				= BaseColumns._ID;
+        public static final String 	COL_SEARCH			= "search";
+        public static final String 	COL_FLAG_ID			= "flag_id";
+        public static final String 	COL_FLAG_BY			= "flag_by";
+        public static final String 	COL_FLAG_TIME		= "flag_time";
+        public static final String 	COL_FLAG_COMMENT	= "flag_comment";
+        public static final String 	COL_VERDICT			= "verdict";
+        public static final String 	COL_VERDICT_BY		= "verdict_by";
+        public static final String 	COL_VERDICT_TIME	= "verdict_time";
+        public static final String 	COL_VERDICT_COMMENT	= "verdict_comment";
+        public static final String 	COL_ORGANIZATION_ID	= "organization_id";
+        public static final String 	COL_LOCATION_ID		= "location_id";
+        public static final String 	COL_LINK_ID			= "link_id";
+        public static final String 	COL_MEMBER_ID		= "member_id";
+        public static final String 	COL_PERSON_ID		= "person_id";
+        public static final String 	COL_SPECIALTY_ID	= "specialty_id";
+
+        static final String	CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " ("
+                + COL_ID 					+ " integer PRIMARY KEY AUTOINCREMENT, "
+                + COL_SEARCH 				+ " text NOT NULL, "
+                + COL_FLAG_ID 				+ " integer, "
+                + COL_FLAG_BY 				+ " integer, "
+                + COL_FLAG_TIME 			+ " text, "
+                + COL_FLAG_COMMENT 			+ " text, "
+                + COL_VERDICT 				+ " integer, "
+                + COL_VERDICT_BY 			+ " integer, "
+                + COL_VERDICT_TIME 			+ " text, "
+                + COL_VERDICT_COMMENT 		+ " text, "
+                + COL_ORGANIZATION_ID		+ " integer, "
+                + COL_LOCATION_ID 			+ " integer, "
+                + COL_LINK_ID				+ " integer, "
+                + COL_MEMBER_ID 			+ " integer, "
+                + COL_PERSON_ID 			+ " integer, "
+                + COL_SPECIALTY_ID 			+ " integer"
+                + ");";
+    }
+
+
+    public static final class SearchMap {
+        private SearchMap() { /* Not instantiable */ }
+
+        public static final String 	TABLE_NAME 			= "search_map";
+        public static final Uri 	CONTENT_URI 		= Uri.parse("content://" + AUTHORITY + "/" + TABLE_NAME);
+
+        public static final String 	CONTENT_TYPE 		= ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + TABLE_NAME;
+        public static final String 	CONTENT_ITEM_TYPE	= ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + TABLE_NAME;
+
+        // Meta fields
+        public static final String 	COL_ID 				= BaseColumns._ID;
+        public static final String 	COL_SEARCH			= "search";
+        public static final String 	COL_TIMESTAMP 		= "timestamp";
+
+        // Common/shared fields
+        public static final String 	COL_LATITUDE		= "latitude";
+        public static final String 	COL_LONGITUDE		= "longitude";
+        public static final String 	COL_ADDRESS			= "address";
+        public static final String 	COL_CITY			= "city";
+        public static final String 	COL_STATE			= "state";
+        public static final String 	COL_ZIP				= "zip";
+        public static final String 	COL_EMAIL1			= "email1";
+        public static final String 	COL_PHONE1			= "phone1";
+        public static final String 	COL_PHONE2			= "phone2";
+
+        // Person/Member fields
+        public static final String 	COL_FIRST_NAME		= "first_name";
+        public static final String 	COL_LAST_NAME		= "last_name";
+
+        // Person fields
+        public static final String 	COL_PERSON_ID		= "person_id";
+
+        // Member fields
+        public static final String 	COL_MEMBER_ID		= "member_id";
+        public static final String 	COL_LOCATION_TIME	= "location_time";
+
+        // OrganizationLocation fields
+        public static final String 	COL_LOCATION_ID		= "location_id";
+        public static final String 	COL_ORGANIZATION	= "organization";
+        public static final String 	COL_PRIMARY			= "primary";
+        public static final String 	COL_EMAIL2			= "email2";
+
+
+
+        static final String	CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " ("
+                + COL_ID 					+ " integer PRIMARY KEY AUTOINCREMENT, "
+                + COL_SEARCH 				+ " text NOT NULL, "
+                + COL_TIMESTAMP 			+ " text NOT NULL, "
+
+                + COL_LATITUDE 				+ " real, "
+                + COL_LONGITUDE 			+ " real, "
+                + COL_ADDRESS 				+ " text, "
+                + COL_CITY 					+ " text, "
+                + COL_STATE 				+ " text, "
+                + COL_ZIP 					+ " text, "
+                + COL_EMAIL1 				+ " text, "
+                + COL_PHONE1 				+ " text, "
+                + COL_PHONE2 				+ " text, "
+
+                + COL_FIRST_NAME 			+ " text, "
+                + COL_LAST_NAME 			+ " text, "
+
+                + COL_PERSON_ID 			+ " integer, "
+
+                + COL_MEMBER_ID 			+ " integer, "
+                + COL_LOCATION_TIME 		+ " text, "
+
+                + COL_LOCATION_ID 			+ " integer, "
+                + COL_ORGANIZATION 			+ " text, "
+                + COL_PRIMARY 				+ " integer, "
+                + COL_EMAIL2 				+ " text"
+                + ");";
+    }
 
 
 

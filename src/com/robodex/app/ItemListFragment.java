@@ -22,12 +22,12 @@ public class ItemListFragment extends SherlockListFragment {
     private static final String DEFAULT_MAIN_ITEM_ID = "0";
 
     public interface Callbacks {
-        public void onCategoryItemSelected(int position);
+        public void onItemSelected(int position);
     }
 
     private static Callbacks sDummyCallbacks = new Callbacks() {
         @Override
-        public void onCategoryItemSelected(int position) {
+        public void onItemSelected(int position) {
         }
     };
 
@@ -109,7 +109,7 @@ public class ItemListFragment extends SherlockListFragment {
     @Override
     public void onListItemClick(ListView listView, View view, int position, long id) {
         super.onListItemClick(listView, view, position, id);
-        mCallbacks.onCategoryItemSelected(position);
+        mCallbacks.onItemSelected(position);
     }
 
     @Override
