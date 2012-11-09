@@ -10,27 +10,27 @@ import com.actionbarsherlock.app.SherlockListFragment;
 import com.robodex.R;
 
 public class MainListFragment extends SherlockListFragment {
-	private static final String STATE_ACTIVATED_POSITION = "activated_position";
+    private static final String STATE_ACTIVATED_POSITION = "activated_position";
 
-	public interface Callbacks {
+    public interface Callbacks {
         public void onMainItemSelected(int position);
-	}
+    }
 
-	private static Callbacks sDummyCallbacks = new Callbacks() {
-		@Override
+    private static Callbacks sDummyCallbacks = new Callbacks() {
+        @Override
         public void onMainItemSelected(int position) {
         }
-	};
-	
-	private Callbacks mCallbacks = sDummyCallbacks;
-	
+    };
+
+    private Callbacks mCallbacks = sDummyCallbacks;
+
     private int mActivatedPosition = ListView.INVALID_POSITION;
-    
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setListAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1,
-        		getResources().getStringArray(R.array.main_items)));
+                getResources().getStringArray(R.array.main_items)));
     }
 
     @Override
@@ -75,7 +75,7 @@ public class MainListFragment extends SherlockListFragment {
     public void setActivateOnItemClick(boolean activateOnItemClick) {
         getListView().setChoiceMode(activateOnItemClick
                 ? ListView.CHOICE_MODE_SINGLE
-                : ListView.CHOICE_MODE_NONE);
+                        : ListView.CHOICE_MODE_NONE);
     }
 
     public void setActivatedPosition(int position) {

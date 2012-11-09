@@ -16,25 +16,25 @@ import com.robodex.data.DummyData.DummyLocation;
 import com.robodex.request.SpecialtyList;
 
 public class ItemListFragment extends SherlockListFragment {
-	private static final String STATE_ACTIVATED_POSITION = "activated_position";
-	public static final String ARG_MAIN_ITEM_ID = "main_item_id";
-	public static final String ARG_CATEGORY_ITEM_ID = "category_item_id";
-	private static final String DEFAULT_MAIN_ITEM_ID = "0";
-	
-	public interface Callbacks {
-        public void onCategoryItemSelected(int position);
-	}
+    private static final String STATE_ACTIVATED_POSITION = "activated_position";
+    public static final String ARG_MAIN_ITEM_ID = "main_item_id";
+    public static final String ARG_CATEGORY_ITEM_ID = "category_item_id";
+    private static final String DEFAULT_MAIN_ITEM_ID = "0";
 
-	private static Callbacks sDummyCallbacks = new Callbacks() {
-		@Override
+    public interface Callbacks {
+        public void onCategoryItemSelected(int position);
+    }
+
+    private static Callbacks sDummyCallbacks = new Callbacks() {
+        @Override
         public void onCategoryItemSelected(int position) {
         }
-	};
-	
-	private Callbacks mCallbacks = sDummyCallbacks;
+    };
+
+    private Callbacks mCallbacks = sDummyCallbacks;
 
     private String mMainItem;
-    
+
     private int mActivatedPosition = ListView.INVALID_POSITION;
 
     @Override
@@ -44,42 +44,42 @@ public class ItemListFragment extends SherlockListFragment {
             mMainItem = getArguments().getString(ARG_MAIN_ITEM_ID);
         }
         if (mMainItem == null || mMainItem.length() == 0) mMainItem = DEFAULT_MAIN_ITEM_ID;
-        
-        int pos = Integer.valueOf(mMainItem);       
+
+        int pos = Integer.valueOf(mMainItem);
         String[] mainItems = getResources().getStringArray(R.array.main_items);
-        
-        String [] items = {};               
-        
+
+        String [] items = {};
+
         if (mainItems[pos].equals(getResources().getString(R.string.specialties))) {
-        	items = DummyData.SPECIALTIES;
-        	
-        	SpecialtyList specialties = new SpecialtyList();
-        	specialties.execute();
+            items = DummyData.SPECIALTIES;
+
+            SpecialtyList specialties = new SpecialtyList(1);
+            specialties.execute();
         }
         else if (mainItems[pos].equals(getResources().getString(R.string.organizations))) {
-        	items = DummyData.AGENCIES;
+            items = DummyData.AGENCIES;
         }
         else if (mainItems[pos].equals(getResources().getString(R.string.people))) {
-        	items = DummyData.PEOPLE;
+            items = DummyData.PEOPLE;
         }
         else if (mainItems[pos].equals(getResources().getString(R.string.near_me))) {
-        	ArrayList<String> list = new ArrayList<String>();
-        	for (DummyLocation dl : DummyData.LOCATIONS) {
-        		list.add(dl.toString());
-        	}
-        	items = list.toArray(new String[list.size()]);
+            ArrayList<String> list = new ArrayList<String>();
+            for (DummyLocation dl : DummyData.LOCATIONS) {
+                list.add(dl.toString());
+            }
+            items = list.toArray(new String[list.size()]);
         }
         else if (mainItems[pos].equals(getResources().getString(R.string.links))) {
-        	ArrayList<String> list = new ArrayList<String>();
-        	for (DummyLink dl : DummyData.LINKS) {
-        		list.add(dl.toString());
-        	}
-        	items = list.toArray(new String[list.size()]);
+            ArrayList<String> list = new ArrayList<String>();
+            for (DummyLink dl : DummyData.LINKS) {
+                list.add(dl.toString());
+            }
+            items = list.toArray(new String[list.size()]);
         }
-        
+
         setListAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, items));
     }
-    
+
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
@@ -89,7 +89,7 @@ public class ItemListFragment extends SherlockListFragment {
             setActivatedPosition(savedInstanceState.getInt(STATE_ACTIVATED_POSITION));
         }
     }
-    
+
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -105,7 +105,7 @@ public class ItemListFragment extends SherlockListFragment {
         super.onDetach();
         mCallbacks = sDummyCallbacks;
     }
-    
+
     @Override
     public void onListItemClick(ListView listView, View view, int position, long id) {
         super.onListItemClick(listView, view, position, id);
@@ -123,7 +123,7 @@ public class ItemListFragment extends SherlockListFragment {
     public void setActivateOnItemClick(boolean activateOnItemClick) {
         getListView().setChoiceMode(activateOnItemClick
                 ? ListView.CHOICE_MODE_SINGLE
-                : ListView.CHOICE_MODE_NONE);
+                        : ListView.CHOICE_MODE_NONE);
     }
 
     public void setActivatedPosition(int position) {

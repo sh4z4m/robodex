@@ -1,17 +1,20 @@
 package com.robodex.request;
 
-import org.json.JSONObject;
+import java.util.List;
+import java.util.Map;
 
 public class Login extends BaseRequest {
+
 	@Override
-	protected JSONObject getRequest() {
+	protected void populateRequest(Map<String, String> request) {
 		// TODO Auto-generated method stub
-		return null;
+
 	}
 
 	@Override
-	protected void processInBackground(JSONObject response) {
+	protected void processInBackground(List<Map<String, String>> results) {
 		// TODO Auto-generated method stub
-		
+
 	}
+
 }

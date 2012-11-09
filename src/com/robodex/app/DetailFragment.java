@@ -10,20 +10,20 @@ import com.actionbarsherlock.app.SherlockFragment;
 import com.robodex.R;
 
 public class DetailFragment extends SherlockFragment {
-	public static final String ARG_CATEGORY_ITEM_ID = "category_item_id";
-	public static final String ARG_MAIN_ITEM_ID = "main_item_id";
-	
-	private String mMainItem;
+    public static final String ARG_CATEGORY_ITEM_ID = "category_item_id";
+    public static final String ARG_MAIN_ITEM_ID = "main_item_id";
+
+    private String mMainItem;
     private String mCategoryItem;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
+
         if (getArguments().containsKey(ARG_MAIN_ITEM_ID)) {
             mMainItem = getArguments().getString(ARG_MAIN_ITEM_ID);
         }
-        
+
         if (getArguments().containsKey(ARG_CATEGORY_ITEM_ID)) {
             mCategoryItem = getArguments().getString(ARG_CATEGORY_ITEM_ID);
         }

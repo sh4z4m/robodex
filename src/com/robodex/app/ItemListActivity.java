@@ -12,7 +12,7 @@ import com.robodex.R;
 import com.robodex.Robodex;
 
 public class ItemListActivity extends BaseActivity implements ItemListFragment.Callbacks {
-	@Override
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category);
@@ -26,38 +26,38 @@ public class ItemListActivity extends BaseActivity implements ItemListFragment.C
             ItemListFragment fragment = new ItemListFragment();
             fragment.setArguments(arguments);
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.category_container, fragment)
-                    .commit();
+            .add(R.id.category_container, fragment)
+            .commit();
         }
     }
-	
-	    
+
+
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {    	    	
-    	switch (item.getItemId()) {
-    	case android.R.id.home:
-    		Intent parentActivityIntent = new Intent(this, MainActivity.class);
-    		parentActivityIntent.addFlags(
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+        case android.R.id.home:
+            Intent parentActivityIntent = new Intent(this, MainActivity.class);
+            parentActivityIntent.addFlags(
                     Intent.FLAG_ACTIVITY_CLEAR_TOP |
                     Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(parentActivityIntent);
             finish();
             return true;
-    	}
+        }
 
-    	return super.onOptionsItemSelected(item);
+        return super.onOptionsItemSelected(item);
     }
 
 
-	@Override
-	public void onCategoryItemSelected(int position) {
-		if (Robodex.DEBUG) {     		
-        	Toast.makeText(this,"category item selected, position: " + position, Toast.LENGTH_SHORT).show();        	
+    @Override
+    public void onCategoryItemSelected(int position) {
+        if (Robodex.DEBUG) {
+            Toast.makeText(this,"category item selected, position: " + position, Toast.LENGTH_SHORT).show();
         }
-		
-		Intent details = new Intent(this, DetailActivity.class);
-		details.putExtra(DetailFragment.ARG_MAIN_ITEM_ID, getIntent().getStringExtra(ItemListFragment.ARG_MAIN_ITEM_ID));
-		details.putExtra(DetailFragment.ARG_CATEGORY_ITEM_ID, position + "");
-		startActivity(details);				
-	}
+
+        Intent details = new Intent(this, DetailActivity.class);
+        details.putExtra(DetailFragment.ARG_MAIN_ITEM_ID, getIntent().getStringExtra(ItemListFragment.ARG_MAIN_ITEM_ID));
+        details.putExtra(DetailFragment.ARG_CATEGORY_ITEM_ID, position + "");
+        startActivity(details);
+    }
 }
