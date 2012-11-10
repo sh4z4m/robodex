@@ -75,7 +75,7 @@ public final class DatabaseContract {
         public static final String 	COL_ID 				= BaseColumns._ID;
         public static final String 	COL_LOCATION_ID		= "location_id";
         public static final String 	COL_ORGANIZATION_ID	= "organization_id";
-        public static final String 	COL_PRIMARY			= "primary";
+        public static final String 	COL_PRIMARY			= "primary_location";
         public static final String 	COL_ADDRESS			= "address";
         public static final String 	COL_CITY			= "city";
         public static final String 	COL_STATE			= "state";
@@ -486,7 +486,7 @@ public final class DatabaseContract {
         // OrganizationLocation fields
         public static final String 	COL_LOCATION_ID		= "location_id";
         public static final String 	COL_ORGANIZATION	= "organization";
-        public static final String 	COL_PRIMARY			= "primary";
+        public static final String 	COL_PRIMARY			= "primary_location";
         public static final String 	COL_EMAIL2			= "email2";
 
 
@@ -1154,7 +1154,7 @@ public final class DatabaseContract {
         // OrganizationLocation fields
         public static final String 	COL_LOCATION_ID		= "location_id";
         public static final String 	COL_ORGANIZATION	= "organization";
-        public static final String 	COL_PRIMARY			= "primary";
+        public static final String 	COL_PRIMARY			= "primary_location";
         public static final String 	COL_EMAIL2			= "email2";
 
 

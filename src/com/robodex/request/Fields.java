@@ -94,7 +94,7 @@ final class Fields {
     static final String RESPONSE_MESSAGE   				= "response_message";
     static final String RESULTS   						= "results";
 
-    static final int 	ERROR_CODE_OK					= 0;
+    static final int 	RESPONSE_CODE_OK					= 0;
 
 
 

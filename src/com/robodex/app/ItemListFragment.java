@@ -3,23 +3,37 @@ package com.robodex.app;
 import java.util.ArrayList;
 
 import android.app.Activity;
+import android.database.Cursor;
 import android.os.Bundle;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
+import android.support.v4.widget.CursorAdapter;
+import android.support.v4.widget.SimpleCursorAdapter;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.actionbarsherlock.app.SherlockListFragment;
 import com.robodex.R;
+import com.robodex.data.DatabaseContract.Specialty;
 import com.robodex.data.DummyData;
 import com.robodex.data.DummyData.DummyLink;
 import com.robodex.data.DummyData.DummyLocation;
 import com.robodex.request.SpecialtyList;
 
-public class ItemListFragment extends SherlockListFragment {
+public class ItemListFragment extends SherlockListFragment implements
+		LoaderManager.LoaderCallbacks<Cursor> {
+	private static final String LOG_TAG = ItemListFragment.class.getSimpleName();
+
     private static final String STATE_ACTIVATED_POSITION = "activated_position";
     public static final String ARG_MAIN_ITEM_ID = "main_item_id";
     public static final String ARG_CATEGORY_ITEM_ID = "category_item_id";
     private static final String DEFAULT_MAIN_ITEM_ID = "0";
+
+    private static final int SPECIALTY_LIST_LOADER = 1;
+    private SimpleCursorAdapter mCursorAdapter;
 
     public interface Callbacks {
         public void onItemSelected(int position);
@@ -51,16 +65,29 @@ public class ItemListFragment extends SherlockListFragment {
         String [] items = {};
 
         if (mainItems[pos].equals(getResources().getString(R.string.specialties))) {
-            items = DummyData.SPECIALTIES;
+//            items = DummyData.SPECIALTIES;
+        	getLoaderManager().initLoader(SPECIALTY_LIST_LOADER, null, this);
+
+        	String[] uiBindFrom = { Specialty.COL_SPECIALTY};
+            int[] uiBindTo = { android.R.id.text1 };
+
+        	mCursorAdapter = new SimpleCursorAdapter(
+                    getActivity().getApplicationContext(), android.R.layout.simple_list_item_1,
+                    null, uiBindFrom, uiBindTo,
+                    CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
 
             SpecialtyList specialties = new SpecialtyList(1);
             specialties.execute();
+
+            setListAdapter(mCursorAdapter);
         }
         else if (mainItems[pos].equals(getResources().getString(R.string.organizations))) {
             items = DummyData.AGENCIES;
+            setListAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, items));
         }
         else if (mainItems[pos].equals(getResources().getString(R.string.people))) {
             items = DummyData.PEOPLE;
+            setListAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, items));
         }
         else if (mainItems[pos].equals(getResources().getString(R.string.near_me))) {
             ArrayList<String> list = new ArrayList<String>();
@@ -68,6 +95,7 @@ public class ItemListFragment extends SherlockListFragment {
                 list.add(dl.toString());
             }
             items = list.toArray(new String[list.size()]);
+            setListAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, items));
         }
         else if (mainItems[pos].equals(getResources().getString(R.string.links))) {
             ArrayList<String> list = new ArrayList<String>();
@@ -75,9 +103,11 @@ public class ItemListFragment extends SherlockListFragment {
                 list.add(dl.toString());
             }
             items = list.toArray(new String[list.size()]);
+
+            setListAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, items));
         }
 
-        setListAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, items));
+
     }
 
 
@@ -134,5 +164,40 @@ public class ItemListFragment extends SherlockListFragment {
         }
 
         mActivatedPosition = position;
+    }
+
+
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+    	CursorLoader cursorLoader = null;
+
+    	switch (id) {
+    	case SPECIALTY_LIST_LOADER:
+    		String[] projection = { Specialty.COL_ID, Specialty.COL_SPECIALTY };
+            cursorLoader = new CursorLoader(getActivity(),
+            		Specialty.CONTENT_URI, projection, null, null, null);
+    		break;
+		default:
+
+			break;
+    	}
+
+    	if (cursorLoader == null) {
+    		Log.d(LOG_TAG, "cursorLoader is null for id " + id);
+    	}
+
+    	return cursorLoader;
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
+        mCursorAdapter.swapCursor(cursor);
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+    	Log.d(LOG_TAG, "onLoaderReset()");
+
+    	mCursorAdapter.swapCursor(null);
     }
 }

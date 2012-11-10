@@ -16,6 +16,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.ContentValues;
+import android.net.Uri;
 import android.util.Log;
 
 import com.robodex.HttpHelper;
@@ -27,7 +29,8 @@ import com.robodex.Robodex;
 public abstract class BaseRequest {
     private static final String LOG_TAG = BaseRequest.class.getSimpleName();
 
-    private static final String URL		= "http://businesshours.net/oatia/json/test.php";
+    private static final String URL		= "http://businesshours.net/oatia/android_listener.php";
+//    private static final String URL		= "http://businesshours.net/oatia/json/test.php";
 
     private final Callback mCallback;
 
@@ -71,7 +74,7 @@ public abstract class BaseRequest {
                 }
 
                 if (json != null) {
-                    int     code = Fields.ERROR_CODE_OK;
+                    int     code = Fields.RESPONSE_CODE_OK;
                     String  msg  = null;
 
                     try {
@@ -82,20 +85,21 @@ public abstract class BaseRequest {
                         Log.e(LOG_TAG, "Failed parsing response code or message.", e);
                     }
 
-                    if (code != Fields.ERROR_CODE_OK) {
+                    if (code != Fields.RESPONSE_CODE_OK) {
                         Log.e(LOG_TAG, "Error " + code + ": " + msg);
                     }
 
 
                     try {
                     	Map<String, String> rowToSave;
-                    	List<Map<String, String>> resultsList = new ArrayList<Map<String, String>>();
 
                         JSONArray results = json.getJSONArray(Fields.RESULTS);
                         JSONObject rowFromResponse;
 
                         String field;
                         String value;
+
+                        ContentValues dbRow;
 
                         for (int i = 0; i < results.length(); ++i) {
                             rowFromResponse = results.getJSONObject(i);
@@ -109,10 +113,16 @@ public abstract class BaseRequest {
                             	rowToSave.put(field, value);
                             }
 
-                            resultsList.add(rowToSave);
-                        }
+                            dbRow = processRowForInsertion(rowToSave);
 
-                        processInBackground(resultsList);
+                            try {
+                            	Robodex.sAppContext.getContentResolver().insert(
+                            		getContentUri(), dbRow);
+                            }
+                            catch (Throwable t) {
+                            	Log.wtf(LOG_TAG, "Error saving row.", t);
+                            }
+                        }
                     }
                     catch (JSONException e) {
                         Log.e(LOG_TAG, "Error creating results list.", e);
@@ -175,8 +185,11 @@ public abstract class BaseRequest {
     }
 
     /** Fields to send to server */
-    protected abstract void	populateRequest(Map<String, String> request);
+    protected abstract void				populateRequest(Map<String, String> request);
 
-    /** Save the results of the request */
-    protected abstract void	processInBackground(List<Map<String, String>> results);
+    /** Parse a row from the results so that it can be stored in the database */
+    protected abstract ContentValues	processRowForInsertion(Map<String, String> row);
+
+    /** The CONTENT_URI for the database table related to the request */
+    protected abstract Uri 				getContentUri();
 }
