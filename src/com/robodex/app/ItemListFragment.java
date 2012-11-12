@@ -17,12 +17,11 @@ import android.widget.ListView;
 
 import com.actionbarsherlock.app.SherlockListFragment;
 import com.robodex.R;
-import com.robodex.data.DatabaseContract.ListSpecialties;
+import com.robodex.data.DatabaseContract;
 import com.robodex.data.DummyData;
 import com.robodex.data.DummyData.DummyLink;
 import com.robodex.data.DummyData.DummyLocation;
 import com.robodex.request.ListSpecialties;
-
 public class ItemListFragment extends SherlockListFragment implements
 		LoaderManager.LoaderCallbacks<Cursor> {
 	private static final String LOG_TAG = ItemListFragment.class.getSimpleName();
@@ -68,7 +67,7 @@ public class ItemListFragment extends SherlockListFragment implements
 //            items = DummyData.SPECIALTIES;
         	getLoaderManager().initLoader(SPECIALTY_LIST_LOADER, null, this);
 
-        	String[] uiBindFrom = { ListSpecialties.COL_SPECIALTY};
+        	String[] uiBindFrom = { DatabaseContract.ListSpecialties.COL_SPECIALTY};
             int[] uiBindTo = { android.R.id.text1 };
 
         	mCursorAdapter = new SimpleCursorAdapter(
@@ -76,7 +75,7 @@ public class ItemListFragment extends SherlockListFragment implements
                     null, uiBindFrom, uiBindTo,
                     CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
 
-            ListSpecialties specialties = new ListSpecialties(1);
+            ListSpecialties specialties = new ListSpecialties();
             specialties.execute();
 
             setListAdapter(mCursorAdapter);
@@ -173,9 +172,9 @@ public class ItemListFragment extends SherlockListFragment implements
 
     	switch (id) {
     	case SPECIALTY_LIST_LOADER:
-    		String[] projection = { ListSpecialties.COL_ID, ListSpecialties.COL_SPECIALTY };
+    		String[] projection = { DatabaseContract.ListSpecialties.COL_ID, DatabaseContract.ListSpecialties.COL_SPECIALTY };
             cursorLoader = new CursorLoader(getActivity(),
-            		ListSpecialties.CONTENT_URI, projection, null, null, null);
+            		DatabaseContract.ListSpecialties.CONTENT_URI, projection, null, null, null);
     		break;
 		default:
 

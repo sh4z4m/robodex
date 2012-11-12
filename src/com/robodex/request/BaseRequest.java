@@ -52,6 +52,7 @@ public abstract class BaseRequest {
 
     protected BaseRequest(final HttpPostTask.Callback callback) {
     	mResponseCode = RESPONSE_CODE_UNKNOWN;
+    	getChildInfo();
 
         mCallback = new HttpPostTask.Callback() {
         	@Override
@@ -61,9 +62,6 @@ public abstract class BaseRequest {
 
         	@Override
 			public void onPreExecuteBackgroundProcessing(HttpPostTask task) {
-        		// Set the request type and content uri
-        		getChildInfo();
-
 				if (callback != null) callback.onPreExecuteBackgroundProcessing(task);
 			}
 
@@ -152,7 +150,7 @@ public abstract class BaseRequest {
         else {
             Throwable t = task.getConnectionError();
             if (t == null) t = task.getParseError();
-            Log.e(LOG_TAG, "Response and hash are not defined.", t);
+            Log.e(LOG_TAG, "Response and hash are not defined, received " + size + " line response.", t);
 
             return null;
         }

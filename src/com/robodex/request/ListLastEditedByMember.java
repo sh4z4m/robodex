@@ -2,13 +2,15 @@ package com.robodex.request;
 
 import java.util.Map;
 
+import com.robodex.request.ServerContract.RequestField;
+
 import android.content.ContentValues;
 
-public final class ListLastEditedByMember extends BaseRequest {
+public final class ListLastEditedByMember extends BaseEndlessListRequest {
 
 	@Override
 	protected void populateRequest(Map<String, String> request) {
-		// TODO
+		request.put(RequestField.START_POSITION, String.valueOf(getStartPosition()));
 	}
 
 	@Override

@@ -24,17 +24,6 @@ public class CreateFlag extends BaseRequest {
 	}
 
 	@Override
-	protected String getRequestType() {
-		return RequestType.CREATE_FLAG;
-	}
-
-
-	@Override
-	protected Uri getContentUri() {
-		return DatabaseContract.CreateFlag.CONTENT_URI;
-	}
-
-	@Override
 	protected void populateRequest(Map<String, String> request) {
 		request.put(RequestField.FLAG_COMMENT, mComment);
 		request.put(mField, String.valueOf(mRowId));

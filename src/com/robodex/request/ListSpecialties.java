@@ -7,18 +7,10 @@ import android.content.ContentValues;
 import com.robodex.data.DatabaseContract;
 import com.robodex.request.ServerContract.RequestField;
 
-public final class ListSpecialties extends BaseRequest {
-
-    private final int mStartPosition;
-
-    public ListSpecialties(int startPosition) {
-        mStartPosition = startPosition;
-    }
-
-
+public final class ListSpecialties extends BaseEndlessListRequest {
     @Override
     protected void populateRequest(Map<String, String> request) {
-        request.put(RequestField.START_POSITION, String.valueOf(mStartPosition));
+        request.put(RequestField.START_POSITION, String.valueOf(getStartPosition()));
     }
 
 	@Override

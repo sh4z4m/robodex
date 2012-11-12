@@ -10,7 +10,6 @@ final class ServerContract {
 	 * The types of requests the app can make
 	 */
 	static final class RequestType {
-		// should these be integers?
 
 		static final String LOGIN       				= "login";
 	    static final String CHECK_IN       				= "check_in";
@@ -19,7 +18,7 @@ final class ServerContract {
 	    static final String DETAIL_LOCATION    			= "detail_location";
 
 	    static final String LIST_SPECIALTIES 			= "list_specialties";
-	    static final String LIST_MAP    		= "list_coordinates";
+	    static final String LIST_MAP    				= "list_coordinates";
 	    static final String LIST_ORGANIZATIONS   		= "list_organizations";
 	    static final String LIST_LINKS    				= "list_links";
 	    static final String LIST_PENDING_FLAGS   	 	= "list_pending_flags";
