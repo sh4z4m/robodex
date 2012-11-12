@@ -9,7 +9,7 @@ final class ServerContract {
 	/**
 	 * The types of requests the app can make
 	 */
-	static class RequestType {
+	static final class RequestType {
 		// should these be integers?
 
 		static final String LOGIN       				= "login";
@@ -19,13 +19,13 @@ final class ServerContract {
 	    static final String DETAIL_LOCATION    			= "detail_location";
 
 	    static final String LIST_SPECIALTIES 			= "list_specialties";
-	    static final String LIST_COORDINATES    		= "list_coordinates";
+	    static final String LIST_MAP    		= "list_coordinates";
 	    static final String LIST_ORGANIZATIONS   		= "list_organizations";
 	    static final String LIST_LINKS    				= "list_links";
 	    static final String LIST_PENDING_FLAGS   	 	= "list_pending_flags";
 	    static final String LIST_ROLES    				= "list_roles";
 	    static final String LIST_PEOPLE_BY_SPECIALTY 	= "list_people_by_specialty";
-	    static final String LIST_LOCATIONS     			= "list_locations";
+	    static final String LIST_LOCATIONS_BY_ORGANIZATION     			= "list_locations";
 	    static final String LIST_APPROVED_FLAGS  		= "list_approved_flags";
 	    // TODO update documentation
 	    static final String LIST_LAST_EDITED_BY_MEMBER	= "list_last_edited_by_member";
@@ -60,7 +60,7 @@ final class ServerContract {
 	/**
 	 * Fields that can be in an HTTP request understood by the server.
 	 */
-	static class RequestField {
+	static final class RequestField {
 
 		/*
 		 * HTTP POST fields
@@ -174,7 +174,7 @@ final class ServerContract {
 	/**
 	 * Fields that can be in a response understood by the app.
 	 */
-	static class ResponseField {
+	static final class ResponseField {
 		 // All responses must have these
 	    static final String RESPONSE_CODE  				= "response_code";
 	    static final String RESPONSE_MESSAGE   			= "response_message";

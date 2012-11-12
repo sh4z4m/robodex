@@ -11,36 +11,36 @@ import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 import android.util.Log;
 
-import com.robodex.data.DatabaseContract.ApprovedFlags;
+import com.robodex.data.DatabaseContract.ListApprovedFlags;
 import com.robodex.data.DatabaseContract.Edits;
 import com.robodex.data.DatabaseContract.Flag;
-import com.robodex.data.DatabaseContract.LastEditedByMember;
-import com.robodex.data.DatabaseContract.Link;
-import com.robodex.data.DatabaseContract.LocationByOrganization;
-import com.robodex.data.DatabaseContract.MapCache;
+import com.robodex.data.DatabaseContract.ListLastEditedByMember;
+import com.robodex.data.DatabaseContract.ListLinks;
+import com.robodex.data.DatabaseContract.ListLocationsByOrganization;
+import com.robodex.data.DatabaseContract.ListMap;
 import com.robodex.data.DatabaseContract.Member;
-import com.robodex.data.DatabaseContract.Organization;
-import com.robodex.data.DatabaseContract.OrganizationLocation;
-import com.robodex.data.DatabaseContract.PendingFlags;
-import com.robodex.data.DatabaseContract.PeopleBySpecialty;
+import com.robodex.data.DatabaseContract.ListOrganizations;
+import com.robodex.data.DatabaseContract.DetailLocation;
+import com.robodex.data.DatabaseContract.ListPendingFlags;
+import com.robodex.data.DatabaseContract.ListPeopleBySpecialty;
 import com.robodex.data.DatabaseContract.Person;
-import com.robodex.data.DatabaseContract.PersonDetail;
+import com.robodex.data.DatabaseContract.DetailPerson;
 import com.robodex.data.DatabaseContract.PersonOrganization;
 import com.robodex.data.DatabaseContract.PersonSpecialty;
 import com.robodex.data.DatabaseContract.Recent;
 import com.robodex.data.DatabaseContract.Requests;
-import com.robodex.data.DatabaseContract.Role;
+import com.robodex.data.DatabaseContract.ListRoles;
 import com.robodex.data.DatabaseContract.SearchAll;
 import com.robodex.data.DatabaseContract.SearchApprovedFlags;
 import com.robodex.data.DatabaseContract.SearchLinks;
-import com.robodex.data.DatabaseContract.SearchLocationByOrganization;
+import com.robodex.data.DatabaseContract.SearchLocationsByOrganization;
 import com.robodex.data.DatabaseContract.SearchMap;
 import com.robodex.data.DatabaseContract.SearchOrganizations;
 import com.robodex.data.DatabaseContract.SearchPendingFlags;
 import com.robodex.data.DatabaseContract.SearchPeopleBySpecialty;
 import com.robodex.data.DatabaseContract.SearchSpecialties;
 import com.robodex.data.DatabaseContract.SearchTerms;
-import com.robodex.data.DatabaseContract.Specialty;
+import com.robodex.data.DatabaseContract.ListSpecialties;
 
 public class DatabaseContentProvider extends ContentProvider {
     private static final String LOG_TAG = DatabaseContentProvider.class.getSimpleName();
@@ -84,36 +84,36 @@ public class DatabaseContentProvider extends ContentProvider {
     private static final UriMatcher sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
     static {
-        sUriMatcher.addURI(DatabaseContract.AUTHORITY, ApprovedFlags.TABLE_NAME, 				APPROVED_FLAGS);
+        sUriMatcher.addURI(DatabaseContract.AUTHORITY, ListApprovedFlags.TABLE_NAME, 				APPROVED_FLAGS);
         sUriMatcher.addURI(DatabaseContract.AUTHORITY, Edits.TABLE_NAME, 						EDITS);
         sUriMatcher.addURI(DatabaseContract.AUTHORITY, Flag.TABLE_NAME, 						FLAG);
-        sUriMatcher.addURI(DatabaseContract.AUTHORITY, LastEditedByMember.TABLE_NAME, 			LAST_EDITED_BY_MEMBER);
-        sUriMatcher.addURI(DatabaseContract.AUTHORITY, Link.TABLE_NAME, 						LINK);
-        sUriMatcher.addURI(DatabaseContract.AUTHORITY, LocationByOrganization.TABLE_NAME, 		LOCATION_BY_ORGANIZATION);
-        sUriMatcher.addURI(DatabaseContract.AUTHORITY, MapCache.TABLE_NAME, 					MAP_CACHE);
+        sUriMatcher.addURI(DatabaseContract.AUTHORITY, ListLastEditedByMember.TABLE_NAME, 			LAST_EDITED_BY_MEMBER);
+        sUriMatcher.addURI(DatabaseContract.AUTHORITY, ListLinks.TABLE_NAME, 						LINK);
+        sUriMatcher.addURI(DatabaseContract.AUTHORITY, ListLocationsByOrganization.TABLE_NAME, 		LOCATION_BY_ORGANIZATION);
+        sUriMatcher.addURI(DatabaseContract.AUTHORITY, ListMap.TABLE_NAME, 					MAP_CACHE);
         sUriMatcher.addURI(DatabaseContract.AUTHORITY, Member.TABLE_NAME, 						MEMBER);
-        sUriMatcher.addURI(DatabaseContract.AUTHORITY, Organization.TABLE_NAME, 				ORGANIZATION);
-        sUriMatcher.addURI(DatabaseContract.AUTHORITY, OrganizationLocation.TABLE_NAME, 		ORGANIZATION_LOCATION);
-        sUriMatcher.addURI(DatabaseContract.AUTHORITY, PendingFlags.TABLE_NAME, 				PENDING_FLAGS);
-        sUriMatcher.addURI(DatabaseContract.AUTHORITY, PeopleBySpecialty.TABLE_NAME, 			PEOPLE_BY_SPECIALTY);
+        sUriMatcher.addURI(DatabaseContract.AUTHORITY, ListOrganizations.TABLE_NAME, 				ORGANIZATION);
+        sUriMatcher.addURI(DatabaseContract.AUTHORITY, DetailLocation.TABLE_NAME, 		ORGANIZATION_LOCATION);
+        sUriMatcher.addURI(DatabaseContract.AUTHORITY, ListPendingFlags.TABLE_NAME, 				PENDING_FLAGS);
+        sUriMatcher.addURI(DatabaseContract.AUTHORITY, ListPeopleBySpecialty.TABLE_NAME, 			PEOPLE_BY_SPECIALTY);
         sUriMatcher.addURI(DatabaseContract.AUTHORITY, Person.TABLE_NAME, 						PERSON);
-        sUriMatcher.addURI(DatabaseContract.AUTHORITY, PersonDetail.TABLE_NAME, 				PERSON_DETAIL);
+        sUriMatcher.addURI(DatabaseContract.AUTHORITY, DetailPerson.TABLE_NAME, 				PERSON_DETAIL);
         sUriMatcher.addURI(DatabaseContract.AUTHORITY, PersonOrganization.TABLE_NAME, 			PERSON_ORGANIZATION);
         sUriMatcher.addURI(DatabaseContract.AUTHORITY, PersonSpecialty.TABLE_NAME, 				PERSON_SPECIALTY);
         sUriMatcher.addURI(DatabaseContract.AUTHORITY, Recent.TABLE_NAME, 						RECENT);
         sUriMatcher.addURI(DatabaseContract.AUTHORITY, Requests.TABLE_NAME, 					REQUESTS);
-        sUriMatcher.addURI(DatabaseContract.AUTHORITY, Role.TABLE_NAME, 						ROLE);
+        sUriMatcher.addURI(DatabaseContract.AUTHORITY, ListRoles.TABLE_NAME, 						ROLE);
         sUriMatcher.addURI(DatabaseContract.AUTHORITY, SearchAll.TABLE_NAME, 					SEARCH_ALL);
         sUriMatcher.addURI(DatabaseContract.AUTHORITY, SearchApprovedFlags.TABLE_NAME, 			SEARCH_APPROVED_FLAGS);
         sUriMatcher.addURI(DatabaseContract.AUTHORITY, SearchLinks.TABLE_NAME, 					SEARCH_LINKS);
-        sUriMatcher.addURI(DatabaseContract.AUTHORITY, SearchLocationByOrganization.TABLE_NAME, SEARCH_LOCATION_BY_ORGANIZATION);
+        sUriMatcher.addURI(DatabaseContract.AUTHORITY, SearchLocationsByOrganization.TABLE_NAME, SEARCH_LOCATION_BY_ORGANIZATION);
         sUriMatcher.addURI(DatabaseContract.AUTHORITY, SearchMap.TABLE_NAME, 					SEARCH_MAP);
         sUriMatcher.addURI(DatabaseContract.AUTHORITY, SearchOrganizations.TABLE_NAME, 			SEARCH_ORGANIZATIONS);
         sUriMatcher.addURI(DatabaseContract.AUTHORITY, SearchPendingFlags.TABLE_NAME, 			SEARCH_PENDING_FLAGS);
         sUriMatcher.addURI(DatabaseContract.AUTHORITY, SearchPeopleBySpecialty.TABLE_NAME, 		SEARCH_PEOPLE_BY_SPECIALTY);
         sUriMatcher.addURI(DatabaseContract.AUTHORITY, SearchSpecialties.TABLE_NAME, 			SEARCH_SPECIALTIES);
         sUriMatcher.addURI(DatabaseContract.AUTHORITY, SearchTerms.TABLE_NAME, 					SEARCH_TERMS);
-        sUriMatcher.addURI(DatabaseContract.AUTHORITY, Specialty.TABLE_NAME, 					SPECIALTY);
+        sUriMatcher.addURI(DatabaseContract.AUTHORITY, ListSpecialties.TABLE_NAME, 					SPECIALTY);
     }
 
     @Override
@@ -125,36 +125,36 @@ public class DatabaseContentProvider extends ContentProvider {
     @Override
     public String getType(Uri uri) {
         switch (sUriMatcher.match(uri)) {
-        case APPROVED_FLAGS:					return ApprovedFlags.CONTENT_TYPE;
+        case APPROVED_FLAGS:					return ListApprovedFlags.CONTENT_TYPE;
         case EDITS: 							return Edits.CONTENT_TYPE;
         case FLAG: 								return Flag.CONTENT_TYPE;
-        case LAST_EDITED_BY_MEMBER: 			return LastEditedByMember.CONTENT_TYPE;
-        case LINK: 								return Link.CONTENT_TYPE;
-        case LOCATION_BY_ORGANIZATION: 			return LocationByOrganization.CONTENT_TYPE;
-        case MAP_CACHE: 						return MapCache.CONTENT_TYPE;
+        case LAST_EDITED_BY_MEMBER: 			return ListLastEditedByMember.CONTENT_TYPE;
+        case LINK: 								return ListLinks.CONTENT_TYPE;
+        case LOCATION_BY_ORGANIZATION: 			return ListLocationsByOrganization.CONTENT_TYPE;
+        case MAP_CACHE: 						return ListMap.CONTENT_TYPE;
         case MEMBER: 							return Member.CONTENT_TYPE;
-        case ORGANIZATION: 						return Organization.CONTENT_TYPE;
-        case ORGANIZATION_LOCATION: 			return OrganizationLocation.CONTENT_TYPE;
-        case PENDING_FLAGS: 					return PendingFlags.CONTENT_TYPE;
-        case PEOPLE_BY_SPECIALTY: 				return PeopleBySpecialty.CONTENT_TYPE;
+        case ORGANIZATION: 						return ListOrganizations.CONTENT_TYPE;
+        case ORGANIZATION_LOCATION: 			return DetailLocation.CONTENT_TYPE;
+        case PENDING_FLAGS: 					return ListPendingFlags.CONTENT_TYPE;
+        case PEOPLE_BY_SPECIALTY: 				return ListPeopleBySpecialty.CONTENT_TYPE;
         case PERSON: 							return Person.CONTENT_TYPE;
-        case PERSON_DETAIL: 					return PersonDetail.CONTENT_TYPE;
+        case PERSON_DETAIL: 					return DetailPerson.CONTENT_TYPE;
         case PERSON_ORGANIZATION: 				return PersonOrganization.CONTENT_TYPE;
         case PERSON_SPECIALTY: 					return PersonSpecialty.CONTENT_TYPE;
         case RECENT: 							return Recent.CONTENT_TYPE;
         case REQUESTS: 							return Requests.CONTENT_TYPE;
-        case ROLE: 								return Role.CONTENT_TYPE;
+        case ROLE: 								return ListRoles.CONTENT_TYPE;
         case SEARCH_ALL: 						return SearchAll.CONTENT_TYPE;
         case SEARCH_APPROVED_FLAGS: 			return SearchApprovedFlags.CONTENT_TYPE;
         case SEARCH_LINKS: 						return SearchLinks.CONTENT_TYPE;
-        case SEARCH_LOCATION_BY_ORGANIZATION:	return SearchLocationByOrganization.CONTENT_TYPE;
+        case SEARCH_LOCATION_BY_ORGANIZATION:	return SearchLocationsByOrganization.CONTENT_TYPE;
         case SEARCH_MAP: 						return SearchMap.CONTENT_TYPE;
         case SEARCH_ORGANIZATIONS: 				return SearchOrganizations.CONTENT_TYPE;
         case SEARCH_PENDING_FLAGS: 				return SearchPendingFlags.CONTENT_TYPE;
         case SEARCH_PEOPLE_BY_SPECIALTY: 		return SearchPeopleBySpecialty.CONTENT_TYPE;
         case SEARCH_SPECIALTIES: 				return SearchSpecialties.CONTENT_TYPE;
         case SEARCH_TERMS: 						return SearchTerms.CONTENT_TYPE;
-        case SPECIALTY: 						return Specialty.CONTENT_TYPE;
+        case SPECIALTY: 						return ListSpecialties.CONTENT_TYPE;
         default:
             Log.w(LOG_TAG, "getType() - Unknown Uri: " + uri.toString());
             return null;
@@ -169,7 +169,7 @@ public class DatabaseContentProvider extends ContentProvider {
 
     	switch (sUriMatcher.match(uri)) {
         case APPROVED_FLAGS:
-        	queryBuilder.setTables(ApprovedFlags.TABLE_NAME);
+        	queryBuilder.setTables(ListApprovedFlags.TABLE_NAME);
         	break;
         case EDITS:
         	queryBuilder.setTables(Edits.TABLE_NAME);
@@ -178,37 +178,37 @@ public class DatabaseContentProvider extends ContentProvider {
         	queryBuilder.setTables(Flag.TABLE_NAME);
         	break;
         case LAST_EDITED_BY_MEMBER:
-        	queryBuilder.setTables(LastEditedByMember.TABLE_NAME);
+        	queryBuilder.setTables(ListLastEditedByMember.TABLE_NAME);
         	break;
         case LINK:
-        	queryBuilder.setTables(Link.TABLE_NAME);
+        	queryBuilder.setTables(ListLinks.TABLE_NAME);
         	break;
         case LOCATION_BY_ORGANIZATION:
-        	queryBuilder.setTables(LocationByOrganization.TABLE_NAME);
+        	queryBuilder.setTables(ListLocationsByOrganization.TABLE_NAME);
         	break;
         case MAP_CACHE:
-        	queryBuilder.setTables(MapCache.TABLE_NAME);
+        	queryBuilder.setTables(ListMap.TABLE_NAME);
         	break;
         case MEMBER:
         	queryBuilder.setTables(Member.TABLE_NAME);
         	break;
         case ORGANIZATION:
-        	queryBuilder.setTables(Organization.TABLE_NAME);
+        	queryBuilder.setTables(ListOrganizations.TABLE_NAME);
         	break;
         case ORGANIZATION_LOCATION:
-        	queryBuilder.setTables(OrganizationLocation.TABLE_NAME);
+        	queryBuilder.setTables(DetailLocation.TABLE_NAME);
         	break;
         case PENDING_FLAGS:
-        	queryBuilder.setTables(PendingFlags.TABLE_NAME);
+        	queryBuilder.setTables(ListPendingFlags.TABLE_NAME);
         	break;
         case PEOPLE_BY_SPECIALTY:
-        	queryBuilder.setTables(PeopleBySpecialty.TABLE_NAME);
+        	queryBuilder.setTables(ListPeopleBySpecialty.TABLE_NAME);
         	break;
         case PERSON:
         	queryBuilder.setTables(Person.TABLE_NAME);
         	break;
         case PERSON_DETAIL:
-        	queryBuilder.setTables(PersonDetail.TABLE_NAME);
+        	queryBuilder.setTables(DetailPerson.TABLE_NAME);
         	break;
         case PERSON_ORGANIZATION:
         	queryBuilder.setTables(PersonOrganization.TABLE_NAME);
@@ -223,7 +223,7 @@ public class DatabaseContentProvider extends ContentProvider {
         	queryBuilder.setTables(Requests.TABLE_NAME);
         	break;
         case ROLE:
-        	queryBuilder.setTables(Role.TABLE_NAME);
+        	queryBuilder.setTables(ListRoles.TABLE_NAME);
         	break;
         case SEARCH_ALL:
         	queryBuilder.setTables(SearchAll.TABLE_NAME);
@@ -235,7 +235,7 @@ public class DatabaseContentProvider extends ContentProvider {
         	queryBuilder.setTables(SearchLinks.TABLE_NAME);
         	break;
         case SEARCH_LOCATION_BY_ORGANIZATION:
-        	queryBuilder.setTables(SearchLocationByOrganization.TABLE_NAME);
+        	queryBuilder.setTables(SearchLocationsByOrganization.TABLE_NAME);
         	break;
         case SEARCH_MAP:
         	queryBuilder.setTables(SearchMap.TABLE_NAME);
@@ -256,7 +256,7 @@ public class DatabaseContentProvider extends ContentProvider {
         	queryBuilder.setTables(SearchTerms.TABLE_NAME);
         	break;
         case SPECIALTY:
-        	queryBuilder.setTables(Specialty.TABLE_NAME);
+        	queryBuilder.setTables(ListSpecialties.TABLE_NAME);
         	break;
         default:
         	Log.w(LOG_TAG, "query() - Unknown Uri: " + uri.toString());
@@ -276,7 +276,7 @@ public class DatabaseContentProvider extends ContentProvider {
 
         switch (sUriMatcher.match(uri)) {
         case APPROVED_FLAGS:
-        	rowsAffected = sqlDB.delete(ApprovedFlags.TABLE_NAME, selection, selectionArgs);
+        	rowsAffected = sqlDB.delete(ListApprovedFlags.TABLE_NAME, selection, selectionArgs);
         	break;
         case EDITS:
         	rowsAffected = sqlDB.delete(Edits.TABLE_NAME, selection, selectionArgs);
@@ -285,37 +285,37 @@ public class DatabaseContentProvider extends ContentProvider {
         	rowsAffected = sqlDB.delete(Flag.TABLE_NAME, selection, selectionArgs);
         	break;
         case LAST_EDITED_BY_MEMBER:
-        	rowsAffected = sqlDB.delete(LastEditedByMember.TABLE_NAME, selection, selectionArgs);
+        	rowsAffected = sqlDB.delete(ListLastEditedByMember.TABLE_NAME, selection, selectionArgs);
         	break;
         case LINK:
-        	rowsAffected = sqlDB.delete(Link.TABLE_NAME, selection, selectionArgs);
+        	rowsAffected = sqlDB.delete(ListLinks.TABLE_NAME, selection, selectionArgs);
         	break;
         case LOCATION_BY_ORGANIZATION:
-        	rowsAffected = sqlDB.delete(LocationByOrganization.TABLE_NAME, selection, selectionArgs);
+        	rowsAffected = sqlDB.delete(ListLocationsByOrganization.TABLE_NAME, selection, selectionArgs);
         	break;
         case MAP_CACHE:
-        	rowsAffected = sqlDB.delete(MapCache.TABLE_NAME, selection, selectionArgs);
+        	rowsAffected = sqlDB.delete(ListMap.TABLE_NAME, selection, selectionArgs);
         	break;
         case MEMBER:
         	rowsAffected = sqlDB.delete(Member.TABLE_NAME, selection, selectionArgs);
         	break;
         case ORGANIZATION:
-        	rowsAffected = sqlDB.delete(Organization.TABLE_NAME, selection, selectionArgs);
+        	rowsAffected = sqlDB.delete(ListOrganizations.TABLE_NAME, selection, selectionArgs);
         	break;
         case ORGANIZATION_LOCATION:
-        	rowsAffected = sqlDB.delete(OrganizationLocation.TABLE_NAME, selection, selectionArgs);
+        	rowsAffected = sqlDB.delete(DetailLocation.TABLE_NAME, selection, selectionArgs);
         	break;
         case PENDING_FLAGS:
-        	rowsAffected = sqlDB.delete(PendingFlags.TABLE_NAME, selection, selectionArgs);
+        	rowsAffected = sqlDB.delete(ListPendingFlags.TABLE_NAME, selection, selectionArgs);
         	break;
         case PEOPLE_BY_SPECIALTY:
-        	rowsAffected = sqlDB.delete(PeopleBySpecialty.TABLE_NAME, selection, selectionArgs);
+        	rowsAffected = sqlDB.delete(ListPeopleBySpecialty.TABLE_NAME, selection, selectionArgs);
         	break;
         case PERSON:
         	rowsAffected = sqlDB.delete(Person.TABLE_NAME, selection, selectionArgs);
         	break;
         case PERSON_DETAIL:
-        	rowsAffected = sqlDB.delete(PersonDetail.TABLE_NAME, selection, selectionArgs);
+        	rowsAffected = sqlDB.delete(DetailPerson.TABLE_NAME, selection, selectionArgs);
         	break;
         case PERSON_ORGANIZATION:
         	rowsAffected = sqlDB.delete(PersonOrganization.TABLE_NAME, selection, selectionArgs);
@@ -330,7 +330,7 @@ public class DatabaseContentProvider extends ContentProvider {
         	rowsAffected = sqlDB.delete(Requests.TABLE_NAME, selection, selectionArgs);
         	break;
         case ROLE:
-        	rowsAffected = sqlDB.delete(Role.TABLE_NAME, selection, selectionArgs);
+        	rowsAffected = sqlDB.delete(ListRoles.TABLE_NAME, selection, selectionArgs);
         	break;
         case SEARCH_ALL:
         	rowsAffected = sqlDB.delete(SearchAll.TABLE_NAME, selection, selectionArgs);
@@ -342,7 +342,7 @@ public class DatabaseContentProvider extends ContentProvider {
         	rowsAffected = sqlDB.delete(SearchLinks.TABLE_NAME, selection, selectionArgs);
         	break;
         case SEARCH_LOCATION_BY_ORGANIZATION:
-        	rowsAffected = sqlDB.delete(SearchLocationByOrganization.TABLE_NAME, selection, selectionArgs);
+        	rowsAffected = sqlDB.delete(SearchLocationsByOrganization.TABLE_NAME, selection, selectionArgs);
         	break;
         case SEARCH_MAP:
         	rowsAffected = sqlDB.delete(SearchMap.TABLE_NAME, selection, selectionArgs);
@@ -363,7 +363,7 @@ public class DatabaseContentProvider extends ContentProvider {
         	rowsAffected = sqlDB.delete(SearchTerms.TABLE_NAME, selection, selectionArgs);
         	break;
         case SPECIALTY:
-        	rowsAffected = sqlDB.delete(Specialty.TABLE_NAME, selection, selectionArgs);
+        	rowsAffected = sqlDB.delete(ListSpecialties.TABLE_NAME, selection, selectionArgs);
         	break;
         default:
         	Log.w(LOG_TAG, "delete() - Unknown Uri: " + uri.toString());
@@ -383,7 +383,7 @@ public class DatabaseContentProvider extends ContentProvider {
     	try {
 	    	switch (sUriMatcher.match(uri)) {
 	        case APPROVED_FLAGS:
-	        	newID = sqlDB.insertOrThrow(ApprovedFlags.TABLE_NAME, null, values);
+	        	newID = sqlDB.insertOrThrow(ListApprovedFlags.TABLE_NAME, null, values);
 	        	break;
 	        case EDITS:
 	        	newID = sqlDB.insertOrThrow(Edits.TABLE_NAME, null, values);
@@ -392,37 +392,37 @@ public class DatabaseContentProvider extends ContentProvider {
 	        	newID = sqlDB.insertOrThrow(Flag.TABLE_NAME, null, values);
 	        	break;
 	        case LAST_EDITED_BY_MEMBER:
-	        	newID = sqlDB.insertOrThrow(LastEditedByMember.TABLE_NAME, null, values);
+	        	newID = sqlDB.insertOrThrow(ListLastEditedByMember.TABLE_NAME, null, values);
 	        	break;
 	        case LINK:
-	        	newID = sqlDB.insertOrThrow(Link.TABLE_NAME, null, values);
+	        	newID = sqlDB.insertOrThrow(ListLinks.TABLE_NAME, null, values);
 	        	break;
 	        case LOCATION_BY_ORGANIZATION:
-	        	newID = sqlDB.insertOrThrow(LocationByOrganization.TABLE_NAME, null, values);
+	        	newID = sqlDB.insertOrThrow(ListLocationsByOrganization.TABLE_NAME, null, values);
 	        	break;
 	        case MAP_CACHE:
-	        	newID = sqlDB.insertOrThrow(MapCache.TABLE_NAME, null, values);
+	        	newID = sqlDB.insertOrThrow(ListMap.TABLE_NAME, null, values);
 	        	break;
 	        case MEMBER:
 	        	newID = sqlDB.insertOrThrow(Member.TABLE_NAME, null, values);
 	        	break;
 	        case ORGANIZATION:
-	        	newID = sqlDB.insertOrThrow(Organization.TABLE_NAME, null, values);
+	        	newID = sqlDB.insertOrThrow(ListOrganizations.TABLE_NAME, null, values);
 	        	break;
 	        case ORGANIZATION_LOCATION:
-	        	newID = sqlDB.insertOrThrow(OrganizationLocation.TABLE_NAME, null, values);
+	        	newID = sqlDB.insertOrThrow(DetailLocation.TABLE_NAME, null, values);
 	        	break;
 	        case PENDING_FLAGS:
-	        	newID = sqlDB.insertOrThrow(PendingFlags.TABLE_NAME, null, values);
+	        	newID = sqlDB.insertOrThrow(ListPendingFlags.TABLE_NAME, null, values);
 	        	break;
 	        case PEOPLE_BY_SPECIALTY:
-	        	newID = sqlDB.insertOrThrow(PeopleBySpecialty.TABLE_NAME, null, values);
+	        	newID = sqlDB.insertOrThrow(ListPeopleBySpecialty.TABLE_NAME, null, values);
 	        	break;
 	        case PERSON:
 	        	newID = sqlDB.insertOrThrow(Person.TABLE_NAME, null, values);
 	        	break;
 	        case PERSON_DETAIL:
-	        	newID = sqlDB.insertOrThrow(PersonDetail.TABLE_NAME, null, values);
+	        	newID = sqlDB.insertOrThrow(DetailPerson.TABLE_NAME, null, values);
 	        	break;
 	        case PERSON_ORGANIZATION:
 	        	newID = sqlDB.insertOrThrow(PersonOrganization.TABLE_NAME, null, values);
@@ -437,7 +437,7 @@ public class DatabaseContentProvider extends ContentProvider {
 	        	newID = sqlDB.insertOrThrow(Requests.TABLE_NAME, null, values);
 	        	break;
 	        case ROLE:
-	        	newID = sqlDB.insertOrThrow(Role.TABLE_NAME, null, values);
+	        	newID = sqlDB.insertOrThrow(ListRoles.TABLE_NAME, null, values);
 	        	break;
 	        case SEARCH_ALL:
 	        	newID = sqlDB.insertOrThrow(SearchAll.TABLE_NAME, null, values);
@@ -449,7 +449,7 @@ public class DatabaseContentProvider extends ContentProvider {
 	        	newID = sqlDB.insertOrThrow(SearchLinks.TABLE_NAME, null, values);
 	        	break;
 	        case SEARCH_LOCATION_BY_ORGANIZATION:
-	        	newID = sqlDB.insertOrThrow(SearchLocationByOrganization.TABLE_NAME, null, values);
+	        	newID = sqlDB.insertOrThrow(SearchLocationsByOrganization.TABLE_NAME, null, values);
 	        	break;
 	        case SEARCH_MAP:
 	        	newID = sqlDB.insertOrThrow(SearchMap.TABLE_NAME, null, values);
@@ -470,7 +470,7 @@ public class DatabaseContentProvider extends ContentProvider {
 	        	newID = sqlDB.insertOrThrow(SearchTerms.TABLE_NAME, null, values);
 	        	break;
 	        case SPECIALTY:
-	        	newID = sqlDB.insertOrThrow(Specialty.TABLE_NAME, null, values);
+	        	newID = sqlDB.insertOrThrow(ListSpecialties.TABLE_NAME, null, values);
 	        	break;
 	        default:
 	        	Log.w(LOG_TAG, "insert() - Unknown Uri: " + uri.toString());
@@ -500,7 +500,7 @@ public class DatabaseContentProvider extends ContentProvider {
 
         switch (sUriMatcher.match(uri)) {
         case APPROVED_FLAGS:
-        	rowsAffected = sqlDB.update(ApprovedFlags.TABLE_NAME, values, selection, selectionArgs);
+        	rowsAffected = sqlDB.update(ListApprovedFlags.TABLE_NAME, values, selection, selectionArgs);
         	break;
         case EDITS:
         	rowsAffected = sqlDB.update(Edits.TABLE_NAME, values, selection, selectionArgs);
@@ -509,37 +509,37 @@ public class DatabaseContentProvider extends ContentProvider {
         	rowsAffected = sqlDB.update(Flag.TABLE_NAME, values, selection, selectionArgs);
         	break;
         case LAST_EDITED_BY_MEMBER:
-        	rowsAffected = sqlDB.update(LastEditedByMember.TABLE_NAME, values, selection, selectionArgs);
+        	rowsAffected = sqlDB.update(ListLastEditedByMember.TABLE_NAME, values, selection, selectionArgs);
         	break;
         case LINK:
-        	rowsAffected = sqlDB.update(Link.TABLE_NAME, values, selection, selectionArgs);
+        	rowsAffected = sqlDB.update(ListLinks.TABLE_NAME, values, selection, selectionArgs);
         	break;
         case LOCATION_BY_ORGANIZATION:
-        	rowsAffected = sqlDB.update(LocationByOrganization.TABLE_NAME, values, selection, selectionArgs);
+        	rowsAffected = sqlDB.update(ListLocationsByOrganization.TABLE_NAME, values, selection, selectionArgs);
         	break;
         case MAP_CACHE:
-        	rowsAffected = sqlDB.update(MapCache.TABLE_NAME, values, selection, selectionArgs);
+        	rowsAffected = sqlDB.update(ListMap.TABLE_NAME, values, selection, selectionArgs);
         	break;
         case MEMBER:
         	rowsAffected = sqlDB.update(Member.TABLE_NAME, values, selection, selectionArgs);
         	break;
         case ORGANIZATION:
-        	rowsAffected = sqlDB.update(Organization.TABLE_NAME, values, selection, selectionArgs);
+        	rowsAffected = sqlDB.update(ListOrganizations.TABLE_NAME, values, selection, selectionArgs);
         	break;
         case ORGANIZATION_LOCATION:
-        	rowsAffected = sqlDB.update(OrganizationLocation.TABLE_NAME, values, selection, selectionArgs);
+        	rowsAffected = sqlDB.update(DetailLocation.TABLE_NAME, values, selection, selectionArgs);
         	break;
         case PENDING_FLAGS:
-        	rowsAffected = sqlDB.update(PendingFlags.TABLE_NAME, values, selection, selectionArgs);
+        	rowsAffected = sqlDB.update(ListPendingFlags.TABLE_NAME, values, selection, selectionArgs);
         	break;
         case PEOPLE_BY_SPECIALTY:
-        	rowsAffected = sqlDB.update(PeopleBySpecialty.TABLE_NAME, values, selection, selectionArgs);
+        	rowsAffected = sqlDB.update(ListPeopleBySpecialty.TABLE_NAME, values, selection, selectionArgs);
         	break;
         case PERSON:
         	rowsAffected = sqlDB.update(Person.TABLE_NAME, values, selection, selectionArgs);
         	break;
         case PERSON_DETAIL:
-        	rowsAffected = sqlDB.update(PersonDetail.TABLE_NAME, values, selection, selectionArgs);
+        	rowsAffected = sqlDB.update(DetailPerson.TABLE_NAME, values, selection, selectionArgs);
         	break;
         case PERSON_ORGANIZATION:
         	rowsAffected = sqlDB.update(PersonOrganization.TABLE_NAME, values, selection, selectionArgs);
@@ -554,7 +554,7 @@ public class DatabaseContentProvider extends ContentProvider {
         	rowsAffected = sqlDB.update(Requests.TABLE_NAME, values, selection, selectionArgs);
         	break;
         case ROLE:
-        	rowsAffected = sqlDB.update(Role.TABLE_NAME, values, selection, selectionArgs);
+        	rowsAffected = sqlDB.update(ListRoles.TABLE_NAME, values, selection, selectionArgs);
         	break;
         case SEARCH_ALL:
         	rowsAffected = sqlDB.update(SearchAll.TABLE_NAME, values, selection, selectionArgs);
@@ -566,7 +566,7 @@ public class DatabaseContentProvider extends ContentProvider {
         	rowsAffected = sqlDB.update(SearchLinks.TABLE_NAME, values, selection, selectionArgs);
         	break;
         case SEARCH_LOCATION_BY_ORGANIZATION:
-        	rowsAffected = sqlDB.update(SearchLocationByOrganization.TABLE_NAME, values, selection, selectionArgs);
+        	rowsAffected = sqlDB.update(SearchLocationsByOrganization.TABLE_NAME, values, selection, selectionArgs);
         	break;
         case SEARCH_MAP:
         	rowsAffected = sqlDB.update(SearchMap.TABLE_NAME, values, selection, selectionArgs);
@@ -587,7 +587,7 @@ public class DatabaseContentProvider extends ContentProvider {
         	rowsAffected = sqlDB.update(SearchTerms.TABLE_NAME, values, selection, selectionArgs);
         	break;
         case SPECIALTY:
-        	rowsAffected = sqlDB.update(Specialty.TABLE_NAME, values, selection, selectionArgs);
+        	rowsAffected = sqlDB.update(ListSpecialties.TABLE_NAME, values, selection, selectionArgs);
         	break;
         default:
         	Log.w(LOG_TAG, "update() - Unknown Uri: " + uri.toString());

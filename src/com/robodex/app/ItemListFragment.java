@@ -17,11 +17,11 @@ import android.widget.ListView;
 
 import com.actionbarsherlock.app.SherlockListFragment;
 import com.robodex.R;
-import com.robodex.data.DatabaseContract.Specialty;
+import com.robodex.data.DatabaseContract.ListSpecialties;
 import com.robodex.data.DummyData;
 import com.robodex.data.DummyData.DummyLink;
 import com.robodex.data.DummyData.DummyLocation;
-import com.robodex.request.SpecialtyList;
+import com.robodex.request.ListSpecialties;
 
 public class ItemListFragment extends SherlockListFragment implements
 		LoaderManager.LoaderCallbacks<Cursor> {
@@ -68,7 +68,7 @@ public class ItemListFragment extends SherlockListFragment implements
 //            items = DummyData.SPECIALTIES;
         	getLoaderManager().initLoader(SPECIALTY_LIST_LOADER, null, this);
 
-        	String[] uiBindFrom = { Specialty.COL_SPECIALTY};
+        	String[] uiBindFrom = { ListSpecialties.COL_SPECIALTY};
             int[] uiBindTo = { android.R.id.text1 };
 
         	mCursorAdapter = new SimpleCursorAdapter(
@@ -76,7 +76,7 @@ public class ItemListFragment extends SherlockListFragment implements
                     null, uiBindFrom, uiBindTo,
                     CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
 
-            SpecialtyList specialties = new SpecialtyList(1);
+            ListSpecialties specialties = new ListSpecialties(1);
             specialties.execute();
 
             setListAdapter(mCursorAdapter);
@@ -173,9 +173,9 @@ public class ItemListFragment extends SherlockListFragment implements
 
     	switch (id) {
     	case SPECIALTY_LIST_LOADER:
-    		String[] projection = { Specialty.COL_ID, Specialty.COL_SPECIALTY };
+    		String[] projection = { ListSpecialties.COL_ID, ListSpecialties.COL_SPECIALTY };
             cursorLoader = new CursorLoader(getActivity(),
-            		Specialty.CONTENT_URI, projection, null, null, null);
+            		ListSpecialties.CONTENT_URI, projection, null, null, null);
     		break;
 		default:
 

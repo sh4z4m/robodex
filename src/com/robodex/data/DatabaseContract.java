@@ -11,16 +11,10 @@ public final class DatabaseContract {
     public static final String  DATABASE_NAME           = "robodex.db";
     public static final int     DATABASE_VERSION        = 1;
 
-    /**
-     * All classes that represent database tables which cache the results of a response extend this class.
-     * Its more for a sanity check at this point.
-     */
-    public static abstract class ResponseCache {}
-
 
     /** List of organizations */
-    public static final class Organization extends ResponseCache {
-        private Organization() { /* Not instantiable */ }
+    public static final class ListOrganizations {
+        private ListOrganizations() { /* Not instantiable */ }
 
         public static final String 	TABLE_NAME 			= "organization";
         public static final Uri 	CONTENT_URI 		= Uri.parse("content://" + AUTHORITY + "/" + TABLE_NAME);
@@ -44,8 +38,8 @@ public final class DatabaseContract {
     }
 
     /** Details of a location */
-    public static final class OrganizationLocation extends ResponseCache {
-        private OrganizationLocation() { /* Not instantiable */ }
+    public static final class DetailLocation {
+        private DetailLocation() { /* Not instantiable */ }
 
         public static final String 	TABLE_NAME 			= "organization_location";
         public static final Uri 	CONTENT_URI 		= Uri.parse("content://" + AUTHORITY + "/" + TABLE_NAME);
@@ -138,45 +132,45 @@ public final class DatabaseContract {
 //                + ");";
 //    }
 //
-//    public static final class Link {
-//        private Link() { /* Not instantiable */ }
-//
-//        public static final String 	TABLE_NAME 			= "link";
-//        public static final Uri 	CONTENT_URI 		= Uri.parse("content://" + AUTHORITY + "/" + TABLE_NAME);
-//
-//        public static final String 	CONTENT_TYPE 		= ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + TABLE_NAME;
-//        public static final String 	CONTENT_ITEM_TYPE	= ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + TABLE_NAME;
-//
-//        public static final String 	COL_ID 				= BaseColumns._ID;
-//        public static final String 	COL_LINK_ID			= "link_id";
-//        public static final String 	COL_ROLE_ID			= "role_id";
-//        public static final String 	COL_LINK			= "link";
-//        public static final String 	COL_TITLE			= "title";
-//        public static final String 	COL_TOP_LEVEL		= "top_level";
-//        public static final String 	COL_ORGANIZATION_ID	= "organization_id";
-//        public static final String 	COL_LOCATION_ID		= "location_id";
-//        public static final String 	COL_MEMBER_ID		= "member_id";
-//        public static final String 	COL_PERSON_ID		= "person_id";
-//        public static final String 	COL_SPECIALTY_ID	= "specialty_id";
-//        public static final String 	COL_REMOVE 			= "remove";
-//        public static final String 	COL_REMOVE_APPROVED = "remove_approved";
-//
-//        static final String	CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " ("
-//                + COL_ID 					+ " integer PRIMARY KEY AUTOINCREMENT, "
-//                + COL_LINK_ID 				+ " integer UNIQUE NOT NULL, "
-//                + COL_ROLE_ID 				+ " integer, "
-//                + COL_LINK 					+ " text, "
-//                + COL_TITLE 				+ " text, "
-//                + COL_TOP_LEVEL 			+ " integer, "
-//                + COL_ORGANIZATION_ID 		+ " integer, "
-//                + COL_LOCATION_ID 			+ " integer, "
-//                + COL_MEMBER_ID 			+ " integer, "
-//                + COL_PERSON_ID				+ " integer, "
-//                + COL_SPECIALTY_ID 			+ " integer, "
-//                + COL_REMOVE 				+ " integer, "
-//                + COL_REMOVE_APPROVED 		+ " integer"
-//                + ");";
-//    }
+    public static final class ListLinks {
+        private ListLinks() { /* Not instantiable */ }
+
+        public static final String 	TABLE_NAME 			= "link";
+        public static final Uri 	CONTENT_URI 		= Uri.parse("content://" + AUTHORITY + "/" + TABLE_NAME);
+
+        public static final String 	CONTENT_TYPE 		= ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + TABLE_NAME;
+        public static final String 	CONTENT_ITEM_TYPE	= ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + TABLE_NAME;
+
+        public static final String 	COL_ID 				= BaseColumns._ID;
+        public static final String 	COL_LINK_ID			= "link_id";
+        public static final String 	COL_ROLE_ID			= "role_id";
+        public static final String 	COL_LINK			= "link";
+        public static final String 	COL_TITLE			= "title";
+        public static final String 	COL_TOP_LEVEL		= "top_level";
+        public static final String 	COL_ORGANIZATION_ID	= "organization_id";
+        public static final String 	COL_LOCATION_ID		= "location_id";
+        public static final String 	COL_MEMBER_ID		= "member_id";
+        public static final String 	COL_PERSON_ID		= "person_id";
+        public static final String 	COL_SPECIALTY_ID	= "specialty_id";
+        public static final String 	COL_REMOVE 			= "remove";
+        public static final String 	COL_REMOVE_APPROVED = "remove_approved";
+
+        static final String	CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " ("
+                + COL_ID 					+ " integer PRIMARY KEY AUTOINCREMENT, "
+                + COL_LINK_ID 				+ " integer UNIQUE NOT NULL, "
+                + COL_ROLE_ID 				+ " integer, "
+                + COL_LINK 					+ " text, "
+                + COL_TITLE 				+ " text, "
+                + COL_TOP_LEVEL 			+ " integer, "
+                + COL_ORGANIZATION_ID 		+ " integer, "
+                + COL_LOCATION_ID 			+ " integer, "
+                + COL_MEMBER_ID 			+ " integer, "
+                + COL_PERSON_ID				+ " integer, "
+                + COL_SPECIALTY_ID 			+ " integer, "
+                + COL_REMOVE 				+ " integer, "
+                + COL_REMOVE_APPROVED 		+ " integer"
+                + ");";
+    }
 //
 //    public static final class Member {
 //        private Member() { /* Not instantiable */ }
@@ -319,8 +313,8 @@ public final class DatabaseContract {
 //    }
 
     /** List roles */
-    public static final class Role extends ResponseCache {
-        private Role() { /* Not instantiable */ }
+    public static final class ListRoles {
+        private ListRoles() { /* Not instantiable */ }
 
         public static final String 	TABLE_NAME 			= "role";
         public static final Uri 	CONTENT_URI 		= Uri.parse("content://" + AUTHORITY + "/" + TABLE_NAME);
@@ -354,8 +348,8 @@ public final class DatabaseContract {
     }
 
     /** List specialties */
-    public static final class Specialty extends ResponseCache {
-        private Specialty() { /* Not instantiable */ }
+    public static final class ListSpecialties {
+        private ListSpecialties() { /* Not instantiable */ }
 
         public static final String 	TABLE_NAME 			= "specialty";
         public static final Uri 	CONTENT_URI 		= Uri.parse("content://" + AUTHORITY + "/" + TABLE_NAME);
@@ -378,80 +372,77 @@ public final class DatabaseContract {
                 + ");";
     }
 
-    /*
-     * TODO Replace with each individual create/edit request
-     */
 
-    public static final class Edits {
-        private Edits() { /* Not instantiable */ }
-
-        public static final String 	TABLE_NAME 			= "edits";
-        public static final Uri 	CONTENT_URI 		= Uri.parse("content://" + AUTHORITY + "/" + TABLE_NAME);
-
-        public static final String 	CONTENT_TYPE 		= ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + TABLE_NAME;
-        public static final String 	CONTENT_ITEM_TYPE	= ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + TABLE_NAME;
-
-        public static final String 	COL_ID 				= BaseColumns._ID;
-        public static final String 	COL_EDIT_ID 		= "edit_id";			// Can be the id of the first row in this set of edits
-        public static final String 	COL_EDIT_TIME 		= "edit_time";
-        public static final String 	COL_TABLE_NAME		= "table_name";
-        public static final String 	COL_ROW_ID			= "row_id";
-        public static final String 	COL_FIELD_NAME		= "field_name";
-        public static final String 	COL_OLD_VALUE 		= "old_value";
-        public static final String 	COL_NEW_VALUE 		= "new_value";
-        public static final String 	COL_RESULT 			= "result";
-        public static final String 	COL_RESULT_TIME 	= "result_time";
-
-        public static final int 	RESULT_UNKNOWN		= 0;
-        public static final int 	RESULT_PENDING		= 1;
-        public static final int 	RESULT_ACCEPTED		= 2;
-        public static final int 	RESULT_REJECTED		= 3;
-
-        static final String	CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " ("
-                + COL_ID 					+ " integer PRIMARY KEY AUTOINCREMENT, "
-                + COL_EDIT_ID 				+ " integer NOT NULL, "
-                + COL_EDIT_TIME 			+ " text NOT NULL, "
-                + COL_TABLE_NAME 			+ " text NOT NULL, "
-                + COL_ROW_ID 				+ " integer NOT NULL, "
-                + COL_FIELD_NAME 			+ " text NOT NULL, "
-                + COL_OLD_VALUE 			+ " text NOT NULL, "
-                + COL_NEW_VALUE 			+ " text, "
-                + COL_RESULT 				+ " integer, "
-                + COL_RESULT_TIME 			+ " text"
-                + ");";
-    }
-
-    /** Results of all create and/or edit requests go here */
-    public static final class EditResult extends ResponseCache {
-        private EditResult() { /* Not instantiable */ }
-
-        public static final String 	TABLE_NAME 			= "edit_result";
-        public static final Uri 	CONTENT_URI 		= Uri.parse("content://" + AUTHORITY + "/" + TABLE_NAME);
-
-        public static final String 	CONTENT_TYPE 		= ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + TABLE_NAME;
-        public static final String 	CONTENT_ITEM_TYPE	= ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + TABLE_NAME;
-
-        public static final String 	COL_ID 				= BaseColumns._ID;
-        public static final String 	COL_EDIT_ID 		= "edit_id";
-        public static final String 	COL_RESULT 			= "result";
-        public static final String 	COL_RESULT_TIME 	= "result_time";
-
-        public static final int 	RESULT_UNKNOWN		= 0;
-        public static final int 	RESULT_PENDING		= 1;
-        public static final int 	RESULT_ACCEPTED		= 2;
-        public static final int 	RESULT_REJECTED		= 3;
-
-        static final String	CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " ("
-                + COL_ID 					+ " integer PRIMARY KEY AUTOINCREMENT, "
-                + COL_EDIT_ID 				+ " integer NOT NULL, "
-                + COL_RESULT 				+ " integer, "
-                + COL_RESULT_TIME 			+ " text"
-                + ");";
-    }
+//    public static final class Edits {
+//        private Edits() { /* Not instantiable */ }
+//
+//        public static final String 	TABLE_NAME 			= "edits";
+//        public static final Uri 	CONTENT_URI 		= Uri.parse("content://" + AUTHORITY + "/" + TABLE_NAME);
+//
+//        public static final String 	CONTENT_TYPE 		= ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + TABLE_NAME;
+//        public static final String 	CONTENT_ITEM_TYPE	= ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + TABLE_NAME;
+//
+//        public static final String 	COL_ID 				= BaseColumns._ID;
+//        public static final String 	COL_EDIT_ID 		= "edit_id";			// Can be the id of the first row in this set of edits
+//        public static final String 	COL_EDIT_TIME 		= "edit_time";
+//        public static final String 	COL_TABLE_NAME		= "table_name";
+//        public static final String 	COL_ROW_ID			= "row_id";
+//        public static final String 	COL_FIELD_NAME		= "field_name";
+//        public static final String 	COL_OLD_VALUE 		= "old_value";
+//        public static final String 	COL_NEW_VALUE 		= "new_value";
+//        public static final String 	COL_RESULT 			= "result";
+//        public static final String 	COL_RESULT_TIME 	= "result_time";
+//
+//        public static final int 	RESULT_UNKNOWN		= 0;
+//        public static final int 	RESULT_PENDING		= 1;
+//        public static final int 	RESULT_ACCEPTED		= 2;
+//        public static final int 	RESULT_REJECTED		= 3;
+//
+//        static final String	CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " ("
+//                + COL_ID 					+ " integer PRIMARY KEY AUTOINCREMENT, "
+//                + COL_EDIT_ID 				+ " integer NOT NULL, "
+//                + COL_EDIT_TIME 			+ " text NOT NULL, "
+//                + COL_TABLE_NAME 			+ " text NOT NULL, "
+//                + COL_ROW_ID 				+ " integer NOT NULL, "
+//                + COL_FIELD_NAME 			+ " text NOT NULL, "
+//                + COL_OLD_VALUE 			+ " text NOT NULL, "
+//                + COL_NEW_VALUE 			+ " text, "
+//                + COL_RESULT 				+ " integer, "
+//                + COL_RESULT_TIME 			+ " text"
+//                + ");";
+//    }
+//
+//    /** Results of all create and/or edit requests go here */
+//    public static final class EditResult {
+//        private EditResult() { /* Not instantiable */ }
+//
+//        public static final String 	TABLE_NAME 			= "edit_result";
+//        public static final Uri 	CONTENT_URI 		= Uri.parse("content://" + AUTHORITY + "/" + TABLE_NAME);
+//
+//        public static final String 	CONTENT_TYPE 		= ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + TABLE_NAME;
+//        public static final String 	CONTENT_ITEM_TYPE	= ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + TABLE_NAME;
+//
+//        public static final String 	COL_ID 				= BaseColumns._ID;
+//        public static final String 	COL_EDIT_ID 		= "edit_id";
+//        public static final String 	COL_RESULT 			= "result";
+//        public static final String 	COL_RESULT_TIME 	= "result_time";
+//
+//        public static final int 	RESULT_UNKNOWN		= 0;
+//        public static final int 	RESULT_PENDING		= 1;
+//        public static final int 	RESULT_ACCEPTED		= 2;
+//        public static final int 	RESULT_REJECTED		= 3;
+//
+//        static final String	CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " ("
+//                + COL_ID 					+ " integer PRIMARY KEY AUTOINCREMENT, "
+//                + COL_EDIT_ID 				+ " integer NOT NULL, "
+//                + COL_RESULT 				+ " integer, "
+//                + COL_RESULT_TIME 			+ " text"
+//                + ");";
+//    }
 
     /** List coordinates uses this */
-    public static final class MapCache extends ResponseCache {
-        private MapCache() { /* Not instantiable */ }
+    public static final class ListMap {
+        private ListMap() { /* Not instantiable */ }
 
         public static final String 	TABLE_NAME 			= "map_cache";
         public static final Uri 	CONTENT_URI 		= Uri.parse("content://" + AUTHORITY + "/" + TABLE_NAME);
@@ -526,8 +517,8 @@ public final class DatabaseContract {
 
 
     /** Listing people with a specific specialty */
-    public static final class PeopleBySpecialty extends ResponseCache {
-        private PeopleBySpecialty() { /* Not instantiable */ }
+    public static final class ListPeopleBySpecialty {
+        private ListPeopleBySpecialty() { /* Not instantiable */ }
 
         public static final String 	TABLE_NAME 			= "people_by_specialty";
         public static final Uri 	CONTENT_URI 		= Uri.parse("content://" + AUTHORITY + "/" + TABLE_NAME);
@@ -558,8 +549,8 @@ public final class DatabaseContract {
     }
 
     /** List locations of a specific organization */
-    public static final class LocationByOrganization extends ResponseCache {
-        private LocationByOrganization() { /* Not instantiable */ }
+    public static final class ListLocationsByOrganization {
+        private ListLocationsByOrganization() { /* Not instantiable */ }
 
         public static final String 	TABLE_NAME 			= "location_by_organization";
         public static final Uri 	CONTENT_URI 		= Uri.parse("content://" + AUTHORITY + "/" + TABLE_NAME);
@@ -590,8 +581,8 @@ public final class DatabaseContract {
 
 
     /** Combined person/member details */
-    public static final class PersonDetail extends ResponseCache {
-        private PersonDetail() { /* Not instantiable */ }
+    public static final class DetailPerson {
+        private DetailPerson() { /* Not instantiable */ }
 
         public static final String 	TABLE_NAME 			= "person_detail";
         public static final Uri 	CONTENT_URI 		= Uri.parse("content://" + AUTHORITY + "/" + TABLE_NAME);
@@ -682,8 +673,8 @@ public final class DatabaseContract {
     }
 
     /** List of items where the user was the last to edit/update them */
-    public static final class LastEditedByMember extends ResponseCache {
-        private LastEditedByMember() { /* Not instantiable */ }
+    public static final class ListLastEditedByMember {
+        private ListLastEditedByMember() { /* Not instantiable */ }
 
         public static final String 	TABLE_NAME 			= "last_edited_by_member";
         public static final Uri 	CONTENT_URI 		= Uri.parse("content://" + AUTHORITY + "/" + TABLE_NAME);
@@ -721,8 +712,8 @@ public final class DatabaseContract {
     }
 
     /** List pending flags */
-    public static final class PendingFlags extends ResponseCache {
-        private PendingFlags() { /* Not instantiable */ }
+    public static final class ListPendingFlags {
+        private ListPendingFlags() { /* Not instantiable */ }
 
         public static final String 	TABLE_NAME 			= "pending_flags";
         public static final Uri 	CONTENT_URI 		= Uri.parse("content://" + AUTHORITY + "/" + TABLE_NAME);
@@ -758,8 +749,8 @@ public final class DatabaseContract {
     }
 
     /** List flags that have been approved */
-    public static final class ApprovedFlags extends ResponseCache {
-        private ApprovedFlags() { /* Not instantiable */ }
+    public static final class ListApprovedFlags {
+        private ListApprovedFlags() { /* Not instantiable */ }
 
         public static final String 	TABLE_NAME 			= "approved_flags";
         public static final Uri 	CONTENT_URI 		= Uri.parse("content://" + AUTHORITY + "/" + TABLE_NAME);
@@ -804,7 +795,7 @@ public final class DatabaseContract {
 
 
     /** Results of general search */
-    public static final class SearchAll extends ResponseCache {
+    public static final class SearchAll {
         private SearchAll() { /* Not instantiable */ }
 
         public static final String 	TABLE_NAME 			= "search_all";
@@ -864,7 +855,7 @@ public final class DatabaseContract {
     }
 
     /** Results of specialties search */
-    public static final class SearchSpecialties extends ResponseCache {
+    public static final class SearchSpecialties {
         private SearchSpecialties() { /* Not instantiable */ }
 
         public static final String 	TABLE_NAME 			= "search_specialties";
@@ -887,7 +878,7 @@ public final class DatabaseContract {
     }
 
     /** Results of organization search */
-    public static final class SearchOrganizations extends ResponseCache {
+    public static final class SearchOrganizations {
         private SearchOrganizations() { /* Not instantiable */ }
 
         public static final String 	TABLE_NAME 			= "search_organizations";
@@ -910,7 +901,7 @@ public final class DatabaseContract {
     }
 
     /** Results of link search */
-    public static final class SearchLinks extends ResponseCache {
+    public static final class SearchLinks {
         private SearchLinks() { /* Not instantiable */ }
 
         public static final String 	TABLE_NAME 			= "search_links";
@@ -935,7 +926,7 @@ public final class DatabaseContract {
     }
 
     /** Results of searching for people with a given specialty */
-    public static final class SearchPeopleBySpecialty extends ResponseCache {
+    public static final class SearchPeopleBySpecialty {
         private SearchPeopleBySpecialty() { /* Not instantiable */ }
 
         public static final String 	TABLE_NAME 			= "search_people_by_specialty";
@@ -967,8 +958,8 @@ public final class DatabaseContract {
     }
 
     /** Results of searching for a location of a given organization */
-    public static final class SearchLocationByOrganization extends ResponseCache {
-        private SearchLocationByOrganization() { /* Not instantiable */ }
+    public static final class SearchLocationsByOrganization {
+        private SearchLocationsByOrganization() { /* Not instantiable */ }
 
         public static final String 	TABLE_NAME 			= "search_location_by_organization";
         public static final Uri 	CONTENT_URI 		= Uri.parse("content://" + AUTHORITY + "/" + TABLE_NAME);
@@ -998,7 +989,7 @@ public final class DatabaseContract {
 
 
     /** Results of pending flags search */
-    public static final class SearchPendingFlags extends ResponseCache {
+    public static final class SearchPendingFlags {
         private SearchPendingFlags() { /* Not instantiable */ }
 
         public static final String 	TABLE_NAME 			= "search_pending_flags";
@@ -1038,7 +1029,7 @@ public final class DatabaseContract {
 
 
     /** Results of approved flags search */
-    public static final class SearchApprovedFlags extends ResponseCache {
+    public static final class SearchApprovedFlags {
         private SearchApprovedFlags() { /* Not instantiable */ }
 
         public static final String 	TABLE_NAME 			= "search_approved_flags";
@@ -1085,7 +1076,7 @@ public final class DatabaseContract {
     }
 
     /** Results of searching the map */
-    public static final class SearchMap extends ResponseCache {
+    public static final class SearchMap {
         private SearchMap() { /* Not instantiable */ }
 
         public static final String 	TABLE_NAME 			= "search_map";
@@ -1160,7 +1151,7 @@ public final class DatabaseContract {
     }
 
     /** The response of a checkin request */
-    public static final class CheckIn extends ResponseCache {
+    public static final class CheckIn {
         private CheckIn() { /* Not instantiable */ }
 
         public static final String 	TABLE_NAME 			= "check_in";
@@ -1179,7 +1170,7 @@ public final class DatabaseContract {
     }
 
     /** The response of a login request */
-    public static final class Login extends ResponseCache {
+    public static final class Login {
         private Login() { /* Not instantiable */ }
 
         public static final String 	TABLE_NAME 			= "login";
@@ -1201,22 +1192,264 @@ public final class DatabaseContract {
 
 
 
+    /** The response of a create flag request */
+    public static final class CreateFlag {
+        private CreateFlag() { /* Not instantiable */ }
+
+        public static final String 	TABLE_NAME 			= "create_flag";
+        public static final Uri 	CONTENT_URI 		= Uri.parse("content://" + AUTHORITY + "/" + TABLE_NAME);
+
+        public static final String 	CONTENT_TYPE 		= ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + TABLE_NAME;
+        public static final String 	CONTENT_ITEM_TYPE	= ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + TABLE_NAME;
+
+        public static final String 	COL_ID 				= BaseColumns._ID;
+        public static final String 	COL_FLAG_ID			= "flag_id";
+
+        static final String	CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " ("
+                + COL_ID 					+ " integer PRIMARY KEY AUTOINCREMENT, "
+                + COL_FLAG_ID 				+ " integer UNIQUE"
+                + ");";
+    }
 
 
+    /** The response of a create link request */
+    public static final class CreateLink {
+        private CreateLink() { /* Not instantiable */ }
+
+        public static final String 	TABLE_NAME 			= "create_link";
+        public static final Uri 	CONTENT_URI 		= Uri.parse("content://" + AUTHORITY + "/" + TABLE_NAME);
+
+        public static final String 	CONTENT_TYPE 		= ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + TABLE_NAME;
+        public static final String 	CONTENT_ITEM_TYPE	= ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + TABLE_NAME;
+
+        public static final String 	COL_ID 				= BaseColumns._ID;
+        public static final String 	COL_LINK_ID			= "link_id";
+
+        static final String	CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " ("
+                + COL_ID 					+ " integer PRIMARY KEY AUTOINCREMENT, "
+                + COL_LINK_ID 				+ " integer UNIQUE"
+                + ");";
+    }
 
 
+    /** The response of a create location request */
+    public static final class CreateLocation {
+        private CreateLocation() { /* Not instantiable */ }
+
+        public static final String 	TABLE_NAME 			= "create_location";
+        public static final Uri 	CONTENT_URI 		= Uri.parse("content://" + AUTHORITY + "/" + TABLE_NAME);
+
+        public static final String 	CONTENT_TYPE 		= ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + TABLE_NAME;
+        public static final String 	CONTENT_ITEM_TYPE	= ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + TABLE_NAME;
+
+        public static final String 	COL_ID 				= BaseColumns._ID;
+        public static final String 	COL_LOCATION_ID			= "location_id";
+
+        static final String	CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " ("
+                + COL_ID 					+ " integer PRIMARY KEY AUTOINCREMENT, "
+                + COL_LOCATION_ID 				+ " integer UNIQUE"
+                + ");";
+    }
 
 
+    /** The response of a create organization request */
+    public static final class CreateOrganization {
+        private CreateOrganization() { /* Not instantiable */ }
+
+        public static final String 	TABLE_NAME 			= "create_organization";
+        public static final Uri 	CONTENT_URI 		= Uri.parse("content://" + AUTHORITY + "/" + TABLE_NAME);
+
+        public static final String 	CONTENT_TYPE 		= ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + TABLE_NAME;
+        public static final String 	CONTENT_ITEM_TYPE	= ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + TABLE_NAME;
+
+        public static final String 	COL_ID 				= BaseColumns._ID;
+        public static final String 	COL_ORGANIZATION_ID			= "organization_id";
+
+        static final String	CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " ("
+                + COL_ID 					+ " integer PRIMARY KEY AUTOINCREMENT, "
+                + COL_ORGANIZATION_ID 				+ " integer UNIQUE"
+                + ");";
+    }
 
 
+    /** The response of a create person request */
+    public static final class CreatePerson {
+        private CreatePerson() { /* Not instantiable */ }
+
+        public static final String 	TABLE_NAME 			= "create_person";
+        public static final Uri 	CONTENT_URI 		= Uri.parse("content://" + AUTHORITY + "/" + TABLE_NAME);
+
+        public static final String 	CONTENT_TYPE 		= ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + TABLE_NAME;
+        public static final String 	CONTENT_ITEM_TYPE	= ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + TABLE_NAME;
+
+        public static final String 	COL_ID 				= BaseColumns._ID;
+        public static final String 	COL_PERSON_ID		= "person_id";
+
+        static final String	CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " ("
+                + COL_ID 					+ " integer PRIMARY KEY AUTOINCREMENT, "
+                + COL_PERSON_ID 				+ " integer UNIQUE"
+                + ");";
+    }
 
 
+    /** The response of a create specialty request */
+    public static final class CreateSpecialty {
+        private CreateSpecialty() { /* Not instantiable */ }
+
+        public static final String 	TABLE_NAME 			= "create_specialty";
+        public static final Uri 	CONTENT_URI 		= Uri.parse("content://" + AUTHORITY + "/" + TABLE_NAME);
+
+        public static final String 	CONTENT_TYPE 		= ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + TABLE_NAME;
+        public static final String 	CONTENT_ITEM_TYPE	= ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + TABLE_NAME;
+
+        public static final String 	COL_ID 				= BaseColumns._ID;
+        public static final String 	COL_SPECIALTY_ID		= "specialty_id";
+
+        static final String	CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " ("
+                + COL_ID 					+ " integer PRIMARY KEY AUTOINCREMENT, "
+                + COL_SPECIALTY_ID 				+ " integer UNIQUE"
+                + ");";
+    }
 
 
+    /** The response of an edit flag request */
+    public static final class EditFlag {
+        private EditFlag() { /* Not instantiable */ }
+
+        public static final String 	TABLE_NAME 			= "edit_flag";
+        public static final Uri 	CONTENT_URI 		= Uri.parse("content://" + AUTHORITY + "/" + TABLE_NAME);
+
+        public static final String 	CONTENT_TYPE 		= ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + TABLE_NAME;
+        public static final String 	CONTENT_ITEM_TYPE	= ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + TABLE_NAME;
+
+        public static final String 	COL_ID 				= BaseColumns._ID;
+        public static final String 	COL_FLAG_ID		= "flag_id";
+
+        static final String	CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " ("
+                + COL_ID 					+ " integer PRIMARY KEY AUTOINCREMENT, "
+                + COL_FLAG_ID 				+ " integer UNIQUE"
+                + ");";
+    }
 
 
+    /** The response of an edit link request */
+    public static final class EditLink {
+        private EditLink() { /* Not instantiable */ }
+
+        public static final String 	TABLE_NAME 			= "edit_link";
+        public static final Uri 	CONTENT_URI 		= Uri.parse("content://" + AUTHORITY + "/" + TABLE_NAME);
+
+        public static final String 	CONTENT_TYPE 		= ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + TABLE_NAME;
+        public static final String 	CONTENT_ITEM_TYPE	= ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + TABLE_NAME;
+
+        public static final String 	COL_ID 				= BaseColumns._ID;
+        public static final String 	COL_LINK_ID		= "link_id";
+
+        static final String	CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " ("
+                + COL_ID 					+ " integer PRIMARY KEY AUTOINCREMENT, "
+                + COL_LINK_ID 				+ " integer UNIQUE"
+                + ");";
+    }
 
 
+    /** The response of an edit location request */
+    public static final class EditLocation {
+        private EditLocation() { /* Not instantiable */ }
+
+        public static final String 	TABLE_NAME 			= "edit_location";
+        public static final Uri 	CONTENT_URI 		= Uri.parse("content://" + AUTHORITY + "/" + TABLE_NAME);
+
+        public static final String 	CONTENT_TYPE 		= ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + TABLE_NAME;
+        public static final String 	CONTENT_ITEM_TYPE	= ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + TABLE_NAME;
+
+        public static final String 	COL_ID 				= BaseColumns._ID;
+        public static final String 	COL_LOCATION_ID		= "location_id";
+
+        static final String	CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " ("
+                + COL_ID 					+ " integer PRIMARY KEY AUTOINCREMENT, "
+                + COL_LOCATION_ID 				+ " integer UNIQUE"
+                + ");";
+    }
+
+
+    /** The response of an edit organization request */
+    public static final class EditOrganization {
+        private EditOrganization() { /* Not instantiable */ }
+
+        public static final String 	TABLE_NAME 			= "edit_organization";
+        public static final Uri 	CONTENT_URI 		= Uri.parse("content://" + AUTHORITY + "/" + TABLE_NAME);
+
+        public static final String 	CONTENT_TYPE 		= ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + TABLE_NAME;
+        public static final String 	CONTENT_ITEM_TYPE	= ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + TABLE_NAME;
+
+        public static final String 	COL_ID 				= BaseColumns._ID;
+        public static final String 	COL_ORGANIZATION_ID		= "organization_id";
+
+        static final String	CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " ("
+                + COL_ID 					+ " integer PRIMARY KEY AUTOINCREMENT, "
+                + COL_ORGANIZATION_ID 				+ " integer UNIQUE"
+                + ");";
+    }
+
+
+    /** The response of an edit person request */
+    public static final class EditPerson {
+        private EditPerson() { /* Not instantiable */ }
+
+        public static final String 	TABLE_NAME 			= "edit_person";
+        public static final Uri 	CONTENT_URI 		= Uri.parse("content://" + AUTHORITY + "/" + TABLE_NAME);
+
+        public static final String 	CONTENT_TYPE 		= ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + TABLE_NAME;
+        public static final String 	CONTENT_ITEM_TYPE	= ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + TABLE_NAME;
+
+        public static final String 	COL_ID 				= BaseColumns._ID;
+        public static final String 	COL_PERSON_ID		= "person_id";
+
+        static final String	CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " ("
+                + COL_ID 					+ " integer PRIMARY KEY AUTOINCREMENT, "
+                + COL_PERSON_ID 				+ " integer UNIQUE"
+                + ");";
+    }
+
+
+    /** The response of an edit role request */
+    public static final class EditRole {
+        private EditRole() { /* Not instantiable */ }
+
+        public static final String 	TABLE_NAME 			= "edit_role";
+        public static final Uri 	CONTENT_URI 		= Uri.parse("content://" + AUTHORITY + "/" + TABLE_NAME);
+
+        public static final String 	CONTENT_TYPE 		= ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + TABLE_NAME;
+        public static final String 	CONTENT_ITEM_TYPE	= ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + TABLE_NAME;
+
+        public static final String 	COL_ID 				= BaseColumns._ID;
+        public static final String 	COL_ROLE_ID		= "role_id";
+
+        static final String	CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " ("
+                + COL_ID 					+ " integer PRIMARY KEY AUTOINCREMENT, "
+                + COL_ROLE_ID 				+ " integer UNIQUE"
+                + ");";
+    }
+
+
+    /** The response of an edit specialty request */
+    public static final class EditSpecialty {
+        private EditSpecialty() { /* Not instantiable */ }
+
+        public static final String 	TABLE_NAME 			= "edit_specialty";
+        public static final Uri 	CONTENT_URI 		= Uri.parse("content://" + AUTHORITY + "/" + TABLE_NAME);
+
+        public static final String 	CONTENT_TYPE 		= ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + TABLE_NAME;
+        public static final String 	CONTENT_ITEM_TYPE	= ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + TABLE_NAME;
+
+        public static final String 	COL_ID 				= BaseColumns._ID;
+        public static final String 	COL_SPECIALTY_ID		= "specialty_id";
+
+        static final String	CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " ("
+                + COL_ID 					+ " integer PRIMARY KEY AUTOINCREMENT, "
+                + COL_SPECIALTY_ID 				+ " integer UNIQUE"
+                + ");";
+    }
 
 
 

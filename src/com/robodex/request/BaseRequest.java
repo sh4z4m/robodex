@@ -20,20 +20,15 @@ import android.content.ContentValues;
 import android.net.Uri;
 import android.util.Log;
 
-import com.robodex.HttpHelper;
-import com.robodex.HttpHelper.HttpPostTask;
-import com.robodex.HttpHelper.HttpPostTask.Callback;
 import com.robodex.Private;
 import com.robodex.Robodex;
 import com.robodex.data.DatabaseContract;
-import com.robodex.data.DatabaseContract.CheckIn;
-import com.robodex.data.DatabaseContract.ResponseCache;
+import com.robodex.request.HttpHelper.HttpPostTask;
+import com.robodex.request.HttpHelper.HttpPostTask.Callback;
 import com.robodex.request.ServerContract.RequestField;
 import com.robodex.request.ServerContract.RequestType;
 import com.robodex.request.ServerContract.ResponseCode;
 import com.robodex.request.ServerContract.ResponseField;
-
-// TODO EditRequest abstract subclass?
 
 public abstract class BaseRequest {
     private static final String LOG_TAG = BaseRequest.class.getSimpleName();
@@ -48,6 +43,8 @@ public abstract class BaseRequest {
 
     private int mResponseCode;
 
+    private String mRequestType;
+    private Uri mContentUri;
 
     protected BaseRequest() {
     	this(null);
@@ -64,6 +61,9 @@ public abstract class BaseRequest {
 
         	@Override
 			public void onPreExecuteBackgroundProcessing(HttpPostTask task) {
+        		// Set the request type and content uri
+        		getChildInfo();
+
 				if (callback != null) callback.onPreExecuteBackgroundProcessing(task);
 			}
 
@@ -97,7 +97,7 @@ public abstract class BaseRequest {
     	JSONObject json = new JSONObject();
 
     	try {
-	    	json.put(RequestField.REQUEST_TYPE, getRequestType());
+	    	json.put(RequestField.REQUEST_TYPE, mRequestType);
 	        json.put(RequestField.AUTH_KEY, 	getAuthKey());
 
 	        if (request != null) {
@@ -256,16 +256,13 @@ public abstract class BaseRequest {
 
         try {
         	Robodex.sAppContext.getContentResolver().insert(
-        		getContentUri(), dbRow);
+        		mContentUri, dbRow);
         }
         catch (Throwable t) {
         	Log.e(LOG_TAG, "Error saving row to database.", t);
         }
 
     }
-
-
-
 
 
 
@@ -279,20 +276,161 @@ public abstract class BaseRequest {
     }
 
 
-    /** The request being implemented as defined in the ServerContract.RequestType class. */
-	protected abstract String 			getRequestType();
+    private void getChildInfo() {
+    	if (getClass() == CheckIn.class) {
+    		mRequestType = RequestType.CHECK_IN;
+    		mContentUri = DatabaseContract.CheckIn.CONTENT_URI;
+    	}
+    	else if (getClass() == CreateFlag.class) {
+    		mRequestType = RequestType.CREATE_FLAG;
+    		mContentUri = DatabaseContract.CreateFlag.CONTENT_URI;
+    	}
+    	else if (getClass() == CreateLink.class) {
+    		mRequestType = RequestType.CREATE_LINK;
+    		mContentUri = DatabaseContract.CreateLink.CONTENT_URI;
+    	}
+    	else if (getClass() == CreateLocation.class) {
+    		mRequestType = RequestType.CREATE_LOCATION;
+    		mContentUri = DatabaseContract.CreateLocation.CONTENT_URI;
+    	}
+    	else if (getClass() == CreateOrganization.class) {
+    		mRequestType = RequestType.CREATE_ORGANIZATION;
+    		mContentUri = DatabaseContract.CreateOrganization.CONTENT_URI;
+    	}
+    	else if (getClass() == CreatePerson.class) {
+    		mRequestType = RequestType.CREATE_PERSON;
+    		mContentUri = DatabaseContract.CreatePerson.CONTENT_URI;
+    	}
+    	else if (getClass() == CreateSpecialty.class) {
+    		mRequestType = RequestType.CREATE_SPECIALTY;
+    		mContentUri = DatabaseContract.CreateSpecialty.CONTENT_URI;
+    	}
+    	else if (getClass() == DetailLocation.class) {
+    		mRequestType = RequestType.DETAIL_LOCATION;
+    		mContentUri = DatabaseContract.DetailLocation.CONTENT_URI;
+    	}
+    	else if (getClass() == DetailPerson.class) {
+    		mRequestType = RequestType.DETAIL_PERSON;
+    		mContentUri = DatabaseContract.DetailPerson.CONTENT_URI;
+    	}
+    	else if (getClass() == EditFlag.class) {
+    		mRequestType = RequestType.EDIT_FLAG;
+    		mContentUri = DatabaseContract.EditFlag.CONTENT_URI;
+    	}
+    	else if (getClass() == EditLink.class) {
+    		mRequestType = RequestType.EDIT_LINK;
+    		mContentUri = DatabaseContract.EditLink.CONTENT_URI;
+    	}
+    	else if (getClass() == EditLocation.class) {
+    		mRequestType = RequestType.EDIT_LOCATION;
+    		mContentUri = DatabaseContract.EditLocation.CONTENT_URI;
+    	}
+    	else if (getClass() == EditOrganization.class) {
+    		mRequestType = RequestType.EDIT_ORGANIZATION;
+    		mContentUri = DatabaseContract.EditOrganization.CONTENT_URI;
+    	}
+    	else if (getClass() == EditPerson.class) {
+    		mRequestType = RequestType.EDIT_PERSON;
+    		mContentUri = DatabaseContract.EditPerson.CONTENT_URI;
+    	}
+    	else if (getClass() == EditRole.class) {
+    		mRequestType = RequestType.EDIT_ROLE;
+    		mContentUri = DatabaseContract.EditRole.CONTENT_URI;
+    	}
+    	else if (getClass() == EditSpecialty.class) {
+    		mRequestType = RequestType.EDIT_SPECIALTY;
+    		mContentUri = DatabaseContract.EditSpecialty.CONTENT_URI;
+    	}
+    	else if (getClass() == ListApprovedFlags.class) {
+    		mRequestType = RequestType.LIST_APPROVED_FLAGS;
+    		mContentUri = DatabaseContract.ListApprovedFlags.CONTENT_URI;
+    	}
+    	else if (getClass() == ListLastEditedByMember.class) {
+    		mRequestType = RequestType.LIST_LAST_EDITED_BY_MEMBER;
+    		mContentUri = DatabaseContract.ListLastEditedByMember.CONTENT_URI;
+    	}
+    	else if (getClass() == ListLinks.class) {
+    		mRequestType = RequestType.LIST_LINKS;
+    		mContentUri = DatabaseContract.ListLinks.CONTENT_URI;
+    	}
+    	else if (getClass() == ListLocationsByOrganization.class) {
+    		mRequestType = RequestType.LIST_LOCATIONS_BY_ORGANIZATION;
+    		mContentUri = DatabaseContract.ListLocationsByOrganization.CONTENT_URI;
+    	}
+    	else if (getClass() == ListMap.class) {
+    		mRequestType = RequestType.LIST_MAP;
+    		mContentUri = DatabaseContract.ListMap.CONTENT_URI;
+    	}
+    	else if (getClass() == ListOrganizations.class) {
+    		mRequestType = RequestType.LIST_ORGANIZATIONS;
+    		mContentUri = DatabaseContract.ListOrganizations.CONTENT_URI;
+    	}
+    	else if (getClass() == ListPendingFlags.class) {
+    		mRequestType = RequestType.LIST_PENDING_FLAGS;
+    		mContentUri = DatabaseContract.ListPendingFlags.CONTENT_URI;
+    	}
+    	else if (getClass() == ListPeopleBySpecialty.class) {
+    		mRequestType = RequestType.LIST_PEOPLE_BY_SPECIALTY;
+    		mContentUri = DatabaseContract.ListPeopleBySpecialty.CONTENT_URI;
+    	}
+    	else if (getClass() == ListRoles.class) {
+    		mRequestType = RequestType.LIST_ROLES;
+    		mContentUri = DatabaseContract.ListRoles.CONTENT_URI;
+    	}
+    	else if (getClass() == ListSpecialties.class) {
+    		mRequestType = RequestType.LIST_SPECIALTIES;
+    		mContentUri = DatabaseContract.ListSpecialties.CONTENT_URI;
+    	}
+    	else if (getClass() == Login.class) {
+    		mRequestType = RequestType.LOGIN;
+    		mContentUri = DatabaseContract.Login.CONTENT_URI;
+    	}
+    	else if (getClass() == SearchAll.class) {
+    		mRequestType = RequestType.SEARCH_ALL;
+    		mContentUri = DatabaseContract.SearchAll.CONTENT_URI;
+    	}
+    	else if (getClass() == SearchApprovedFlags.class) {
+    		mRequestType = RequestType.SEARCH_APPROVED_FLAGS;
+    		mContentUri = DatabaseContract.SearchApprovedFlags.CONTENT_URI;
+    	}
+    	else if (getClass() == SearchLinks.class) {
+    		mRequestType = RequestType.SEARCH_LINKS;
+    		mContentUri = DatabaseContract.SearchLinks.CONTENT_URI;
+    	}
+    	else if (getClass() == SearchLocationsByOrganization.class) {
+    		mRequestType = RequestType.SEARCH_LOCATIONS_BY_ORGANIZATION;
+    		mContentUri = DatabaseContract.SearchLocationsByOrganization.CONTENT_URI;
+    	}
+    	else if (getClass() == SearchMap.class) {
+    		mRequestType = RequestType.SEARCH_MAP;
+    		mContentUri = DatabaseContract.SearchMap.CONTENT_URI;
+    	}
+    	else if (getClass() == SearchOrganizations.class) {
+    		mRequestType = RequestType.SEARCH_ORGANIZATIONS;
+    		mContentUri = DatabaseContract.SearchOrganizations.CONTENT_URI;
+    	}
+    	else if (getClass() == SearchPendingFlags.class) {
+    		mRequestType = RequestType.SEARCH_PENDING_FLAGS;
+    		mContentUri = DatabaseContract.SearchPendingFlags.CONTENT_URI;
+    	}
+    	else if (getClass() == SearchPeopleBySpecialty.class) {
+    		mRequestType = RequestType.SEARCH_PEOPLE_BY_SPECIALTY;
+    		mContentUri = DatabaseContract.SearchPeopleBySpecialty.CONTENT_URI;
+    	}
+    	else if (getClass() == SearchSpecialties.class) {
+    		mRequestType = RequestType.SEARCH_SPECIALTIES;
+    		mContentUri = DatabaseContract.SearchSpecialties.CONTENT_URI;
+    	}
+    	else {
+    		Log.wtf(LOG_TAG, "Unkown type of child class: " + getClass().getSimpleName());
+    	}
+    }
 
-	/** The CONTENT_URI for the database table related to the request */
-	protected abstract Uri 				getContentUri();
 
     /** Fields to send to server as defined by the ServerContract.RequestField class.*/
     protected abstract void				populateRequest(Map<String, String> request);
 
     /** Parse a row from the results so that it can be stored in the database */
     protected abstract ContentValues	processRowForInsertion(Map<String, String> rowFromResponse);
-
-
-
-
 
 }

@@ -1,4 +1,4 @@
-package com.robodex;
+package com.robodex.request;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -36,7 +36,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 
-public class HttpHelper {
+public final class HttpHelper {
     private static int CONNECTION_TIMEOUT = 10000;
     private static int SOCKET_TIMEOUT = 10000;
 
@@ -77,7 +77,7 @@ public class HttpHelper {
     }
 
 
-    public static class HttpPostTask extends AsyncTask<Void, Void, Void> {
+    public static final class HttpPostTask extends AsyncTask<Void, Void, Void> {
         public static interface Callback {
         	/** Called on UI thread */
         	void onPreExecuteForegroundProcessing(HttpPostTask task);
