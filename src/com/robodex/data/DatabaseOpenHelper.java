@@ -21,6 +21,7 @@ import com.robodex.data.DatabaseContract.EditPerson;
 import com.robodex.data.DatabaseContract.EditRole;
 import com.robodex.data.DatabaseContract.EditSpecialty;
 import com.robodex.data.DatabaseContract.ListLastEditedByMember;
+import com.robodex.data.DatabaseContract.ListLinks;
 import com.robodex.data.DatabaseContract.ListLocationsByOrganization;
 import com.robodex.data.DatabaseContract.Login;
 import com.robodex.data.DatabaseContract.ListMap;
@@ -111,6 +112,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + SearchPeopleBySpecialty.TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + SearchSpecialties.TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + ListSpecialties.TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + ListLinks.TABLE_NAME);
 
         db.execSQL("DROP TABLE IF EXISTS " + Recent.TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + Requests.TABLE_NAME);
@@ -153,6 +155,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
         db.execSQL(SearchPeopleBySpecialty.CREATE_TABLE);
         db.execSQL(SearchSpecialties.CREATE_TABLE);
         db.execSQL(ListSpecialties.CREATE_TABLE);
+        db.execSQL(ListLinks.CREATE_TABLE);
 
         db.execSQL(Recent.CREATE_TABLE);
         db.execSQL(Requests.CREATE_TABLE);

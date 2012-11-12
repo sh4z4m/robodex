@@ -1,7 +1,5 @@
 package com.robodex.data;
 
-import java.lang.reflect.Member;
-
 import android.content.ContentProvider;
 import android.content.ContentUris;
 import android.content.ContentValues;

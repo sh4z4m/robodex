@@ -17,10 +17,13 @@ import android.widget.ListView;
 
 import com.actionbarsherlock.app.SherlockListFragment;
 import com.robodex.R;
+import com.robodex.Robodex;
 import com.robodex.data.DatabaseContract;
 import com.robodex.data.DummyData;
 import com.robodex.data.DummyData.DummyLink;
 import com.robodex.data.DummyData.DummyLocation;
+import com.robodex.request.ListLinks;
+import com.robodex.request.ListOrganizations;
 import com.robodex.request.ListSpecialties;
 public class ItemListFragment extends SherlockListFragment implements
 		LoaderManager.LoaderCallbacks<Cursor> {
@@ -32,6 +35,9 @@ public class ItemListFragment extends SherlockListFragment implements
     private static final String DEFAULT_MAIN_ITEM_ID = "0";
 
     private static final int SPECIALTY_LIST_LOADER = 1;
+    private static final int ORGANIZATION_LIST_LOADER = 2;
+    private static final int LINK_LIST_LOADER = 3;
+
     private SimpleCursorAdapter mCursorAdapter;
 
     public interface Callbacks {
@@ -61,10 +67,14 @@ public class ItemListFragment extends SherlockListFragment implements
         int pos = Integer.valueOf(mMainItem);
         String[] mainItems = getResources().getStringArray(R.array.main_items);
 
+        getActivity().setTitle(mainItems[pos]);
+
         String [] items = {};
 
         if (mainItems[pos].equals(getResources().getString(R.string.specialties))) {
 //            items = DummyData.SPECIALTIES;
+
+
         	getLoaderManager().initLoader(SPECIALTY_LIST_LOADER, null, this);
 
         	String[] uiBindFrom = { DatabaseContract.ListSpecialties.COL_SPECIALTY};
@@ -75,18 +85,27 @@ public class ItemListFragment extends SherlockListFragment implements
                     null, uiBindFrom, uiBindTo,
                     CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
 
-            ListSpecialties specialties = new ListSpecialties();
-            specialties.execute();
+            ListSpecialties request = new ListSpecialties();
+            request.execute();
 
             setListAdapter(mCursorAdapter);
         }
         else if (mainItems[pos].equals(getResources().getString(R.string.organizations))) {
-            items = DummyData.AGENCIES;
-            setListAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, items));
-        }
-        else if (mainItems[pos].equals(getResources().getString(R.string.people))) {
-            items = DummyData.PEOPLE;
-            setListAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, items));
+//          items = DummyData.AGENCIES;
+	      	getLoaderManager().initLoader(ORGANIZATION_LIST_LOADER, null, this);
+
+	      	String[] uiBindFrom = { DatabaseContract.ListOrganizations.COL_ORGANIZATION};
+	          int[] uiBindTo = { android.R.id.text1 };
+
+	      	mCursorAdapter = new SimpleCursorAdapter(
+	                  getActivity().getApplicationContext(), android.R.layout.simple_list_item_1,
+	                  null, uiBindFrom, uiBindTo,
+	                  CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
+
+	      	ListOrganizations request = new ListOrganizations();
+	      	request.execute();
+
+	      	setListAdapter(mCursorAdapter);
         }
         else if (mainItems[pos].equals(getResources().getString(R.string.near_me))) {
             ArrayList<String> list = new ArrayList<String>();
@@ -97,13 +116,27 @@ public class ItemListFragment extends SherlockListFragment implements
             setListAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, items));
         }
         else if (mainItems[pos].equals(getResources().getString(R.string.links))) {
-            ArrayList<String> list = new ArrayList<String>();
-            for (DummyLink dl : DummyData.LINKS) {
-                list.add(dl.toString());
-            }
-            items = list.toArray(new String[list.size()]);
+//            ArrayList<String> list = new ArrayList<String>();
+//            for (DummyLink dl : DummyData.LINKS) {
+//                list.add(dl.toString());
+//            }
+//            items = list.toArray(new String[list.size()]);
+//
+//            setListAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, items));
+        	getLoaderManager().initLoader(LINK_LIST_LOADER, null, this);
 
-            setListAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, items));
+	      	String[] uiBindFrom = { DatabaseContract.ListLinks.COL_TITLE};
+	          int[] uiBindTo = { android.R.id.text1 };
+
+	      	mCursorAdapter = new SimpleCursorAdapter(
+	                  getActivity().getApplicationContext(), android.R.layout.simple_list_item_1,
+	                  null, uiBindFrom, uiBindTo,
+	                  CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
+
+	      	ListLinks request = new ListLinks();
+	      	request.execute();
+
+	      	setListAdapter(mCursorAdapter);
         }
 
 
@@ -176,6 +209,16 @@ public class ItemListFragment extends SherlockListFragment implements
             cursorLoader = new CursorLoader(getActivity(),
             		DatabaseContract.ListSpecialties.CONTENT_URI, projection, null, null, null);
     		break;
+    	case ORGANIZATION_LIST_LOADER:
+    		String[] projection1 = { DatabaseContract.ListOrganizations.COL_ID, DatabaseContract.ListOrganizations.COL_ORGANIZATION };
+            cursorLoader = new CursorLoader(getActivity(),
+            		DatabaseContract.ListOrganizations.CONTENT_URI, projection1, null, null, null);
+    		break;
+    	case LINK_LIST_LOADER:
+    		String[] projection2 = { DatabaseContract.ListLinks.COL_ID, DatabaseContract.ListLinks.COL_TITLE };
+            cursorLoader = new CursorLoader(getActivity(),
+            		DatabaseContract.ListLinks.CONTENT_URI, projection2, null, null, null);
+    		break;
 		default:
 
 			break;
@@ -195,7 +238,7 @@ public class ItemListFragment extends SherlockListFragment implements
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
-    	Log.d(LOG_TAG, "onLoaderReset()");
+    	if (Robodex.DEBUG) Log.i(LOG_TAG, "onLoaderReset()");
 
     	mCursorAdapter.swapCursor(null);
     }

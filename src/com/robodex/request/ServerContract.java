@@ -132,8 +132,8 @@ final class ServerContract {
         // Hyperlinks
         static final String LINK_ID						= "link_id";
         static final String LINK						= "link";
-        static final String LINK_TEXT					= "link_text";
-        static final String TOP_LEVEL					= "link_top_level";
+        static final String LINK_TEXT					= "title";
+        static final String TOP_LEVEL					= "top_level";
 
         // Member
         static final String MEMBER_ID					= "member_id";

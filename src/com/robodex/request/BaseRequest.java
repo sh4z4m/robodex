@@ -133,7 +133,10 @@ public abstract class BaseRequest {
     	JSONObject response = decodeResponse(task);
     	mResponseCode = handleResponseCodes(response);
     	JSONArray results = getResponseResults(response);
-    	processResponseResults(results);
+    	int numRows = processResponseResults(results);
+    	if (Robodex.DEBUG) {
+    		Log.i(LOG_TAG, "Recieved " + numRows + " rows from " + getContenUri().getLastPathSegment());
+    	}
     }
 
 
@@ -178,7 +181,7 @@ public abstract class BaseRequest {
     }
 
 
-    private int handleResponseCodes(JSONObject response) {
+    protected int handleResponseCodes(JSONObject response) {
     	if (response == null) return RESPONSE_CODE_NOT_GIVEN;
 
     	int     code = ResponseCode.OK;
@@ -213,9 +216,10 @@ public abstract class BaseRequest {
     	return results;
     }
 
-    private void processResponseResults(JSONArray results) {
-    	if (results == null) return;
+    protected int processResponseResults(JSONArray results) {
+    	if (results == null) return 0;
 
+    	int numRows = 0;
     	JSONObject resultRow = null;
     	Map<String, String> rowToSave = null;
 
@@ -223,12 +227,14 @@ public abstract class BaseRequest {
     		try {
     			resultRow = results.getJSONObject(i);
     			rowToSave = convertResultRow(resultRow);
-    			processConvertedResultRow(rowToSave);
+    			if (processConvertedResultRow(rowToSave)) ++numRows;
     		}
     		catch(JSONException e) {
     			Log.e(LOG_TAG, "Error processing result row " + i);
     		}
     	}
+
+    	return numRows;
     }
 
     private Map<String, String> convertResultRow(JSONObject resultRow) {
@@ -249,7 +255,7 @@ public abstract class BaseRequest {
         return rowToSave;
     }
 
-	private void processConvertedResultRow(Map<String, String> rowToSave) {
+	private boolean processConvertedResultRow(Map<String, String> rowToSave) {
 		ContentValues dbRow = processRowForInsertion(rowToSave);
 
         try {
@@ -258,20 +264,12 @@ public abstract class BaseRequest {
         }
         catch (Throwable t) {
         	Log.e(LOG_TAG, "Error saving row to database.", t);
+        	return false;
         }
-
+        return true;
     }
 
 
-
-    private String getAuthKey() {
-    	// TODO
-    	return "";
-    }
-
-    public synchronized int getResponseCode() {
-    	return mResponseCode;
-    }
 
 
     private void getChildInfo() {
@@ -424,6 +422,23 @@ public abstract class BaseRequest {
     	}
     }
 
+
+    private String getAuthKey() {
+    	// TODO
+    	return "";
+    }
+
+    public synchronized int getResponseCode() {
+    	return mResponseCode;
+    }
+
+    protected String getRequestType() {
+    	return mRequestType;
+    }
+
+    protected Uri getContenUri() {
+    	return mContentUri;
+    }
 
     /** Fields to send to server as defined by the ServerContract.RequestField class.*/
     protected abstract void				populateRequest(Map<String, String> request);

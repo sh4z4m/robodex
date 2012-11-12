@@ -135,7 +135,7 @@ public final class DatabaseContract {
     public static final class ListLinks {
         private ListLinks() { /* Not instantiable */ }
 
-        public static final String 	TABLE_NAME 			= "link";
+        public static final String 	TABLE_NAME 			= "links";
         public static final Uri 	CONTENT_URI 		= Uri.parse("content://" + AUTHORITY + "/" + TABLE_NAME);
 
         public static final String 	CONTENT_TYPE 		= ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + TABLE_NAME;
