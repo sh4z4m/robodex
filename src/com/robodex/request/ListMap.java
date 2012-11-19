@@ -1,5 +1,6 @@
 package com.robodex.request;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import android.content.ContentValues;
@@ -7,8 +8,10 @@ import android.content.ContentValues;
 public final class ListMap extends BaseRequest {
 
 	@Override
-	protected void populateRequest(Map<String, String> request) {
+	protected void prepareRequest() {
+		Map<String, String> request = new HashMap<String, String>();
 		// TODO
+		executeRequest(request);
 	}
 
 	@Override

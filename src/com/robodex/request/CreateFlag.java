@@ -1,14 +1,12 @@
 package com.robodex.request;
 
+import java.util.HashMap;
 import java.util.Map;
+
+import android.content.ContentValues;
 
 import com.robodex.data.DatabaseContract;
 import com.robodex.request.ServerContract.RequestField;
-import com.robodex.request.ServerContract.RequestType;
-
-import android.content.ContentValues;
-import android.net.Uri;
-import android.util.Log;
 
 public class CreateFlag extends BaseRequest {
 	private static final String LOG_TAG = CreateFlag.class.getSimpleName();
@@ -24,10 +22,11 @@ public class CreateFlag extends BaseRequest {
 	}
 
 	@Override
-	protected void populateRequest(Map<String, String> request) {
+	protected void prepareRequest() {
+		Map<String, String> request = new HashMap<String, String>();
 		request.put(RequestField.FLAG_COMMENT, mComment);
 		request.put(mField, String.valueOf(mRowId));
-
+		executeRequest(request);
 	}
 
 	@Override

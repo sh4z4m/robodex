@@ -1,11 +1,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.robodex"
-    android:versionCode="08140041"
-    android:versionName="0.4.x" >
+    android:versionCode="08140060"
+    android:versionName="0.6" >
 
     <uses-sdk
         android:minSdkVersion="8"
-        android:targetSdkVersion="16" />
+        android:targetSdkVersion="17" />
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />

@@ -1,5 +1,9 @@
 package com.robodex.request;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.ArrayList;
@@ -9,6 +13,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.message.BasicNameValuePair;
@@ -18,6 +24,7 @@ import org.json.JSONObject;
 
 import android.content.ContentValues;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.util.Log;
 
 import com.robodex.Private;
@@ -41,54 +48,54 @@ public abstract class BaseRequest {
 
     private final Callback mCallback;
 
-    private int mResponseCode;
-
+    private Map<String, String> mRequest;
     private String mRequestType;
     private Uri mContentUri;
 
-    protected BaseRequest() {
-    	this(null);
-    }
+    private int mResponseCode;
 
-    protected BaseRequest(final HttpPostTask.Callback callback) {
+    protected BaseRequest() {
     	mResponseCode = RESPONSE_CODE_UNKNOWN;
     	getChildInfo();
 
         mCallback = new HttpPostTask.Callback() {
         	@Override
-			public void onPreExecuteForegroundProcessing(HttpPostTask task) {
-				if (callback != null) callback.onPreExecuteForegroundProcessing(task);
+			public HttpPost onCreateRequest() {
+				return createRequest(mRequest);
 			}
 
         	@Override
-			public void onPreExecuteBackgroundProcessing(HttpPostTask task) {
-				if (callback != null) callback.onPreExecuteBackgroundProcessing(task);
-			}
-
-        	@Override
-            public void onPostExecuteBackgroundProcessing(HttpPostTask task) {
-        		// Process the response
-        		processResponse(task);
-
-        		if (callback != null) callback.onPostExecuteBackgroundProcessing(task);
-            }
-
-            @Override
-            public void onPostExecuteForegroundProcessing(HttpPostTask task) {
-            	if (callback != null) callback.onPostExecuteForegroundProcessing(task);
+            public void onResponseReceived(HttpResponse response) {
+        		processResponse(response);
             }
         };
     }
 
+
     public final void execute() {
-    	Map<String, String> requestMap = new HashMap<String, String>();
+        new PrepareRequestTask().execute();
+    }
 
-        // Child classes populate the request object passed to them.
-        populateRequest(requestMap);
+    private class PrepareRequestTask extends AsyncTask<Void, Void, Void> {
+			@Override
+			protected Void doInBackground(Void... params) {
+    	        // Child classes populate the request object passed to them.
+    	        prepareRequest();
+    	        return null;
+			}
+    }
 
+    /** Called by child classes when the request is done being prepared. */
+    protected void executeRequest(Map<String, String> request) {
+    	mRequest = request;
+    	new HttpPostTask(mCallback).execute();
+    }
+
+    // Start creating the request here.
+
+    private HttpPost createRequest(Map<String, String> requestMap) {
         String requestString = encodeRequest(requestMap);
-    	HttpPost post = createHttpPost(requestString);
-        new HttpPostTask(post, mCallback).execute();
+    	return createHttpPost(requestString);
     }
 
     private String encodeRequest(Map<String, String> request) {
@@ -127,42 +134,70 @@ public abstract class BaseRequest {
         return post;
     }
 
+    // Start processing the response here.
 
-    private void processResponse(HttpPostTask task) {
-
-    	JSONObject response = decodeResponse(task);
-    	mResponseCode = handleResponseCodes(response);
-    	JSONArray results = getResponseResults(response);
+    private void processResponse(HttpResponse response) {
+    	List<String> responseLines = parseResponseLines(response);
+    	JSONObject responseJson = decodeResponse(responseLines);
+    	mResponseCode = handleResponseCodes(responseJson);
+    	JSONArray results = getResponseResults(responseJson);
     	int numRows = processResponseResults(results);
     	if (Robodex.DEBUG) {
     		Log.i(LOG_TAG, "Recieved " + numRows + " rows from " + getContenUri().getLastPathSegment());
     	}
     }
 
+    private List<String> parseResponseLines(HttpResponse response) {
+    	List<String> responseLines = new ArrayList<String>();
+    	if (response == null) return responseLines;
 
-    private JSONObject decodeResponse(HttpPostTask task) {
+        HttpEntity entity = response.getEntity();
+        if (entity == null) return responseLines;
+
+        InputStream stream = null;
+        BufferedReader reader = null;
+        String line = null;
+
+        // Not a repeatable entity, only one call to getContent() allowed
+        try {
+            stream = entity.getContent();
+            reader = new BufferedReader(new InputStreamReader(stream,"iso-8859-1"), 8);
+            while ((line = reader.readLine()) != null) {
+            	responseLines.add(line);
+            }
+            reader.close();
+            stream.close();
+        }
+        catch (IllegalStateException e) {
+        	Log.e(LOG_TAG, "Error processing response lines.", e);
+        }
+        catch (IOException e) {
+        	Log.e(LOG_TAG, "Error processing response lines.", e);
+        }
+
+        return responseLines;
+    }
+
+
+    private JSONObject decodeResponse(List<String> responseLines) {
     	String 		responseString	= null;
         String 		hash        	= null;
-        int			size        	= task.getResponseLines().size();
-        JSONObject	responseJson	= null;
+        int			size        	= responseLines.size();
+        JSONObject	responseJson	= new JSONObject();
 
         if (size >= 2) {
-            responseString 	= task.getResponseLines().get(0);
-            hash            = task.getResponseLines().get(1);
+            responseString 	= responseLines.get(0);
+            hash            = responseLines.get(1);
         }
         else {
-            Throwable t = task.getConnectionError();
-            if (t == null) t = task.getParseError();
-            Log.e(LOG_TAG, "Response and hash are not defined, received " + size + " line response.", t);
-
-            return null;
+            Log.e(LOG_TAG, "Response and hash are not defined, received " + size + " line response.");
+            return responseJson;
         }
 
 
         if (!hash.equals(Private.calculateHash(responseString))) {
             Log.e(LOG_TAG, "Failed hash check.");
-
-            return null;
+            return responseJson;
         }
 
 
@@ -441,7 +476,7 @@ public abstract class BaseRequest {
     }
 
     /** Fields to send to server as defined by the ServerContract.RequestField class.*/
-    protected abstract void				populateRequest(Map<String, String> request);
+    protected abstract void				prepareRequest();
 
     /** Parse a row from the results so that it can be stored in the database */
     protected abstract ContentValues	processRowForInsertion(Map<String, String> rowFromResponse);

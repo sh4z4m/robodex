@@ -33,4 +33,6 @@
         <item>@string/recent</item>
     </string-array>
 
+    <string name="search_hint_default">Search</string>
+
 </resources>

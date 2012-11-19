@@ -4,13 +4,7 @@ import java.util.Map;
 
 import android.content.ContentValues;
 
-public final class SearchSpecialties extends BaseRequest {
-
-	@Override
-	protected void populateRequest(Map<String, String> request) {
-		// TODO
-	}
-
+public final class SearchSpecialties extends BaseEndlessListRequest {
 	@Override
 	protected ContentValues processRowForInsertion(Map<String, String> rowFromResponse) {
 		ContentValues rowToInsert = new ContentValues();

@@ -7,18 +7,22 @@ import android.widget.Toast;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.actionbarsherlock.widget.SearchView;
 import com.robodex.R;
 import com.robodex.Robodex;
 
-public class BaseActivity extends SherlockFragmentActivity {
-
-
+public abstract class BaseActivity extends SherlockFragmentActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
         getSupportMenuInflater().inflate(R.menu.main, menu);
+
+        //Create the search view
+        SearchView searchView = new SearchView(getSupportActionBar().getThemedContext());
+        searchView.setQueryHint(getString(R.string.search_hint_default));
+
         (menu.findItem(R.id.menu_search))
-        .setActionView(R.layout.collapsible_edittext)
+        .setActionView(searchView)
         .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS | MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
         return true;
     }

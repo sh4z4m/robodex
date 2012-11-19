@@ -141,6 +141,7 @@ final class ServerContract {
         static final String USERNAME					= "username";
         static final String PASSWORD					= "password";
         static final String LOCATION_TIME				= "location_time";
+        static final String LOCATION_ACCURACY			= "location_accuracy"; // TODO Document
         static final String EDITS						= "edits";
         static final String EDITS_TODAY					= "edits_today";
         static final String LOGINS						= "logins";

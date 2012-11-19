@@ -1162,10 +1162,16 @@ public final class DatabaseContract {
 
         public static final String 	COL_ID 				= BaseColumns._ID;
         public static final String 	COL_TIMESTAMP 		= "timestamp";
+        public static final String 	COL_LATITUDE		= "latitude";
+        public static final String 	COL_LONGITUDE		= "longitude";
+        public static final String 	COL_ACCURACY		= "accuracy";
 
         static final String	CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " ("
                 + COL_ID 					+ " integer PRIMARY KEY AUTOINCREMENT, "
-                + COL_TIMESTAMP 			+ " text NOT NULL"
+                + COL_TIMESTAMP 			+ " text NOT NULL, "
+                + COL_LATITUDE 				+ " real, "
+                + COL_LONGITUDE 			+ " real, "
+                + COL_ACCURACY 				+ " real"
                 + ");";
     }
 

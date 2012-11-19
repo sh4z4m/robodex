@@ -1,5 +1,7 @@
 package com.robodex.request;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.json.JSONArray;
@@ -8,6 +10,7 @@ import org.json.JSONObject;
 import android.util.Log;
 
 import com.robodex.Robodex;
+import com.robodex.request.ServerContract.RequestField;
 import com.robodex.request.ServerContract.ResponseCode;
 
 
@@ -31,6 +34,13 @@ public abstract class BaseEndlessListRequest extends BaseRequest {
 
 	public final void setStartPosition(int startPosition) {
 		mStartPosition.set(startPosition);
+	}
+
+	@Override
+	protected void prepareRequest() {
+		Map<String, String> request = new HashMap<String, String>();
+		request.put(RequestField.START_POSITION, String.valueOf(getStartPosition()));
+		executeRequest(request);
 	}
 
 
