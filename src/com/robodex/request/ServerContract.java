@@ -4,7 +4,7 @@ package com.robodex.request;
  * Specifies the data that the server and app understand
  * so they can communicate it between one another.
  */
-final class ServerContract {
+public final class ServerContract {
 
 	/**
 	 * The types of requests the app can make
@@ -186,8 +186,8 @@ final class ServerContract {
 	/**
 	 * Response codes given by the server
 	 */
-	static final class ResponseCode {
-		static final int OK								= 0;
+	public static final class ResponseCode {
+		public static final int OK								= 0;
 
 		// Business logic errors
 		static final int INVALID_USERNAME				= 10;
