@@ -2,11 +2,13 @@ package com.robodex.app;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.robodex.R;
 import com.robodex.Robodex;
+import com.robodex.request.UserLogin;
 
 public class MainActivity extends BaseActivity implements MainListFragment.Callbacks,
 ItemListFragment.Callbacks {
@@ -16,17 +18,36 @@ ItemListFragment.Callbacks {
 
     private String mMainItem;
     private String mCategoryItem;
+    
+    
+ public void onCreate() {
+    	
+    	StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().permitAll().build());
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+      
         setContentView(R.layout.activity_main);
 
-        if (findViewById(R.id.fragment_container) != null) {
-            mTwoPane = true;
-            ((MainListFragment) getSupportFragmentManager()
+        // Check login status in android database
+        UserLogin userLogin = new UserLogin();
+        if(userLogin.isUserLoggedIn(getApplicationContext())){
+        	setContentView(R.layout.activity_main);
+
+        	if (findViewById(R.id.fragment_container) != null) {
+        		mTwoPane = true;
+        		((MainListFragment) getSupportFragmentManager()
                     .findFragmentById(R.id.list))
                     .setActivateOnItemClick(true);
+        	}
+        }else{
+        	// user is not logged in show login screen
+        	Intent login = new Intent(getApplicationContext(), LoginActivity.class);
+        	login.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        	startActivity(login);
+        	finish();
         }
     }
 
