@@ -1,7 +1,5 @@
 package com.robodex.app;
 
-import org.json.JSONException;
-
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -14,7 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.robodex.R;
 import com.robodex.data.DatabaseContract;
 import com.robodex.request.Login;
@@ -22,7 +20,7 @@ import com.robodex.request.ServerContract.ResponseCode;
 
 
 
-public class LoginActivity extends SherlockActivity implements
+public class LoginActivity extends SherlockFragmentActivity implements
 LoaderManager.LoaderCallbacks<Cursor> {
 	
     private static final int LOGIN_LOADER = 1;
@@ -32,6 +30,8 @@ LoaderManager.LoaderCallbacks<Cursor> {
 	EditText inputUser;
 	EditText inputPassword;
 	TextView loginErrorMsg;
+	
+	
 
 	// JSON Response node names
 	private static String KEY_SUCCESS    = "success";
@@ -51,11 +51,15 @@ LoaderManager.LoaderCallbacks<Cursor> {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.login);
-
+		
+		userLogin = new Login();
+		
 		inputUser    = (EditText) findViewById(R.id.loginUser);
 		inputPassword = (EditText) findViewById(R.id.loginPassword);
 		loginErrorMsg = (TextView) findViewById(R.id.login_error);
 		btnLogin      = (Button)   findViewById(R.id.btnLogin);
+		
+		
 
 		// Login button Click Event
 		btnLogin.setOnClickListener(new View.OnClickListener() {
@@ -64,8 +68,14 @@ LoaderManager.LoaderCallbacks<Cursor> {
 				String user    = inputUser.getText().toString();
 				String password = inputPassword.getText().toString();
 				
+				getSupportLoaderManager().initLoader(LOGIN_LOADER, null,  LoginActivity.this);
+				
 				loginErrorMsg.setText("Work????");
-				userLogin = new Login(user, password);
+				
+				;
+				userLogin.setUsername(user);
+				userLogin.setPassword(password);
+				
 				userLogin.execute();
 				//UserLogin userLogin = new UserLogin();
 				//JSONObject json = userLogin.loginUser(user, password);				
@@ -122,7 +132,7 @@ LoaderManager.LoaderCallbacks<Cursor> {
 	}
 
 	@Override
-	public void onLoadFinished(Loader<Cursor> arg0, Cursor arg1) {
+	 public void onLoadFinished(Loader<Cursor> arg0, Cursor arg1) {
 		// TODO Auto-generated method stub
 		
 		loginErrorMsg.setText("Login....");
