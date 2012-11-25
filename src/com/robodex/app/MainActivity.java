@@ -34,6 +34,7 @@ ItemListFragment.Callbacks {
         // Check login status in android database
         UserLogin userLogin = new UserLogin();
         if(userLogin.isUserLoggedIn(getApplicationContext())){
+
         	setContentView(R.layout.activity_main);
 
         	if (findViewById(R.id.fragment_container) != null) {

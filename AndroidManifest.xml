@@ -69,7 +69,7 @@
             android:label="Login Account" 
             android:name=".app.LoginActivity">
            android:parentActivityName=".app.MainActivity"
-           
+            android:theme="@android:style/Theme.Black.NoTitleBar" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".app.MainActivity" />
