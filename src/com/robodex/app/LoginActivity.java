@@ -15,7 +15,6 @@ import android.widget.TextView;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.robodex.R;
 import com.robodex.data.DatabaseContract;
-import com.robodex.data.DatabaseHandler;
 import com.robodex.request.Login;
 import com.robodex.request.ServerContract.ResponseCode;
 
@@ -71,7 +70,7 @@ LoaderManager.LoaderCallbacks<Cursor> {
 				
 				getSupportLoaderManager().initLoader(LOGIN_LOADER, null,  LoginActivity.this);
 				
-				loginErrorMsg.setText("Work????");
+				loginErrorMsg.setText("Loading...");
 				
 				;
 				userLogin.setUsername(user);
@@ -140,11 +139,11 @@ LoaderManager.LoaderCallbacks<Cursor> {
 		if((userLogin.getResponseCode() != ResponseCode.OK)){
 			
 			
-			//del here
-			DatabaseHandler db   = new DatabaseHandler(getApplicationContext());
-										
-			db.addUser("test", "test", "12345","fgf");						
-			// to 
+//			//del here
+//			DatabaseHandler db   = new DatabaseHandler(getApplicationContext());
+//										
+//			db.addUser("test", "test", "12345","fgf");						
+//			// to 
 			
 			
 			Intent main = new Intent(getApplicationContext(), MainActivity.class);

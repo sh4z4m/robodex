@@ -8,7 +8,6 @@ import android.widget.Toast;
 
 import com.robodex.R;
 import com.robodex.Robodex;
-import com.robodex.request.UserLogin;
 
 public class MainActivity extends BaseActivity implements MainListFragment.Callbacks,
 ItemListFragment.Callbacks {
@@ -31,9 +30,6 @@ ItemListFragment.Callbacks {
       
         setContentView(R.layout.activity_main);
 
-        // Check login status in android database
-        UserLogin userLogin = new UserLogin();
-        if(userLogin.isUserLoggedIn(getApplicationContext())){
 
         	setContentView(R.layout.activity_main);
 
@@ -43,13 +39,7 @@ ItemListFragment.Callbacks {
                     .findFragmentById(R.id.list))
                     .setActivateOnItemClick(true);
         	}
-        }else{
-        	// user is not logged in show login screen
-        	Intent login = new Intent(getApplicationContext(), LoginActivity.class);
-        	login.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        	startActivity(login);
-        	finish();
-        }
+
     }
 
     @Override
