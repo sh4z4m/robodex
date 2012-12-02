@@ -5,21 +5,144 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".app.MainActivity" >
-	<fragment
-	    android:name="com.robodex.app.MainListFragment"
-	    android:id="@+id/list"
+	<LinearLayout
 	    android:layout_width="match_parent"
 	    android:layout_height="0dp"
 	    android:layout_weight="1"
-	    android:layout_marginLeft="16dp"
-	    android:layout_marginRight="16dp"
-	    tools:context=".app.MainActivity" />
+	    android:orientation="horizontal">
+	    <View
+	        android:layout_width="0dp"
+	        android:layout_height="match_parent"
+	        android:layout_weight=".2" />
+        <LinearLayout
+	        android:layout_width="wrap_content"
+	        android:layout_height="match_parent"
+	        android:orientation="vertical">
+	        <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight=".25" />
+		    <ImageView
+		        android:id="@+id/search"
+	            android:src="@drawable/main_search"
+	            android:contentDescription="@string/search"
+		        android:layout_width="wrap_content"
+	            android:layout_height="wrap_content" />
+		    <TextView
+		        android:text="@string/search"
+		        android:layout_gravity="center_horizontal"
+		        android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+		    <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight=".25" />
+		    <ImageView
+	            android:id="@+id/map"
+	            android:src="@drawable/main_map"
+	            android:contentDescription="@string/map"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content" />
+		    <TextView
+                android:text="@string/map"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+		    <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight=".25" />
+		    <ImageView
+	            android:id="@+id/links"
+	            android:src="@drawable/main_links"
+	            android:contentDescription="@string/links"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content" />
+		    <TextView
+                android:text="@string/links"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+		    <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight=".25" />
+	    </LinearLayout>
+	    <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight=".4" />
+	    <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+		    <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight=".25" />
+		    <ImageView
+	            android:id="@+id/specialties"
+	            android:src="@drawable/main_specialties"
+	            android:contentDescription="@string/specialties"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content" />
+		    <TextView
+                android:text="@string/specialties"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+		    <View
+		        android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight=".25" />
+		    <ImageView
+	            android:id="@+id/organizations"
+	            android:src="@drawable/main_organizations"
+	            android:contentDescription="@string/organizations"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content" />
+		    <TextView
+                android:text="@string/organizations"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+		    <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight=".25" />
+		    <ImageView
+                android:id="@+id/checkin"
+                android:src="@drawable/main_checkin"
+                android:contentDescription="@string/about"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+		    <TextView
+                android:text="@string/checkin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+		    <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight=".25" />
+		</LinearLayout>
+		<View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight=".2" />
+    </LinearLayout>
 	<com.google.ads.AdView
 	    android:id="@+id/adView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         ads:adUnitId="a1506e906138301"
         ads:adSize="BANNER"
-        ads:testDevices="TEST_EMULATOR, 9000A2718EFD8884AD39AA82BE77CF7B, 1C61D0699B76FB79113B685B19440E25"
+        ads:testDevices="TEST_EMULATOR"
         ads:loadAdOnCreate="true" />
 </LinearLayout>

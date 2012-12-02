@@ -50,6 +50,7 @@ public final class DatabaseContract {
         public static final String 	COL_ID 				= BaseColumns._ID;
         public static final String 	COL_LOCATION_ID		= "location_id";
         public static final String 	COL_ORGANIZATION_ID	= "organization_id";
+        public static final String 	COL_ORGANIZATION	= "organization";
         public static final String 	COL_PRIMARY			= "primary_location";
         public static final String 	COL_ADDRESS			= "address";
         public static final String 	COL_CITY			= "city";
@@ -69,7 +70,8 @@ public final class DatabaseContract {
         static final String	CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " ("
                 + COL_ID 					+ " integer PRIMARY KEY AUTOINCREMENT, "
                 + COL_LOCATION_ID 			+ " integer UNIQUE NOT NULL, "
-                + COL_ORGANIZATION_ID 		+ " integer NOT NULL, "
+                + COL_ORGANIZATION_ID		+ " integer NOT NULL, "
+                + COL_ORGANIZATION 			+ " text NOT NULL, "
                 + COL_PRIMARY 				+ " integer, "
                 + COL_ADDRESS 				+ " text, "
                 + COL_CITY 					+ " text, "
@@ -486,7 +488,7 @@ public final class DatabaseContract {
 
         static final String	CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " ("
                 + COL_ID 					+ " integer PRIMARY KEY AUTOINCREMENT, "
-                + COL_TIMESTAMP 			+ " text NOT NULL, "
+                + COL_TIMESTAMP 			+ " text, "
 
                 + COL_LATITUDE 				+ " real, "
                 + COL_LONGITUDE 			+ " real, "
@@ -534,17 +536,18 @@ public final class DatabaseContract {
         public static final String 	COL_LAST_NAME		= "last_name";
         public static final String 	COL_CITY			= "city";
         public static final String 	COL_STATE			= "state";
+        public static final String 	COL_ZIP				= "zip";
 
 
         static final String	CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " ("
                 + COL_ID 					+ " integer PRIMARY KEY AUTOINCREMENT, "
-                + COL_TIMESTAMP 			+ " text NOT NULL, "
-
+                + COL_TIMESTAMP 			+ " text, "
                 + COL_PERSON_ID 			+ " integer NOT NULL, "
                 + COL_FIRST_NAME 			+ " text, "
                 + COL_LAST_NAME 			+ " text, "
                 + COL_CITY 					+ " text, "
-                + COL_STATE 				+ " text"
+                + COL_STATE 				+ " text, "
+                + COL_ZIP	 				+ " text"
                 + ");";
     }
 
@@ -561,6 +564,7 @@ public final class DatabaseContract {
         public static final String 	COL_ID 				= BaseColumns._ID;
         public static final String 	COL_TIMESTAMP 		= "timestamp";
         public static final String 	COL_LOCATION_ID		= "location_id";
+        public static final String 	COL_PRIMARY			= "primary_location";
         public static final String 	COL_ADDRESS			= "address";
         public static final String 	COL_CITY			= "city";
         public static final String 	COL_STATE			= "state";
@@ -569,8 +573,9 @@ public final class DatabaseContract {
 
         static final String	CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " ("
                 + COL_ID 					+ " integer PRIMARY KEY AUTOINCREMENT, "
-                + COL_TIMESTAMP 			+ " text NOT NULL, "
-                + COL_LOCATION_ID 			+ " integer, "
+                + COL_TIMESTAMP 			+ " text, "
+                + COL_LOCATION_ID 			+ " integer NOT NULL, "
+                + COL_PRIMARY 				+ " integer, "
                 + COL_ADDRESS 				+ " text, "
                 + COL_CITY 					+ " text, "
                 + COL_STATE 				+ " text, "
@@ -598,6 +603,8 @@ public final class DatabaseContract {
         // Person fields
         public static final String 	COL_FIRST_NAME		= "first_name";
         public static final String 	COL_LAST_NAME		= "last_name";
+        public static final String 	COL_SPECIALTIES		= "specialties";
+        public static final String 	COL_ORGANIZATIONS	= "organizations";
         public static final String 	COL_ADDRESS			= "address";
         public static final String 	COL_CITY			= "city";
         public static final String 	COL_STATE			= "state";
@@ -635,10 +642,12 @@ public final class DatabaseContract {
 
         static final String	CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " ("
                 + COL_ID 					+ " integer PRIMARY KEY AUTOINCREMENT, "
-                + COL_PERSON_ID 			+ " integer UNIQUE NOT NULL, "
+                + COL_PERSON_ID 			+ " integer NOT NULL, "
 
                 + COL_FIRST_NAME 			+ " text, "
                 + COL_LAST_NAME 			+ " text, "
+                + COL_SPECIALTIES 			+ " text, "
+                + COL_ORGANIZATIONS			+ " text, "
                 + COL_ADDRESS 				+ " text, "
                 + COL_CITY 					+ " text, "
                 + COL_STATE 				+ " text, "
@@ -807,10 +816,12 @@ public final class DatabaseContract {
         public static final String 	COL_ID 				= BaseColumns._ID;
         public static final String 	COL_SEARCH			= "search";
 
+        public static final String 	COL_SPECIALTY_ID	= "specialty_id";
+        public static final String 	COL_SPECIALTY		= "specialty";
         public static final String 	COL_ORGANIZATION_ID	= "organization_id";
         public static final String 	COL_ORGANIZATION	= "organization";
         public static final String 	COL_LOCATION_ID		= "location_id";
-        public static final String 	COL_LOCATION		= "location";
+        public static final String 	COL_PRIMARY			= "primary_location";
         public static final String 	COL_MEMBER_ID		= "member_id";
         public static final String 	COL_PERSON_ID		= "person_id";
 
@@ -819,9 +830,8 @@ public final class DatabaseContract {
         public static final String 	COL_ADDRESS			= "address";
         public static final String 	COL_CITY			= "city";
         public static final String 	COL_STATE			= "state";
+        public static final String 	COL_ZIP				= "zip";
 
-        public static final String 	COL_SPECIALTY_ID	= "specialty_id";
-        public static final String 	COL_SPECIALTY	= "specialty";
         public static final String 	COL_LINK_ID			= "link_id";
         public static final String 	COL_LINK			= "link";
         public static final String 	COL_LINK_TITLE		= "link_title";
@@ -831,11 +841,11 @@ public final class DatabaseContract {
 
         static final String	CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " ("
                 + COL_ID 					+ " integer PRIMARY KEY AUTOINCREMENT, "
-                + COL_SEARCH				+ " text NOT NULL, "
+                + COL_SEARCH				+ " text, "
                 + COL_ORGANIZATION_ID		+ " integer, "
                 + COL_ORGANIZATION			+ " text, "
                 + COL_LOCATION_ID 			+ " integer, "
-                + COL_LOCATION 				+ " text, "
+                + COL_PRIMARY 				+ " integer, "
                 + COL_MEMBER_ID 			+ " integer, "
                 + COL_PERSON_ID 			+ " integer, "
 
@@ -845,6 +855,7 @@ public final class DatabaseContract {
                 + COL_ADDRESS 				+ " text, "
                 + COL_CITY 					+ " text, "
                 + COL_STATE 				+ " text, "
+                + COL_ZIP	 				+ " text, "
 
                 + COL_SPECIALTY_ID 			+ " integer, "
                 + COL_SPECIALTY 			+ " text, "

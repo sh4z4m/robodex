@@ -1,101 +1,94 @@
 package com.robodex.app;
 
+import android.content.Context;
 import android.content.Intent;
+import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
-import android.os.StrictMode;
-import android.util.Log;
+import android.support.v4.app.LoaderManager.LoaderCallbacks;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.robodex.R;
-import com.robodex.Robodex;
-
-public class MainActivity extends BaseActivity implements MainListFragment.Callbacks,
-ItemListFragment.Callbacks {
-    private static final String LOG_TAG = MainActivity.class.getSimpleName();
-
-    private boolean mTwoPane;
-
-    private String mMainItem;
-    private String mCategoryItem;
-    
-    
- public void onCreate() {
-    	
-    	StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().permitAll().build());
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-      
-        setContentView(R.layout.activity_main);
+import com.robodex.request.CheckIn;
+import com.robodex.request.ListMap;
 
 
-        	setContentView(R.layout.activity_main);
+public class MainActivity extends BaseActivity {
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		getSupportActionBar().hide();
 
-        	if (findViewById(R.id.fragment_container) != null) {
-        		mTwoPane = true;
-        		((MainListFragment) getSupportFragmentManager()
-                    .findFragmentById(R.id.list))
-                    .setActivateOnItemClick(true);
-        	}
+		setContentView(R.layout.activity_main);
 
-    }
+		((ImageView) findViewById(R.id.search)).setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				getSupportActionBar().show();
+				focusSearchView();
+			}
+		});
 
-    @Override
-    public void onMainItemSelected(int position) {
-        if (Robodex.DEBUG) {
-            Toast.makeText(this,"main item selected, position: " + position, Toast.LENGTH_SHORT).show();
-        }
+		((ImageView) findViewById(R.id.specialties)).setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(MainActivity.this, ItemListActivity.class);
+				intent.putExtra(ItemListFragment.ARG_LIST_TYPE, ItemListFragment.LIST_TYPE_SPECIALTIES);
+				startActivity(intent);
+			}
+		});
 
-        mMainItem = String.valueOf(position);
+		((ImageView) findViewById(R.id.organizations)).setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(MainActivity.this, ItemListActivity.class);
+				intent.putExtra(ItemListFragment.ARG_LIST_TYPE, ItemListFragment.LIST_TYPE_ORGANIZATIONS);
+				startActivity(intent);
+			}
+		});
 
-        if (position == 1) {
-            startActivity(new Intent(this, MyMapActivity.class));
-        }
-        else if (mTwoPane) {
-            Bundle arguments = new Bundle();
-            arguments.putString(ItemListFragment.ARG_MAIN_ITEM_ID, mMainItem);
-            ItemListFragment fragment = new ItemListFragment();
-            fragment.setArguments(arguments);
-            getSupportFragmentManager().beginTransaction()
-            .replace(R.id.fragment_container, fragment)
-            .commit();
-        }
-        else {
-            Intent category = new Intent(this, ItemListActivity.class);
-            category.putExtra(ItemListFragment.ARG_MAIN_ITEM_ID, mMainItem);
-            startActivity(category);
-        }
-    }
+		((ImageView) findViewById(R.id.links)).setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(MainActivity.this, ItemListActivity.class);
+				intent.putExtra(ItemListFragment.ARG_LIST_TYPE, ItemListFragment.LIST_TYPE_LINKS);
+				startActivity(intent);
+			}
+		});
 
+		((ImageView) findViewById(R.id.checkin)).setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// TODO dyamicanizeit
+				(new CheckIn(1)).execute();
+				Toast.makeText(MainActivity.this, "Updating your location...", Toast.LENGTH_LONG).show();
+			}
+		});
 
-    @Override
-    public void onItemSelected(int position) {
-        if (Robodex.DEBUG) {
-            Toast.makeText(this,"category item selected, position: " + position, Toast.LENGTH_SHORT).show();
-        }
-
-        mCategoryItem = String.valueOf(position);
-
-        if (mTwoPane) {
-            Bundle arguments = new Bundle();
-            arguments.putString(DetailFragment.ARG_MAIN_ITEM_ID, mMainItem);
-            arguments.putString(DetailFragment.ARG_CATEGORY_ITEM_ID, mCategoryItem);
-            DetailFragment fragment = new DetailFragment();
-            fragment.setArguments(arguments);
-            getSupportFragmentManager().beginTransaction()
-            .replace(R.id.fragment_container, fragment)
-            .commit();
-        }
-        else {
-            // This should never happen
-            Log.wtf(LOG_TAG, "Going from main activity to detail activity");
-
-            Intent details = new Intent(this, DetailActivity.class);
-            details.putExtra(DetailFragment.ARG_MAIN_ITEM_ID, mMainItem);
-            details.putExtra(DetailFragment.ARG_CATEGORY_ITEM_ID, mCategoryItem);
-            startActivity(details);
-        }
-    }
+		((ImageView) findViewById(R.id.map)).setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if (Build.VERSION.SDK_INT < 11) {
+					Toast.makeText(MainActivity.this, "Not supported on your device.", Toast.LENGTH_SHORT).show();
+				}
+				else {
+					
+				    LocationManager locManager;
+	    			locManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+	    			
+	    			// ask user to turn on gps
+	    			if (!locManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+	    				startActivityForResult(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS), 0);
+	    			}
+	    			else{
+	    				Intent intent = new Intent(MainActivity.this, MyMapActivity.class);
+						startActivity(intent);
+	    			}
+				}
+			}
+		});
+	}
 }

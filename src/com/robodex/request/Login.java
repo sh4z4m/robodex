@@ -13,16 +13,13 @@ public final class Login extends BaseRequest {
 	private String mUsername;
 	private String mPassword;
 
-	
-		
-		public void setPassword(String password){
-			mPassword = password;
-		}
-		public void setUsername(String username){
-			mUsername = username;
-		}
-		
+	public void setUsername(String username) {
+		mUsername = username;
+	}
 
+	public void setPassword(String password) {
+		mPassword = password;
+	}
 
 	@Override
 	protected void prepareRequest() {
